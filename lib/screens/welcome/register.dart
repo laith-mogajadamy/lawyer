@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -16,6 +14,23 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   String dropvalue = "select ";
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController password = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    name.dispose();
+    email.dispose();
+    number.dispose();
+    password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +89,7 @@ class _RegisterState extends State<Register> {
         ),
       ),
     ];
-    TextEditingController name = TextEditingController();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -92,7 +107,7 @@ class _RegisterState extends State<Register> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Black22text(text: "Name/Company"),
                       SizedBox(
@@ -125,7 +140,7 @@ class _RegisterState extends State<Register> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const SizedBox(child: Black22text(text: "Email address")),
                       SizedBox(
@@ -133,7 +148,7 @@ class _RegisterState extends State<Register> {
                         width: size.width / 2,
                         child: Form(
                             child: TextFormField(
-                          controller: name,
+                          controller: email,
                           style:
                               TextStyle(color: Colors.black, fontSize: 18.sp),
                           cursorColor: Colors.black,
@@ -158,7 +173,7 @@ class _RegisterState extends State<Register> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const SizedBox(
                           child: Black22text(text: "Contact number")),
@@ -167,7 +182,7 @@ class _RegisterState extends State<Register> {
                         width: size.width / 2,
                         child: Form(
                           child: TextFormField(
-                            controller: name,
+                            controller: number,
                             style:
                                 TextStyle(color: Colors.black, fontSize: 18.sp),
                             cursorColor: Colors.black,
@@ -176,6 +191,41 @@ class _RegisterState extends State<Register> {
                                   const Color.fromARGB(255, 253, 242, 150),
                               filled: true,
                               hintText: "000000000",
+                              hintStyle: TextStyle(
+                                  color: Colors.grey, fontSize: 16.sp),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                borderRadius: BorderRadius.circular(
+                                  30.r,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(child: Black22text(text: "Password")),
+                      SizedBox(
+                        height: size.height / 16,
+                        width: size.width / 2,
+                        child: Form(
+                          child: TextFormField(
+                            controller: password,
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 18.sp),
+                            cursorColor: Colors.black,
+                            decoration: InputDecoration(
+                              fillColor:
+                                  const Color.fromARGB(255, 253, 242, 150),
+                              filled: true,
+                              hintText: "*******",
                               hintStyle: TextStyle(
                                   color: Colors.grey, fontSize: 16.sp),
                               border: OutlineInputBorder(
