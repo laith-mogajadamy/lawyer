@@ -18,10 +18,40 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         password: event.password,
       ));
     });
+    on<LoginNameChanged>((event, emit) async {
+      emit(state.copyWith(
+        name: event.name,
+      ));
+    });
+    on<LoginNumberChanged>((event, emit) async {
+      emit(state.copyWith(
+        number: event.number,
+      ));
+    });
+    on<TypeChanged>((event, emit) async {
+      emit(state.copyWith(
+        type: event.type,
+      ));
+    });
     on<LoginSubmitted>((event, emit) async {
       emit(state.copyWith(
           formStatus: FormSubmitting(),
           username: state.username,
+          password: state.password));
+
+      try {
+        emit(state.copyWith(formStatus: SubmissionSuccess()));
+      } catch (e) {
+        emit(state.copyWith(formStatus: SubmissionFailed(e)));
+      }
+    });
+    on<RegisterSubmitted>((event, emit) async {
+      emit(state.copyWith(
+          formStatus: FormSubmitting(),
+          username: state.username,
+          name: state.name,
+          number: state.number,
+          type: state.type,
           password: state.password));
 
       try {

@@ -16,7 +16,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController email = TextEditingController();
+  TextEditingController email_username = TextEditingController();
   TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    email.dispose();
+    email_username.dispose();
     password.dispose();
     super.dispose();
   }
@@ -39,7 +39,8 @@ class _LoginState extends State<Login> {
       child: BlocBuilder<EnterBloc, EnterState>(
         builder: (context, state) {
           return Scaffold(
-            body: SafeArea(
+            body: Padding(
+              padding: EdgeInsets.symmetric(vertical: 25.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,22 +53,23 @@ class _LoginState extends State<Login> {
                   ),
                   Form(
                     key: formKey,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                      child: Column(
+                        children: [
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(
-                                  child: Black22text(text: "Email address")),
+                                  child: Black22text(text: " Username")),
                               SizedBox(
                                 width: size.width / 2,
                                 child: TextFormField(
-                                  controller: email,
+                                  controller: email_username,
                                   validator: (value) => state.isValidUsername
                                       ? null
-                                      : "email is too short",
+                                      : "Email or Username is too short",
                                   onChanged: (value) => context
                                       .read<EnterBloc>()
                                       .add(
@@ -94,10 +96,10 @@ class _LoginState extends State<Login> {
                               )
                             ],
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(
@@ -135,8 +137,8 @@ class _LoginState extends State<Login> {
                               )
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   ElevatedButton(
