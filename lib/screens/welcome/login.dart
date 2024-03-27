@@ -34,152 +34,147 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => EnterBloc(),
-      child: BlocBuilder<EnterBloc, EnterState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(vertical: 25.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    children: [
-                      Black22text(text: "BRIEFCASE"),
-                      Orange22text(text: "LOGIN"),
-                    ],
-                  ),
-                  Form(
-                    key: formKey,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                  child: Black22text(text: " Username")),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: email_username,
-                                  validator: (value) => state.isValidUsername
-                                      ? null
-                                      : "Email or Username is too short",
-                                  onChanged: (value) => context
-                                      .read<EnterBloc>()
-                                      .add(
-                                        LoginUsernameChanged(username: value),
-                                      ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "Client@gmail.com",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
+    return BlocBuilder<EnterBloc, EnterState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(vertical: 25.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Column(
+                  children: [
+                    Black22text(text: "BRIEFCASE"),
+                    Orange22text(text: "LOGIN"),
+                  ],
+                ),
+                Form(
+                  key: formKey,
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                                child: Black22text(text: " Username")),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: email_username,
+                                validator: (value) => state.isValidUsername
+                                    ? null
+                                    : "Email or Username is too short",
+                                onChanged: (value) =>
+                                    context.read<EnterBloc>().add(
+                                          LoginUsernameChanged(username: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "Client@gmail.com",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                  child: Black22text(text: "Password")),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: password,
-                                  validator: (value) => state.isValidPassword
-                                      ? null
-                                      : 'Password is too short',
-                                  onChanged: (value) => context
-                                      .read<EnterBloc>()
-                                      .add(
-                                        LoginPasswordChanged(password: value),
-                                      ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "*******",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                                child: Black22text(text: "Password")),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: password,
+                                validator: (value) => state.isValidPassword
+                                    ? null
+                                    : 'Password is too short',
+                                onChanged: (value) =>
+                                    context.read<EnterBloc>().add(
+                                          LoginPasswordChanged(password: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "*******",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<EnterBloc>().add(LoginSubmitted());
-                      }
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      context.read<EnterBloc>().add(LoginSubmitted());
+                    }
 
-                      print(state.username);
-                      print("=============");
-                      print(state.password);
-                      print(state.formStatus);
-                      if (state.formStatus is SubmissionSuccess) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MyPages()),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(size.width / 2.3, size.height / 15),
-                      backgroundColor: Colors.orange,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: state.formStatus is FormSubmitting
-                        ? const Center(child: CircularProgressIndicator())
-                        : Text(
-                            "next",
-                            style: TextStyle(
-                                fontSize: 20.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
+                    print(state.username);
+                    print("=============");
+                    print(state.password);
+                    print(state.formStatus);
+                    if (state.formStatus is SubmissionSuccess) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyPages()),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(size.width / 2.3, size.height / 15),
+                    backgroundColor: Colors.orange,
+                    shape: const StadiumBorder(),
                   ),
-                ],
-              ),
+                  child: state.formStatus is FormSubmitting
+                      ? const Center(child: CircularProgressIndicator())
+                      : Text(
+                          "next",
+                          style: TextStyle(
+                              fontSize: 20.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

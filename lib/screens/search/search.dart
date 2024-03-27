@@ -193,7 +193,7 @@ class _SearchState extends State<Search> {
                                 TextStyle(color: Colors.black, fontSize: 18.sp),
                             decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(20.r),
                               ),
                               hintText: "search",
                               hintStyle: const TextStyle(color: Colors.grey),

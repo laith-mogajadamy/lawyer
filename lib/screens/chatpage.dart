@@ -15,6 +15,16 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   List<Message> messages = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,42 +64,38 @@ class _ChatPageState extends State<ChatPage> {
               margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
               height: size.height / 14,
               width: size.width / 1,
-              child: Form(
-                child: TextFormField(
-                  onChanged: (string) {
-                    // bloc.add(GetSearchProductsEvent(
-                    //     pageNum: 1, search: string, perPage: 100));
-                  },
-                  controller: _messageController,
-                  enabled: true,
-                  style: TextStyle(color: Colors.black, fontSize: 18.sp),
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2.h, color: Colors.black),
-                      borderRadius: BorderRadius.circular(20.r),
+              child: TextFormField(
+                autofocus: true,
+                onChanged: (string) {},
+                controller: _messageController,
+                enabled: true,
+                style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 2.h, color: Colors.black),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(width: 2.h, color: Colors.black),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: AppColor.appgray,
+                  suffix: InkWell(
+                    onTap: () {
+                      _handleSendMessage();
+                    },
+                    child: Icon(
+                      Icons.send,
+                      size: 25.r,
                     ),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(width: 2.h, color: Colors.black),
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    hintStyle: const TextStyle(color: Colors.grey),
-                    filled: true,
-                    fillColor: AppColor.appgray,
-                    suffix: InkWell(
-                      onTap: () {
-                        _handleSendMessage();
-                      },
-                      child: Icon(
-                        Icons.send,
-                        size: 25.r,
-                      ),
-                    ),
-                    prefix: InkWell(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.attachment,
-                        size: 25.r,
-                      ),
+                  ),
+                  prefix: InkWell(
+                    onTap: () {},
+                    child: Icon(
+                      Icons.attachment,
+                      size: 25.r,
                     ),
                   ),
                 ),

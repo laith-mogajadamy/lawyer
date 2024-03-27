@@ -65,263 +65,264 @@ class _RegisterState extends State<Register> {
         ),
       );
     }
-    return BlocProvider(
-      create: (context) => EnterBloc(),
-      child: BlocBuilder<EnterBloc, EnterState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(vertical: 25.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    children: [
-                      Black22text(text: "BRIEFCASE"),
-                      Orange22text(text: "REGISTERATION"),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Black22text(text: "Name/Company"),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: name,
-                                  validator: (value) => state.isValidUsername
-                                      ? null
-                                      : "name is too short",
-                                  onChanged: (value) =>
-                                      context.read<EnterBloc>().add(
-                                            LoginNameChanged(name: value),
-                                          ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "Client name",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                  child: Black22text(text: "Email address")),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: email,
-                                  validator: (value) => state.isValidUsername
-                                      ? null
-                                      : "Email is too short",
-                                  onChanged: (value) => context
-                                      .read<EnterBloc>()
-                                      .add(
-                                        LoginUsernameChanged(username: value),
-                                      ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "Client@gmail.com",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                  child: Black22text(text: "Contact number")),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: number,
-                                  validator: (value) => state.isValidnumber
-                                      ? null
-                                      : "number is too short",
-                                  onChanged: (value) =>
-                                      context.read<EnterBloc>().add(
-                                            LoginNumberChanged(number: value),
-                                          ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "000000000",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const SizedBox(
-                                  child: Black22text(text: "Password")),
-                              SizedBox(
-                                width: size.width / 2,
-                                child: TextFormField(
-                                  controller: password,
-                                  validator: (value) => state.isValidPassword
-                                      ? null
-                                      : 'Password is too short',
-                                  onChanged: (value) => context
-                                      .read<EnterBloc>()
-                                      .add(
-                                        LoginPasswordChanged(password: value),
-                                      ),
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  cursorColor: Colors.black,
-                                  decoration: InputDecoration(
-                                    fillColor: const Color.fromARGB(
-                                        255, 253, 242, 150),
-                                    filled: true,
-                                    hintText: "*******",
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey, fontSize: 16.sp),
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                      borderRadius: BorderRadius.circular(
-                                        30.r,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: size.width / 1.9,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 246, 238, 161),
-                                  borderRadius: BorderRadius.circular(20.r)),
-                              child: DropdownButton(
-                                  icon: Icon(
-                                    Icons.arrow_drop_down,
-                                    size: 35.r,
-                                    color: Colors.orange,
-                                  ),
-                                  alignment: Alignment.center,
-                                  dropdownColor: Colors.orange,
-                                  underline: const SizedBox(
-                                    width: 0,
-                                    height: 0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.r),
-                                  hint: Text(
-                                    (state.type.isEmpty)
-                                        ? "select"
-                                        : state.type,
-                                    style: TextStyle(
-                                        fontSize: 18.sp, color: Colors.black),
-                                  ),
-                                  items: clients,
-                                  isExpanded: true,
-                                  onChanged: (v) {
+    return BlocBuilder<EnterBloc, EnterState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Padding(
+            padding: EdgeInsets.symmetric(vertical: 25.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Column(
+                  children: [
+                    Black22text(text: "BRIEFCASE"),
+                    Orange22text(text: "REGISTERATION"),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Black22text(text: "Name/Company"),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: name,
+                                validator: (value) => state.isValidUsername
+                                    ? null
+                                    : "name is too short",
+                                onChanged: (value) =>
                                     context.read<EnterBloc>().add(
-                                          TypeChanged(type: v),
-                                        );
-                                  }),
-                            ),
+                                          LoginNameChanged(name: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "Client name",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                                child: Black22text(text: "Email address")),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: email,
+                                validator: (value) => state.isValidUsername
+                                    ? null
+                                    : "Email is too short",
+                                onChanged: (value) =>
+                                    context.read<EnterBloc>().add(
+                                          LoginUsernameChanged(username: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "Client@gmail.com",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                                child: Black22text(text: "Contact number")),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: number,
+                                validator: (value) => state.isValidnumber
+                                    ? null
+                                    : "number is too short",
+                                onChanged: (value) =>
+                                    context.read<EnterBloc>().add(
+                                          LoginNumberChanged(number: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "000000000",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(
+                                child: Black22text(text: "Password")),
+                            SizedBox(
+                              width: size.width / 2,
+                              child: TextFormField(
+                                controller: password,
+                                validator: (value) => state.isValidPassword
+                                    ? null
+                                    : 'Password is too short',
+                                onChanged: (value) =>
+                                    context.read<EnterBloc>().add(
+                                          LoginPasswordChanged(password: value),
+                                        ),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                cursorColor: Colors.black,
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 253, 242, 150),
+                                  filled: true,
+                                  hintText: "*******",
+                                  hintStyle: TextStyle(
+                                      color: Colors.grey, fontSize: 16.sp),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    borderRadius: BorderRadius.circular(
+                                      30.r,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 5.w, vertical: 10.h),
+                          child: Container(
+                            width: size.width / 1.9,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 246, 238, 161),
+                                borderRadius: BorderRadius.circular(20.r)),
+                            child: DropdownButton(
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 35.r,
+                                  color: Colors.orange,
+                                ),
+                                alignment: Alignment.center,
+                                dropdownColor: Colors.orange,
+                                underline: const SizedBox(
+                                  width: 0,
+                                  height: 0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.r),
+                                hint: Text(
+                                  (state.type.isEmpty) ? "select" : state.type,
+                                  style: TextStyle(
+                                      fontSize: 18.sp, color: Colors.black),
+                                ),
+                                items: clients,
+                                isExpanded: true,
+                                onChanged: (v) {
+                                  context.read<EnterBloc>().add(
+                                        TypeChanged(type: v),
+                                      );
+                                }),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<EnterBloc>().add(RegisterSubmitted());
-                      }
-                      print(state.username);
-                      print("=============");
-                      print(state.name);
-                      print("=============");
-                      print(state.number);
-                      print("=============");
-                      print(state.password);
-                      print("=============");
-                      print(state.type);
-                      print("=============");
-                      print(state.formStatus);
-                      if (state.formStatus is SubmissionSuccess) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MyPages()),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(size.width / 2.3, size.height / 15),
-                      backgroundColor: Colors.orange,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: Text(
-                      "next",
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      context.read<EnterBloc>().add(RegisterSubmitted());
+                    }
+                    print(state.username);
+                    print("=============");
+                    print(state.name);
+                    print("=============");
+                    print(state.number);
+                    print("=============");
+                    print(state.password);
+                    print("=============");
+                    print(state.type);
+                    print("=============");
+                    print(state.formStatus);
+                    if (state.formStatus is SubmissionSuccess) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MyPages()),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(size.width / 2.3, size.height / 15),
+                    backgroundColor: Colors.orange,
+                    shape: const StadiumBorder(),
                   ),
-                ],
-              ),
+                  child: Text(
+                    "next",
+                    style: TextStyle(
+                        fontSize: 20.sp,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

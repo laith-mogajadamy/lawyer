@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lawyer/screens/pages/filespage.dart';
 import 'package:lawyer/screens/pages/home.dart';
+import 'package:lawyer/screens/pages/massegespage.dart';
 import 'package:lawyer/screens/pages/personalprofile.dart';
 
 class MyPages extends StatefulWidget {
-  const MyPages({Key? key}) : super(key: key);
+  const MyPages({super.key});
 
   @override
   State<MyPages> createState() => _MyPagesState();
@@ -29,13 +29,13 @@ class _MyPagesState extends State<MyPages> {
     return WillPopScope(
       onWillPop: () async {
         if (select != 0) {
-          controller.jumpToPage(2);
           setState(() {
             select = 0;
+            controller.jumpToPage(select);
           });
           return false;
         } else {
-          SystemNavigator.pop();
+          // SystemNavigator.pop();
           return true;
         }
       },
@@ -44,11 +44,16 @@ class _MyPagesState extends State<MyPages> {
           child: PageView(
             controller: controller,
             physics: const NeverScrollableScrollPhysics(),
-            children: const [Home(), PersonalProfile()],
+            children: const [
+              Home(),
+              FilesPage(),
+              MassegesPage(),
+              PersonalProfile(),
+            ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "Home",
@@ -70,8 +75,8 @@ class _MyPagesState extends State<MyPages> {
           onTap: (index) {
             setState(() {
               select = index;
+              controller.jumpToPage(select);
             });
-            controller.jumpToPage(select);
           },
           selectedItemColor: Colors.orange,
           selectedFontSize: 16.sp,
