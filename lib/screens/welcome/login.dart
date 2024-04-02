@@ -70,7 +70,7 @@ class _LoginState extends State<Login> {
                                     : "Email or Username is too short",
                                 onChanged: (value) =>
                                     context.read<EnterBloc>().add(
-                                          LoginUsernameChanged(username: value),
+                                          LoginEmailChanged(email: value),
                                         ),
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 18.sp),
@@ -137,38 +137,70 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<EnterBloc>().add(LoginSubmitted());
-                    }
-
-                    print(state.username);
-                    print("=============");
-                    print(state.password);
-                    print(state.formStatus);
+                BlocListener<EnterBloc, EnterState>(
+                  listener: (context, state) {
                     if (state.formStatus is SubmissionSuccess) {
-                      Navigator.push(
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green,
+                          duration: const Duration(seconds: 2),
+                          content: Text(
+                            state.message,
+                            style:
+                                TextStyle(fontSize: 14.sp, color: Colors.white),
+                          ),
+                        ),
+                      );
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const MyPages()),
                       );
+                    } else if (state.formStatus is SubmissionFailed) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                          content: Text(
+                            state.message,
+                            style:
+                                TextStyle(fontSize: 14.sp, color: Colors.white),
+                          ),
+                        ),
+                      );
                     }
                   },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(size.width / 2.3, size.height / 15),
-                    backgroundColor: Colors.orange,
-                    shape: const StadiumBorder(),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<EnterBloc>().add(LoginSubmitted());
+                      }
+
+                      print(state.email);
+                      print("=============");
+                      print(state.name);
+                      print("=============");
+                      print(state.number);
+                      print("=============");
+                      print(state.password);
+                      print("=============");
+                      print(state.type);
+                      print("=============");
+                      print(state.formStatus);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(size.width / 2.3, size.height / 15),
+                      backgroundColor: Colors.orange,
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Text(
+                      "next",
+                      style: TextStyle(
+                          fontSize: 20.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  child: state.formStatus is FormSubmitting
-                      ? const Center(child: CircularProgressIndicator())
-                      : Text(
-                          "next",
-                          style: TextStyle(
-                              fontSize: 20.sp,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
                 ),
               ],
             ),

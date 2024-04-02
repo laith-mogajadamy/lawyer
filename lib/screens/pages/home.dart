@@ -1,6 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/models/lawyer.dart';
+import 'package:lawyer/screens/general-question/general-question.dart';
+import 'package:lawyer/screens/lawyers/lawyers.dart';
+import 'package:lawyer/screens/lawyers/lawyerscomponent.dart';
 import 'package:lawyer/screens/widgets/black20text.dart';
 import 'package:lawyer/screens/widgets/maintextform.dart';
 
@@ -51,17 +57,26 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               Column(
                 children: [
                   const Black16text(text: "LAWYER"),
-                  Container(
-                    width: size.width / 2.2,
-                    height: size.height / 6,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          "assets/images/lawyer.jpeg",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Lawyers()),
+                      );
+                    },
+                    child: Container(
+                      width: size.width / 2.2,
+                      height: size.height / 6,
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            "assets/images/lawyer.jpeg",
+                          ),
                         ),
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
-                      borderRadius: BorderRadius.circular(20.r),
                     ),
                   ),
                 ],
@@ -92,43 +107,33 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Black16text(text: "Typing Center"),
-              Container(
-                width: size.width / 1.1,
-                height: size.height / 6,
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      "assets/images/Typing Center.jpg",
+              const Black16text(text: "GENERAL QUESTIONS "),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const generalquestion()),
+                  );
+                },
+                child: Container(
+                  width: size.width / 1.1,
+                  height: size.height / 6,
+                  decoration: BoxDecoration(
+                    image: const DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        "assets/images/Typing Center.jpg",
+                      ),
                     ),
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
-                  borderRadius: BorderRadius.circular(20.r),
                 ),
               )
             ],
           ),
           SizedBox(
             height: 10.h,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Black16text(text: "ADS"),
-              Container(
-                width: size.width / 1.1,
-                height: size.height / 6,
-                decoration: BoxDecoration(
-                  image: const DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(
-                      "assets/images/ADS.jpg",
-                    ),
-                  ),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-              ),
-            ],
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),

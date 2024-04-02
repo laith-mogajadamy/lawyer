@@ -4,7 +4,7 @@ class Preferences {
   static SharedPreferences? preferences;
 
   static const String KEY_IS_First_Time = 'key_is_first_time';
-  static const String User = 'key_Brands';
+  static const String usertoken = 'key_Token';
   static init() async {
     preferences = await SharedPreferences.getInstance();
   }
@@ -22,16 +22,16 @@ class Preferences {
     }
   }
 
-  static void saveBrands(String userName) async {
-    preferences!.setString(User, userName);
+  static void savetoken(String token) async {
+    preferences!.setString(usertoken, token);
   }
 
-  static String? getBrands() {
-    String? userName = preferences!.getString(User);
-    if (userName == null) {
+  static String? getToken() {
+    String? token = preferences!.getString(usertoken);
+    if (token == null) {
       return '';
     } else {
-      return userName;
+      return token;
     }
   }
 }

@@ -2,13 +2,20 @@ part of 'enter_bloc.dart';
 
 abstract class EnterEvent extends Equatable {}
 
-class LoginUsernameChanged extends EnterEvent {
-  final String? username;
-
-  LoginUsernameChanged({this.username});
+class Getuser extends EnterEvent {
+  Getuser();
 
   @override
-  List<Object?> get props => [username];
+  List<Object?> get props => [];
+}
+
+class LoginEmailChanged extends EnterEvent {
+  final String? email;
+
+  LoginEmailChanged({this.email});
+
+  @override
+  List<Object?> get props => [email];
 }
 
 class LoginPasswordChanged extends EnterEvent {

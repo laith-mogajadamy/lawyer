@@ -5,6 +5,7 @@ import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/enter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/screens/welcome/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EnterBloc(),
+      create: (context) => EnterBloc()..add(Getuser()),
       child: ScreenUtilInit(
           designSize: const Size(393, 786),
           minTextAdapt: true,
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                     ColorScheme.fromSeed(seedColor: AppColor.apporange),
                 useMaterial3: true,
               ),
-              home: const Enter(),
+              home: const Splash(),
             );
           }),
     );

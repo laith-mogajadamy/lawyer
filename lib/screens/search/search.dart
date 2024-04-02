@@ -248,15 +248,16 @@ class _SearchState extends State<Search> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Legalconsultantprofile()),
-                                );
-                              },
-                              child: const Lawyercard());
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) =>
+                              //           const Legalconsultantprofile()),
+                              // );
+                            },
+                            // child: const Lawyerscard(lawyer: ,),
+                          );
                         },
                       ),
                     )

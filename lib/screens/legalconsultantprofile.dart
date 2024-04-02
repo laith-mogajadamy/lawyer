@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/chatpage.dart';
 import 'package:lawyer/screens/consultation.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 
 class Legalconsultantprofile extends StatelessWidget {
-  const Legalconsultantprofile({super.key});
+  final Lawyer lawyer;
+
+  const Legalconsultantprofile({
+    super.key,
+    required this.lawyer,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +24,12 @@ class Legalconsultantprofile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Icon(
-                size: 100.r,
-                Icons.person,
-                color: AppColor.apporange,
+              CircleAvatar(
+                radius: 75.r,
+                backgroundImage: NetworkImage(lawyer.image),
               ),
               Text(
-                "LEGAL CONSULTANT'S NAME",
+                lawyer.name,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 24.sp,
@@ -42,7 +47,7 @@ class Legalconsultantprofile extends StatelessWidget {
                     size: 10.r,
                   ),
                   Text(
-                    "  LOCATION",
+                    " location: ${lawyer.location}",
                     style: TextStyle(
                       color: AppColor.apporange,
                       fontSize: 14.sp,
@@ -52,7 +57,7 @@ class Legalconsultantprofile extends StatelessWidget {
                 ],
               ),
               Text(
-                "45 CASES WON 23 FILES CLOSED",
+                " closedConsultation: ${lawyer.closedConsultation}",
                 style: TextStyle(
                   color: AppColor.apporange,
                   fontSize: 18.sp,
@@ -60,7 +65,7 @@ class Legalconsultantprofile extends StatelessWidget {
                 ),
               ),
               Text(
-                "CONSULTATION 500AED",
+                "consultationPrice:${lawyer.consultationPrice}",
                 style: TextStyle(
                   color: AppColor.apporange,
                   fontSize: 18.sp,
