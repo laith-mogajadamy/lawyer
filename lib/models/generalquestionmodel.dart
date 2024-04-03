@@ -9,6 +9,7 @@ class GeneralquestionModel extends Generalquestion {
     required super.date,
     required super.isReply,
     required super.userRequest,
+    required super.replies,
   });
 
   factory GeneralquestionModel.fromJson(Map<String, dynamic> json) =>
@@ -18,6 +19,9 @@ class GeneralquestionModel extends Generalquestion {
         date: json['date'] ?? '',
         isReply: json['isReply'] ?? 0,
         userRequest: LawyerModel.fromJson(json['userRequest']),
+        replies: (json['replies'] as List)
+            .map((data) => RepliesModel.fromJson(data))
+            .toList(),
       );
 }
 

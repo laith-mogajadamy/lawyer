@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
 
@@ -8,17 +9,19 @@ class Generalquestion extends Equatable {
   final String date;
   final int isReply;
   final LawyerModel userRequest;
-
+  final List<RepliesModel> replies;
   const Generalquestion({
     required this.id,
     required this.question,
     required this.date,
     required this.isReply,
     required this.userRequest,
+    required this.replies,
   });
 
   @override
-  List<Object?> get props => [id, question, date, isReply, userRequest];
+  List<Object?> get props =>
+      [id, question, date, isReply, userRequest, replies];
 }
 
 class Replies extends Equatable {

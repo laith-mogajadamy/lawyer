@@ -11,10 +11,9 @@ class generalquestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 30.h),
-        child: const Column(
+    return const Scaffold(
+      body: SafeArea(
+        child: Column(
           children: [
             Orange22text(text: "General Questions"),
             Expanded(child: Generalquestioncomponent()),

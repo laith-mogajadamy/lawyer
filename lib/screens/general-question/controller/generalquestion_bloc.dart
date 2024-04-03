@@ -16,7 +16,7 @@ class GeneralquestionBloc
     extends Bloc<GeneralquestionEvent, GeneralquestionState> {
   GeneralquestionBloc() : super(const GeneralquestionState()) {
     on<GetGeneralquestion>((event, emit) async {
-      print("Getlawyers");
+      print("Getgeneralquestion");
       String? ptoken = Preferences.getToken();
       if (ptoken!.isNotEmpty) {
         emit(state.copyWith(
