@@ -7,6 +7,8 @@ class EnterState extends Equatable {
   //
   final String token;
   final String email;
+  final String image;
+
   bool get isValidUsername => email.length > 10;
   final String password;
   bool get isValidPassword => password.length > 6;
@@ -22,6 +24,7 @@ class EnterState extends Equatable {
     this.islogedin = '',
     this.token = '',
     this.email = '',
+    this.image = '',
     this.password = '',
     this.name = '',
     this.number = '',
@@ -35,6 +38,7 @@ class EnterState extends Equatable {
     User? user,
     String? token,
     String? email,
+    String? image,
     String? password,
     String? name,
     String? number,
@@ -47,6 +51,7 @@ class EnterState extends Equatable {
       user: user ?? this.user,
       token: token ?? this.token,
       email: email ?? this.email,
+      image: image ?? this.image,
       password: password ?? this.password,
       name: name ?? this.name,
       number: number ?? this.number,

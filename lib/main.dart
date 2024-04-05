@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
-import 'package:lawyer/screens/welcome/enter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/screens/welcome/splash.dart';
 

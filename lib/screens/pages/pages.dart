@@ -90,6 +90,5 @@ class _MyPagesState extends State<MyPages> {
     );
   }
 
-  @override
   bool get wantKeepAlive => true;
 }

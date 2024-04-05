@@ -3,21 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
-import 'package:lawyer/models/general-question.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/black22text.dart';
-import 'package:lawyer/screens/widgets/replaycard.dart';
 
-class Generalquestionpage extends StatefulWidget {
-  final Generalquestion generalquestion;
-  const Generalquestionpage({super.key, required this.generalquestion});
+class AddGeneralquestionpage extends StatefulWidget {
+  const AddGeneralquestionpage({
+    super.key,
+  });
 
   @override
-  State<Generalquestionpage> createState() => _GeneralquestionpageState();
+  State<AddGeneralquestionpage> createState() => _AddGeneralquestionpageState();
 }
 
-class _GeneralquestionpageState extends State<Generalquestionpage> {
+class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
   TextEditingController controller = TextEditingController();
   @override
   void dispose() {
@@ -41,36 +38,15 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                 children: [
                   Center(
                     child: Text(
-                      "General Question",
+                      "General \nQuestion",
                       style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.apporange),
                     ),
                   ),
-                  Center(
-                      child: Black18text(
-                          text: widget.generalquestion.userRequest.name)),
                   SizedBox(
                     height: 10.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: SizedBox(
-                      width: size.width,
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: AppColor.appgray,
-                              borderRadius: BorderRadius.circular(20.r),
-                              border:
-                                  Border.all(color: Colors.black, width: 1.r)),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 10.h),
-                            child: Black22text(
-                                text: widget.generalquestion.question),
-                          )),
-                    ),
                   ),
                   Container(
                     margin:
@@ -80,10 +56,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                     child: Form(
                       child: TextFormField(
                         controller: controller,
-                        onChanged: (string) {
-                          // bloc.add(GetSearchProductsEvent(
-                          //     pageNum: 1, search: string, perPage: 100));
-                        },
+                        onChanged: (string) {},
                         minLines: 20,
                         maxLines: 30,
                         enabled: true,
@@ -92,7 +65,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          hintText: "TYPE YOUR replay",
+                          hintText: "Type your GENERAL question HERE",
                           hintStyle: TextStyle(
                               fontSize: 24.sp,
                               color: AppColor.apporange,
@@ -119,7 +92,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                     width: size.width,
                     child: Text(
                       textAlign: TextAlign.center,
-                      "by answering more general question you will get higher chances to be at the top of the search result",
+                      "YOUR QUESTION MAY OR MAY NOT BE ANSWERED",
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColor.apporange,
@@ -170,9 +143,8 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                         onPressed: () async {
                           if (controller.text.isNotEmpty) {
                             context.read<GeneralquestionBloc>().add(
-                                  ReplayGeneralquestion(
-                                    id: widget.generalquestion.id,
-                                    replay: controller.text.trim(),
+                                  AddGeneralquestion(
+                                    question: controller.text.trim(),
                                   ),
                                 );
                           }
@@ -197,27 +169,6 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Divider(
-                    color: Colors.black,
-                    thickness: 2.h,
-                  ),
-                  const Center(child: Black22text(text: "replayes")),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: widget.generalquestion.replies.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Replaycard(
-                        replie: widget.generalquestion.replies[index],
-                      );
-                    },
                   ),
                 ],
               ),

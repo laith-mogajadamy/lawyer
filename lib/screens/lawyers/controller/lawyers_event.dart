@@ -8,3 +8,17 @@ class Getlawyers extends LawyersEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetlegalConsultant extends LawyersEvent {
+  GetlegalConsultant();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GettypingCenter extends LawyersEvent {
+  GettypingCenter();
+
+  @override
+  List<Object?> get props => [];
+}

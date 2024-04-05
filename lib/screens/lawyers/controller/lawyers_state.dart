@@ -7,6 +7,10 @@ class LawyersState extends Equatable {
   final RequestState lawyersState;
   final String lawyersMessage;
   //
+  final List<Lawyer> legalconsultant;
+  //
+  final List<Lawyer> typingCenters;
+
   const LawyersState({
     this.token = '',
     //
@@ -14,6 +18,9 @@ class LawyersState extends Equatable {
     this.lawyersState = RequestState.loading,
     this.lawyersMessage = '',
     //
+    this.legalconsultant = const [],
+    //
+    this.typingCenters = const [],
   });
 
   LawyersState copyWith({
@@ -22,6 +29,10 @@ class LawyersState extends Equatable {
     final List<Lawyer>? lawyers,
     final RequestState? lawyersState,
     final String? lawyersMessage,
+    //
+    final List<Lawyer>? legalconsultant,
+    //
+    final List<Lawyer>? typingCenters,
   }) {
     return LawyersState(
       token: token ?? this.token,
@@ -31,6 +42,9 @@ class LawyersState extends Equatable {
       lawyersState: lawyersState ?? this.lawyersState,
       lawyersMessage: lawyersMessage ?? this.lawyersMessage,
       //
+      legalconsultant: legalconsultant ?? this.legalconsultant,
+      //
+      typingCenters: typingCenters ?? this.typingCenters,
     );
   }
 
@@ -42,5 +56,8 @@ class LawyersState extends Equatable {
         lawyersState,
         lawyersMessage,
         //
+        legalconsultant,
+        //
+        typingCenters
       ];
 }

@@ -32,7 +32,7 @@ class LawyersBloc extends Bloc<LawyersEvent, LawyersState> {
         if (response.statusCode == 200) {
           emit(state.copyWith(
             lawyers: List<LawyerModel>.from(
-              (responsemap as List).map(
+              (responsemap['lawyers'] as List).map(
                 (e) => LawyerModel.fromJson(e),
               ),
             ),
@@ -40,6 +40,83 @@ class LawyersBloc extends Bloc<LawyersEvent, LawyersState> {
           ));
           print("state.lawyers=");
           print(state.lawyers);
+        } else {
+          emit(state.copyWith(
+            lawyersState: RequestState.error,
+            lawyersMessage: responsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          lawyersState: RequestState.error,
+          lawyersMessage: "Unauthenticated",
+        ));
+      }
+    });
+
+    on<GetlegalConsultant>((event, emit) async {
+      print("GetlegalConsultant");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          lawyersState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response response = await Lawyersreqwest.getlawyers(state.token);
+        var responsemap = jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+            legalconsultant: List<LawyerModel>.from(
+              (responsemap['legalConsultant'] as List).map(
+                (e) => LawyerModel.fromJson(e),
+              ),
+            ),
+            lawyersState: RequestState.loaded,
+          ));
+          print("state.legalconsultant=");
+          print(state.legalconsultant);
+        } else {
+          emit(state.copyWith(
+            lawyersState: RequestState.error,
+            lawyersMessage: responsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          lawyersState: RequestState.error,
+          lawyersMessage: "Unauthenticated",
+        ));
+      }
+    });
+    on<GettypingCenter>((event, emit) async {
+      print("GettypingCenter");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          lawyersState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response response = await Lawyersreqwest.getlawyers(state.token);
+        var responsemap = jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+            typingCenters: List<LawyerModel>.from(
+              (responsemap['typingCenter'] as List).map(
+                (e) => LawyerModel.fromJson(e),
+              ),
+            ),
+            lawyersState: RequestState.loaded,
+          ));
+          print("state.typingCenters=");
+          print(state.typingCenters);
         } else {
           emit(state.copyWith(
             lawyersState: RequestState.error,

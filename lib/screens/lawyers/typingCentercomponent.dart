@@ -2,28 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/enums.dart';
-import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
-import 'package:lawyer/screens/widgets/generalquestioncard.dart';
+import 'package:lawyer/screens/lawyers/controller/lawyers_bloc.dart';
+import 'package:lawyer/screens/widgets/lawyercard.dart';
 import 'package:lottie/lottie.dart';
 
-class Generalquestioncomponent extends StatefulWidget {
-  const Generalquestioncomponent({super.key});
-
-  @override
-  State<Generalquestioncomponent> createState() => _FilesPageState();
-}
-
-class _FilesPageState extends State<Generalquestioncomponent> {
-  TextEditingController controller = TextEditingController();
+class TypingCentercomponent extends StatelessWidget {
+  const TypingCentercomponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => GeneralquestionBloc()..add(GetGeneralquestion()),
-      child: BlocBuilder<GeneralquestionBloc, GeneralquestionState>(
+      create: (context) => LawyersBloc()..add(GettypingCenter()),
+      child: BlocBuilder<LawyersBloc, LawyersState>(
         builder: (context, state) {
-          switch (state.generalquestionsState) {
+          switch (state.lawyersState) {
             case RequestState.loading:
               return SizedBox(
                 height: size.height / 1.5,
@@ -36,19 +29,27 @@ class _FilesPageState extends State<Generalquestioncomponent> {
                 ),
               );
             case RequestState.loaded:
-              return ListView.builder(
-                itemCount: state.generalquestions.length,
-                itemBuilder: (context, index) {
-                  return Generalquestioncard(
-                    genralqsttion: state.generalquestions[index],
-                  );
-                },
+              return Column(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      child: ListView.builder(
+                        itemCount: state.typingCenters.length,
+                        itemBuilder: (context, index) {
+                          return Lawyerscard(
+                            lawyer: state.typingCenters[index],
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                ],
               );
             case RequestState.error:
               return SizedBox(
                 height: 280.h,
                 child: Center(
-                  child: Text(state.generalquestionMessage),
+                  child: Text(state.lawyersMessage),
                 ),
               );
           }

@@ -148,7 +148,9 @@ class Legalconsultantprofile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Consultation(),
+                                builder: (context) => Consultation(
+                                  lawyer: lawyer,
+                                ),
                               ),
                             );
                           },

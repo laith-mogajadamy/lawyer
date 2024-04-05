@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:http/http.dart' as http;
-import 'package:lawyer/core/services/auth.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
-import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -276,7 +271,7 @@ class _RegisterState extends State<Register> {
                                   hint: Text(
                                     (state.type.isEmpty)
                                         ? "select"
-                                        : state.type.toString(),
+                                        : types[int.parse(state.type) - 1],
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black),
                                   ),

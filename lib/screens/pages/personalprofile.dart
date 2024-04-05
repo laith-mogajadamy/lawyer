@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/screens/addgeneralquestion.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
+
 class PersonalProfile extends StatelessWidget {
   const PersonalProfile({super.key});
 
@@ -17,11 +20,16 @@ class PersonalProfile extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Column(
               children: [
-                Icon(
-                  size: 100.r,
-                  Icons.person,
-                  color: AppColor.apporange,
-                ),
+                (state.image.isEmpty)
+                    ? Icon(
+                        size: 100.r,
+                        Icons.person,
+                        color: AppColor.apporange,
+                      )
+                    : CircleAvatar(
+                        radius: 75.r,
+                        backgroundImage: NetworkImage(state.image),
+                      ),
                 Text(
                   (state.name.isNotEmpty) ? state.name : "CLIENT'S NAME",
                   style: TextStyle(
@@ -138,24 +146,33 @@ class PersonalProfile extends StatelessWidget {
                     color: AppColor.appgray,
                   ),
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.quiz,
-                      color: AppColor.apporange,
-                      size: size.width / 8,
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Text(
-                      "POST A GENERAL QUESTION",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddGeneralquestionpage()),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.quiz,
+                        color: AppColor.apporange,
+                        size: size.width / 8,
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Text(
+                        "POST A GENERAL QUESTION",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50.w),

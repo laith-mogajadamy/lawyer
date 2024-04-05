@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/screens/lawyers/lawyerscomponent.dart';
+import 'package:lawyer/screens/lawyers/legalConsultantcomponent.dart';
 import 'package:lawyer/screens/widgets/maintextform.dart';
+import 'package:lawyer/screens/widgets/orange22text.dart';
 
-class Lawyers extends StatelessWidget {
-  const Lawyers({super.key});
+class LegalConsultantpage extends StatelessWidget {
+  const LegalConsultantpage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,11 @@ class Lawyers extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.only(top: 30.h),
         child: const Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             maintextform(),
-            Expanded(child: Lawyerscomponent()),
+            Orange22text(text: "Legal Consultant"),
+            Expanded(child: Legalconsultantcomponent()),
           ],
         ),
       ),

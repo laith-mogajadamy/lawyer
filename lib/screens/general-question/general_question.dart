@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/screens/general-question/generalquestioncomponent.dart';
-import 'package:lawyer/screens/lawyers/lawyerscomponent.dart';
-import 'package:lawyer/screens/widgets/maintextform.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 
-class generalquestion extends StatelessWidget {
-  const generalquestion({super.key});
+class Generalquestion extends StatelessWidget {
+  const Generalquestion({super.key});
 
   @override
   Widget build(BuildContext context) {

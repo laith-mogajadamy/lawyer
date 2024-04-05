@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
-import 'package:lawyer/models/lawyer.dart';
-import 'package:lawyer/screens/general-question/general-question.dart';
-import 'package:lawyer/screens/lawyers/lawyers.dart';
-import 'package:lawyer/screens/lawyers/lawyerscomponent.dart';
+import 'package:lawyer/screens/general-question/general_question.dart';
+import 'package:lawyer/screens/lawyers/lawyerspage.dart';
+import 'package:lawyer/screens/lawyers/legalConsultantpage.dart';
+import 'package:lawyer/screens/lawyers/typingCenterpage.dart';
 import 'package:lawyer/screens/widgets/black20text.dart';
 import 'package:lawyer/screens/widgets/maintextform.dart';
 
@@ -62,7 +61,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Lawyers()),
+                            builder: (context) => const Lawyerspage()),
                       );
                     },
                     child: Container(
@@ -84,20 +83,60 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               Column(
                 children: [
                   const Black16text(text: "LEGAL CONSULTANT"),
-                  Container(
-                    width: size.width / 2.2,
-                    height: size.height / 6,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          "assets/images/LEGAL CONSULTANT.jpeg",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LegalConsultantpage()),
+                      );
+                    },
+                    child: Container(
+                      width: size.width / 2.2,
+                      height: size.height / 6,
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            "assets/images/LEGAL CONSULTANT.jpeg",
+                          ),
                         ),
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
-                      borderRadius: BorderRadius.circular(20.r),
                     ),
                   )
                 ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 10.h,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Black16text(text: "typing Centers "),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TypingCenterpage()),
+                  );
+                },
+                child: Container(
+                  width: size.width / 1.1,
+                  height: size.height / 6,
+                  decoration: BoxDecoration(
+                    image: const DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        "assets/images/Typing Center.jpg",
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                ),
               )
             ],
           ),
@@ -113,7 +152,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const generalquestion()),
+                        builder: (context) => const Generalquestion()),
                   );
                 },
                 child: Container(

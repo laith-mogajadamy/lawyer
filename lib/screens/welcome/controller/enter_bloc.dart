@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lawyer/core/services/auth.dart';
-import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/utils/prefrences.dart';
@@ -33,6 +31,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               name: responsemap["user"]["name"],
               email: responsemap["user"]["email"],
               number: responsemap["user"]["phone"],
+              image: responsemap["user"]["image"],
               islogedin: "true"));
           print(state.name);
           print(state.email);
@@ -95,12 +94,15 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           state.copyWith(
             name: responsemap["name"],
             number: responsemap["phone"],
+            image: responsemap["image"],
             formStatus: SubmissionSuccess(),
             message: " log in successed",
           ),
         );
         Preferences.savetoken(responsemap["access_token"]);
         print("++++++++++++++");
+        print("image:${state.image}");
+
         print("token:${responsemap["access_token"]}");
         print("++++++++++++++");
         print(state.formStatus);

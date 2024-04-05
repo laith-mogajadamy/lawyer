@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 class Message extends Equatable {
   final bool isMe;
   final String text;
-
-  const Message({required this.isMe, required this.text});
+  final String type;
+  const Message({required this.isMe, required this.text, required this.type});
 
   @override
-  List<Object?> get props => [isMe, text];
+  List<Object?> get props => [isMe, text, type];
 }
