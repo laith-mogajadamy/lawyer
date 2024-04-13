@@ -9,6 +9,60 @@ class Getuser extends EnterEvent {
   List<Object?> get props => [];
 }
 
+class ImageChange extends EnterEvent {
+  final File? fimage;
+
+  ImageChange({this.fimage});
+
+  @override
+  List<Object?> get props => [fimage];
+}
+
+class Bottomshow extends EnterEvent {
+  final bool? bottom;
+
+  Bottomshow({this.bottom});
+
+  @override
+  List<Object?> get props => [bottom];
+}
+
+class Profiledit extends EnterEvent {
+  final File? fimage;
+  final String? name;
+  final String? email;
+  final String? number;
+  final String? birth;
+  final int? location;
+  final int? gender;
+  final String? consultationPrice;
+  final List<File>? certification;
+  Profiledit({
+    this.fimage,
+    this.name,
+    this.email,
+    this.number,
+    this.birth,
+    this.location,
+    this.gender,
+    this.consultationPrice,
+    this.certification,
+  });
+
+  @override
+  List<Object?> get props => [
+        fimage,
+        name,
+        email,
+        number,
+        birth,
+        location,
+        gender,
+        consultationPrice,
+        certification,
+      ];
+}
+
 class LoginEmailChanged extends EnterEvent {
   final String? email;
 
@@ -57,6 +111,14 @@ class TypeChanged extends EnterEvent {
 class LoginSubmitted extends EnterEvent {
   @override
   List<Object?> get props => [];
+}
+
+class Logout extends EnterEvent {
+  final String? token;
+  Logout({this.token});
+
+  @override
+  List<Object?> get props => [token];
 }
 
 class RegisterSubmitted extends EnterEvent {

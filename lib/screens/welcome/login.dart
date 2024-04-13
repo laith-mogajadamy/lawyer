@@ -5,6 +5,7 @@ import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
+import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 
 class Login extends StatefulWidget {
@@ -15,7 +16,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController email_username = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -25,7 +26,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
-    email_username.dispose();
+    email.dispose();
     password.dispose();
     super.dispose();
   }
@@ -55,83 +56,29 @@ class _LoginState extends State<Login> {
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox(
-                                child: Black22text(text: " Username")),
-                            SizedBox(
-                              width: size.width / 2,
-                              child: TextFormField(
-                                controller: email_username,
-                                validator: (value) => state.isValidUsername
-                                    ? null
-                                    : "Email or Username is too short",
-                                onChanged: (value) =>
-                                    context.read<EnterBloc>().add(
-                                          LoginEmailChanged(email: value),
-                                        ),
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18.sp),
-                                cursorColor: Colors.black,
-                                decoration: InputDecoration(
-                                  fillColor:
-                                      const Color.fromARGB(255, 253, 242, 150),
-                                  filled: true,
-                                  hintText: "Client@gmail.com",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(
-                                      30.r,
-                                    ),
-                                  ),
+                        InfoInput(
+                            name: "email",
+                            hint: "Client@gmail.com",
+                            validator: (value) => state.isValidEmail
+                                ? null
+                                : "Email or Username is too short",
+                            onchange: (value) => context.read<EnterBloc>().add(
+                                  LoginEmailChanged(email: value),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
+                            controller: email),
                         SizedBox(
                           height: 30.h,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox(
-                                child: Black22text(text: "Password")),
-                            SizedBox(
-                              width: size.width / 2,
-                              child: TextFormField(
-                                controller: password,
-                                validator: (value) => state.isValidPassword
-                                    ? null
-                                    : 'Password is too short',
-                                onChanged: (value) =>
-                                    context.read<EnterBloc>().add(
-                                          LoginPasswordChanged(password: value),
-                                        ),
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18.sp),
-                                cursorColor: Colors.black,
-                                decoration: InputDecoration(
-                                  fillColor:
-                                      const Color.fromARGB(255, 253, 242, 150),
-                                  filled: true,
-                                  hintText: "*******",
-                                  hintStyle: TextStyle(
-                                      color: Colors.grey, fontSize: 16.sp),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: BorderRadius.circular(
-                                      30.r,
-                                    ),
-                                  ),
+                        InfoInput(
+                            name: "Password",
+                            hint: "*******",
+                            validator: (value) => state.isValidPassword
+                                ? null
+                                : 'Password is too short',
+                            onchange: (value) => context.read<EnterBloc>().add(
+                                  LoginPasswordChanged(password: value),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
+                            controller: password),
                       ],
                     ),
                   ),

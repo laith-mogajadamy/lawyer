@@ -1,3 +1,5 @@
+import 'package:lawyer/models/consultationmodel.dart';
+import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/models/lawyer.dart';
 
 class LawyerModel extends Lawyer {
@@ -17,6 +19,8 @@ class LawyerModel extends Lawyer {
     required super.image,
     required super.certification,
     required super.practices,
+    required super.consultations,
+    required super.generalquestions,
   });
 
   factory LawyerModel.fromJson(Map<String, dynamic> json) => LawyerModel(
@@ -24,9 +28,9 @@ class LawyerModel extends Lawyer {
         name: json['name'] ?? '',
         email: json['email'] ?? '',
         birth: json['birth'] ?? '',
-        gender: json['gender'] ?? '',
+        gender: json['gender'] ?? 0,
         phone: json['phone'] ?? '',
-        consultationPrice: json['consultationPrice'] ?? '',
+        consultationPrice: json['consultationPrice'] ?? 0,
         isactive: json['isactive'] ?? 1,
         location: json['location'] ?? 1,
         yearsOfPractice: json['yearsOfPractice'] ?? '',
@@ -35,5 +39,15 @@ class LawyerModel extends Lawyer {
         image: json['image'] ?? '',
         certification: json['certification'] ?? [],
         practices: json['practices'] ?? [],
+        consultations: List<ConsultationsModel>.from(
+          ((json['consultations'] ?? []) as List).map(
+            (e) => ConsultationsModel.fromJson(e),
+          ),
+        ),
+        generalquestions: List<GeneralquestionModel>.from(
+          ((json['generalQuestions'] ?? []) as List).map(
+            (e) => GeneralquestionModel.fromJson(e),
+          ),
+        ),
       );
 }

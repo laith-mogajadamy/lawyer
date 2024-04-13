@@ -21,7 +21,7 @@ class ConsultationBloc extends Bloc<ConsultationEvent, ConsultationState> {
             token: ptoken, consultationState: RequestState.loading));
         print("state.token");
         print(state.token);
-        http.Response response = await AddConsultation.addconsultation(
+        http.Response response = await ConsultationRequest.addconsultation(
             state.token, event.id, event.title!, event.description!);
         var responsemap = await jsonDecode(response.body);
         print("responsemap=");
@@ -32,14 +32,44 @@ class ConsultationBloc extends Bloc<ConsultationEvent, ConsultationState> {
               consultationState: RequestState.loaded));
         } else {
           emit(state.copyWith(
-            consultationState: RequestState.error,
             consultationMessage: responsemap["message"],
+            consultationState: RequestState.error,
           ));
         }
       } else {
         emit(state.copyWith(
-          consultationState: RequestState.error,
           consultationMessage: "Unauthenticated",
+          consultationState: RequestState.error,
+        ));
+      }
+    });
+    on<Answerconsultation>((event, emit) async {
+      print("Answerconsultation");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+            token: ptoken, consultationState: RequestState.loading));
+        print("state.token");
+        print(state.token);
+        http.Response response = await ConsultationRequest.answerconsultation(
+            state.token, event.id, event.answer);
+        var responsemap = await jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+              consultationMessage: "consultation answered successfully ",
+              consultationState: RequestState.loaded));
+        } else {
+          emit(state.copyWith(
+            consultationMessage: responsemap["message"],
+            consultationState: RequestState.error,
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          consultationMessage: "Unauthenticated",
+          consultationState: RequestState.error,
         ));
       }
     });

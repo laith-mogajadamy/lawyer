@@ -12,3 +12,15 @@ class Addconsultation extends ConsultationEvent {
   @override
   List<Object?> get props => [id, title, description];
 }
+
+class Answerconsultation extends ConsultationEvent {
+  final int id;
+  final String answer;
+  Answerconsultation({
+    required this.id,
+    required this.answer,
+  });
+
+  @override
+  List<Object?> get props => [id, answer];
+}

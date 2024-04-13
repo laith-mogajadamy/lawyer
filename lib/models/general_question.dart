@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:lawyer/models/generalquestionmodel.dart';
-import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
 
 class Generalquestion extends Equatable {

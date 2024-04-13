@@ -1,22 +1,29 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/core/services/pdf_api.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 
 class ChatBubble extends StatelessWidget {
   final bool isMe;
   final String message;
   final String type;
-
+  final File? file;
   const ChatBubble(
       {super.key,
       required this.message,
       required this.isMe,
-      required this.type});
+      required this.type,
+      required this.file});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (type == "pdf") {}
+        if (type == "pdf" && file != null) {
+          PDFApi().openPDF(context, file!);
+        }
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
@@ -69,6 +76,13 @@ class ChatBubble extends StatelessWidget {
                         message,
                         textAlign: isMe ? TextAlign.end : TextAlign.start,
                         style: TextStyle(
+                          fontWeight: (type == "pdf")
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                          decoration:
+                              (type == "pdf") ? TextDecoration.underline : null,
+                          decorationThickness: 2,
+                          decorationColor: AppColor.apporange,
                           color: isMe ? Colors.white : Colors.grey,
                         ),
                       )

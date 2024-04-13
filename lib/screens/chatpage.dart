@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/massegemodel.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
@@ -116,6 +115,7 @@ class _ChatPageState extends State<ChatPage> {
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: ChatBubble(
+                      file: message.file,
                       type: message.type,
                       message: message.text,
                       isMe: message.isMe,
@@ -179,7 +179,8 @@ class _ChatPageState extends State<ChatPage> {
   void _handleSendMessage() {
     String messageText = messageController.text.trim();
     if (messageText.isNotEmpty) {
-      Message newMessage = Message(isMe: true, text: messageText, type: "text");
+      Message newMessage =
+          Message(isMe: true, text: messageText, type: "text", file: null);
       setState(() {
         messages.insert(0, newMessage);
       });
@@ -191,7 +192,7 @@ class _ChatPageState extends State<ChatPage> {
   Future uploadpdf() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc'],
+      allowedExtensions: ['pdf'],
     );
     print("result= $result");
     if (result != null) {
@@ -201,7 +202,8 @@ class _ChatPageState extends State<ChatPage> {
       print("filename= $filename");
       String path = file.path;
       print("path= $path");
-      Message newMessage = Message(isMe: true, text: filename, type: "pdf");
+      Message newMessage =
+          Message(isMe: true, text: filename, type: "pdf", file: file);
       setState(() {
         messages.insert(0, newMessage);
       });

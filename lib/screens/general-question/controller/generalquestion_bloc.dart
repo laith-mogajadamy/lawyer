@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
-import 'package:lawyer/models/general-question.dart';
+import 'package:lawyer/models/general_question.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/screens/general-question/data/general_question_reqwest.dart';

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/addgeneralquestion.dart';
+import 'package:lawyer/screens/consultation/user_consultations.dart';
+import 'package:lawyer/screens/general-question/user_general_question.dart';
+import 'package:lawyer/screens/profile_edit.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
+import 'package:lawyer/screens/welcome/enter.dart';
+import 'package:lawyer/screens/widgets/graydivider.dart';
+import 'package:lawyer/screens/widgets/profile_row.dart';
 
 class PersonalProfile extends StatelessWidget {
   const PersonalProfile({super.key});
@@ -71,113 +77,100 @@ class PersonalProfile extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.mail_rounded,
-                      color: AppColor.apporange,
-                      size: size.width / 8,
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Text(
-                      "MESSAGES",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                ProfileRow(
+                    text: "MESSAGES", icon: Icons.mail_rounded, ontap: () {}),
+                const Graydivider(),
+                ProfileRow(text: "FILES", icon: Icons.folder, ontap: () {}),
+                const Graydivider(),
+                ProfileRow(
+                    text: "CONSULTATIONS",
+                    icon: Icons.file_copy_outlined,
+                    ontap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserConsultations()),
+                      );
+                    }),
+                const Graydivider(),
+                ProfileRow(
+                  text: "GENERALQUESTIONS",
+                  icon: Icons.quiz_rounded,
+                  ontap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const UserGeneralquestion()),
+                    );
+                  },
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50.w),
-                  child: const Divider(
-                    color: AppColor.appgray,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.folder,
-                      color: AppColor.apporange,
-                      size: size.width / 8,
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Text(
-                      "FILES",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50.w),
-                  child: const Divider(
-                    color: AppColor.appgray,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.file_copy_outlined,
-                      color: AppColor.apporange,
-                      size: size.width / 8,
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Text(
-                      "CONSULTATIONS",
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50.w),
-                  child: const Divider(
-                    color: AppColor.appgray,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
+                const Graydivider(),
+                ProfileRow(
+                  text: "POST A GENERAL QUESTION",
+                  icon: Icons.quiz,
+                  ontap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const AddGeneralquestionpage()),
                     );
                   },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.quiz,
-                        color: AppColor.apporange,
-                        size: size.width / 8,
-                      ),
-                      SizedBox(
-                        width: 20.w,
-                      ),
-                      Text(
-                        "POST A GENERAL QUESTION",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50.w),
-                  child: const Divider(
-                    color: AppColor.appgray,
+                const Graydivider(),
+                ProfileRow(
+                  text: "Profile Edit",
+                  icon: Icons.edit_note_rounded,
+                  ontap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfileEdit()),
+                    );
+                  },
+                ),
+                const Graydivider(),
+                BlocListener<EnterBloc, EnterState>(
+                  listenWhen: (previous, current) {
+                    return previous.formStatus != current.formStatus;
+                  },
+                  listener: (context, state) {
+                    if (state.formStatus is SubmissionSuccess) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green,
+                          duration: const Duration(seconds: 2),
+                          content: Text(
+                            state.message,
+                            style:
+                                TextStyle(fontSize: 14.sp, color: Colors.white),
+                          ),
+                        ),
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Enter()),
+                      );
+                    } else if (state.formStatus is SubmissionFailed) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 2),
+                          content: Text(
+                            state.message,
+                            style:
+                                TextStyle(fontSize: 14.sp, color: Colors.white),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: ProfileRow(
+                    text: "LOG OUT",
+                    icon: Icons.exit_to_app_rounded,
+                    ontap: () {
+                      context.read<EnterBloc>().add(
+                            Logout(token: state.token),
+                          );
+                    },
                   ),
                 ),
               ],

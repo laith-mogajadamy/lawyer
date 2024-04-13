@@ -77,7 +77,7 @@ class Lawyerscard extends StatelessWidget {
                         Row(
                           children: [
                             const Black18text(text: "consultationPrice: "),
-                            Black18text(text: lawyer.consultationPrice!),
+                            Black18text(text: "${lawyer.consultationPrice!}"),
                           ],
                         ),
                       ],

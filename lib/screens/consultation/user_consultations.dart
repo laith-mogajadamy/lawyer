@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lawyer/screens/general-question/general_questioncomponent.dart';
+import 'package:lawyer/screens/consultation/user_consultations_component.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 
-class Generalquestion extends StatelessWidget {
-  const Generalquestion({super.key});
+class UserConsultations extends StatelessWidget {
+  const UserConsultations({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +11,8 @@ class Generalquestion extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Orange22text(text: "General Questions"),
-            Expanded(child: Generalquestioncomponent()),
+            Orange22text(text: " My consultations"),
+            Expanded(child: UserConsultationscomponent()),
           ],
         ),
       ),

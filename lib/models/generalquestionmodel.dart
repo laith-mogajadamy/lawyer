@@ -1,5 +1,4 @@
-import 'package:lawyer/models/general-question.dart';
-import 'package:lawyer/models/lawyer.dart';
+import 'package:lawyer/models/general_question.dart';
 import 'package:lawyer/models/lawyermodel.dart';
 
 class GeneralquestionModel extends Generalquestion {

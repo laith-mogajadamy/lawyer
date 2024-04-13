@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
-import 'package:lawyer/models/general_question.dart';
-import 'package:lawyer/screens/generalquestionpage.dart';
+import 'package:lawyer/models/consultation.dart';
+import 'package:lawyer/screens/consultation_page.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 
-class Generalquestioncard extends StatelessWidget {
-  final Generalquestion genralqsttion;
-  const Generalquestioncard({
+class ConsultationCard extends StatelessWidget {
+  final Consultation consultation;
+  const ConsultationCard({
     super.key,
-    required this.genralqsttion,
+    required this.consultation,
   });
 
   @override
@@ -22,7 +22,7 @@ class Generalquestioncard extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  Generalquestionpage(generalquestion: genralqsttion),
+                  ConsultationPage(consultation: consultation),
             ),
           );
         },
@@ -32,7 +32,7 @@ class Generalquestioncard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30.r,
-                backgroundImage: NetworkImage(genralqsttion.userRequest.image),
+                backgroundImage: NetworkImage(consultation.sender.image),
               ),
               SizedBox(
                 width: 15.w,
@@ -56,9 +56,9 @@ class Generalquestioncard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Orange22text(text: genralqsttion.userRequest.name),
+                      Orange22text(text: consultation.sender.name),
                       Text(
-                        genralqsttion.question,
+                        consultation.title,
                         style: TextStyle(
                             overflow: TextOverflow.ellipsis,
                             fontSize: 22.sp,

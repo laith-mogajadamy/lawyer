@@ -22,11 +22,11 @@ class GeneralquestionState extends Equatable {
   GeneralquestionState copyWith({
     String? token,
     //
-    final List<Generalquestion>? generalquestions,
-    final RequestState? generalquestionsState,
-    final String? generalquestionMessage,
+    List<Generalquestion>? generalquestions,
+    RequestState? generalquestionsState,
+    String? generalquestionMessage,
     //
-    final String? generalquestionreplyMessage,
+    String? generalquestionreplyMessage,
   }) {
     return GeneralquestionState(
       token: token ?? this.token,

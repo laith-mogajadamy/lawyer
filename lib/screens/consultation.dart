@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
@@ -8,7 +6,6 @@ import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/consultation/controller/consultation_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:my_fatoorah/my_fatoorah.dart';
 
 class Consultation extends StatefulWidget {
   final Lawyer lawyer;
