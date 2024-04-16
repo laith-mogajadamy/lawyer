@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,12 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key});
@@ -37,14 +38,34 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   Future pickimage(ImageSource source) async {
     try {
-      final Image = await ImagePicker().pickImage(source: source);
+      final Image =
+          await ImagePicker().pickImage(source: source, imageQuality: 50);
       if (Image == null) {
         return null;
       }
       final imagetemp = File(Image.path);
       fimage = imagetemp;
     } on PlatformException catch (e) {
-      print("failed to pick image$e");
+      print("failed to pick image $e");
+    }
+  }
+
+  Future uploadpdf() async {
+    FilePickerResult? results = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['pdf'], allowMultiple: true);
+
+    print("result= $results");
+    if (results == null) {
+      return;
+    }
+    for (var i = 0; i < results.files.length; i++) {
+      File file = File(results.files[i].path ?? "");
+      print("file= $file");
+      String filename = results.files[i].name;
+      print("filename= $filename");
+      String path = results.files[i].path!;
+      print("path= $path");
+      _certification.add(file);
     }
   }
 
@@ -172,7 +193,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   ),
                                   child: CircleAvatar(
                                     radius: 75.r,
-                                    backgroundImage: NetworkImage(state.image),
+                                    backgroundImage:
+                                        NetworkImage(state.user.image),
                                   ),
                                 ),
                           Icon(
@@ -258,7 +280,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      uploadpdf();
+                      uploadpdf().then(
+                        (value) => context.read<EnterBloc>().add(
+                              AddCertification(certifications: _certification),
+                            ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(size.width / 2, size.height / 15),
@@ -276,25 +302,37 @@ class _ProfileEditState extends State<ProfileEdit> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  (_certification.isEmpty)
+                  (state.certifications!.isEmpty)
                       ? const SizedBox.shrink()
                       : SizedBox(
-                          height: size.height / 4,
+                          height: size.height / 3,
                           child: ListView.builder(
-                            itemCount: _certification.length,
+                            itemCount: state.certifications!.length,
                             padding: const EdgeInsets.all(8),
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 5.w),
-                                child: Material(
-                                  elevation: 5,
-                                  child: Container(
-                                    width: size.width / 2,
-                                    decoration: const BoxDecoration(
-                                        color: AppColor.appgray),
+                              return GestureDetector(
+                                onTap: () {
+                                  PDFApi().openPDF(
+                                      context, state.certifications![index]);
+                                },
+                                child: Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 5.w),
+                                  child: Material(
+                                    elevation: 5,
+                                    child: Container(
+                                      width: size.width / 2,
+                                      decoration: const BoxDecoration(
+                                          // color: AppColor.appgray,
+                                          ),
+                                      child: PdfDocumentLoader.openFile(
+                                        pageNumber: 1,
+                                        state.certifications![index].path,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               );
@@ -316,22 +354,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 location: int.parse(location.text.trim()),
                                 gender: int.parse(gender.text.trim()),
                                 consultationPrice:
-                                    consultationprice.text.trim(),
+                                    int.parse(consultationprice.text.trim()),
                                 certification: _certification),
                           );
-
-                      print(state.email);
-                      print("=============");
-                      print(state.name);
-                      print("=============");
-                      print(state.number);
-                      print("=============");
-                      print(state.password);
-                      print("=============");
-                      print(state.id);
-                      print("=============");
-                      print(state.formStatus);
-                      print(state.token);
                     },
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(size.width / 2.3, size.height / 15),
@@ -353,26 +378,5 @@ class _ProfileEditState extends State<ProfileEdit> {
         );
       },
     );
-  }
-
-  Future uploadpdf() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-    print("result= $result");
-    if (result == null) {
-      return;
-    }
-
-    File file = File(result.files.single.path ?? "");
-    print("file= $file");
-    String filename = result.files.single.name;
-    print("filename= $filename");
-    String path = file.path;
-    print("path= $path");
-    setState(() {
-      _certification.add(file);
-    });
   }
 }

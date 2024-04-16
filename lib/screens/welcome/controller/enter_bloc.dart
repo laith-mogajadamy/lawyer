@@ -49,6 +49,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         );
         Preferences.savetoken(responsemap["access_token"]);
         print("token:${responsemap["access_token"]}");
+        print("userid:${state.user.id}");
+
         print("user:${state.user}");
         print("user consultations:${state.user.consultations}");
         print("user generalquestions:${state.user.generalquestions}");
@@ -64,12 +66,10 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     //
     on<Profiledit>((event, emit) async {
       print("Profiledit");
-
-      emit(state.copyWith(
-        formStatus: FormSubmitting(),
-      ));
+      print(state.token);
+      emit(state.copyWith());
       Response response = await Uploadfile.profileedit(
-        state.id,
+        state.user.id,
         state.token,
         event.name,
         event.email,
@@ -82,37 +82,26 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         event.certification,
       );
       print(response.statusCode);
-      print(response);
+      print("data=${response.data}");
 
-      // http.Response response = await Auth.profileedit(
+      // Map<String, dynamic> responsemap = await jsonDecode(response.data);
+      if (response.statusCode == 200) {
+        emit(
+          state.copyWith(
+            user: LawyerModel.fromJson(response.data),
+            message: " profile edit successed",
+          ),
+        );
+        print("state.message${state.message}");
 
-      // );
-      // Map responsemap = await jsonDecode(response.body);
-      // print(responsemap);
-      // if (response.statusCode == 200) {
-      //   emit(
-      //     state.copyWith(
-      //       // name: responsemap["user"]["name"],
-      //       // id: responsemap["user"]["id"],
-      //       // number: responsemap["user"]["phone"],
-      //       // image: responsemap["user"]["image"],
-      //       // email: responsemap["user"]["email"],
-      //       // birth: responsemap["user"]["birth"],
-      //       // consultationPrice: responsemap["user"]["consultationPrice"],
-      //       // gender: responsemap["user"]["gender"],
-      //       // location: responsemap["user"]["location"],
-      //       message: " profile edit successed",
-      //       formStatus: SubmissionSuccess(),
-      //     ),
-      //   );
-      // } else {
-      //   emit(
-      //     state.copyWith(
-      //       formStatus: SubmissionFailed(state.message),
-      //       message: " profile edit failed",
-      //     ),
-      //   );
-      // }
+        print("state.user${state.user}");
+      } else {
+        emit(
+          state.copyWith(
+            message: " profile edit failed",
+          ),
+        );
+      }
     });
     //
     on<ImageChange>((event, emit) async {
@@ -122,6 +111,14 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         state.copyWith(fimage: event.fimage),
       );
       print("image=${state.fimage!.path}");
+    });
+    on<AddCertification>((event, emit) async {
+      print(" AddCertification");
+
+      emit(
+        state.copyWith(certifications: event.certifications),
+      );
+      print("certifications=${state.certifications}");
     });
     on<Bottomshow>((event, emit) async {
       print("show bottom");
@@ -176,7 +173,6 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         emit(
           state.copyWith(
             user: LawyerModel.fromJson(responsemap["user"]),
-            password: state.password,
             token: responsemap["access_token"],
             message: " log in successed",
             formStatus: SubmissionSuccess(),

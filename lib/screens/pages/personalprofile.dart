@@ -26,7 +26,7 @@ class PersonalProfile extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: Column(
               children: [
-                (state.image.isEmpty)
+                (state.user.image.isEmpty)
                     ? Icon(
                         size: 100.r,
                         Icons.person,
@@ -34,10 +34,12 @@ class PersonalProfile extends StatelessWidget {
                       )
                     : CircleAvatar(
                         radius: 75.r,
-                        backgroundImage: NetworkImage(state.image),
+                        backgroundImage: NetworkImage(state.user.image),
                       ),
                 Text(
-                  (state.name.isNotEmpty) ? state.name : "CLIENT'S NAME",
+                  (state.user.name.isNotEmpty)
+                      ? state.user.name
+                      : "CLIENT'S NAME",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 24.sp,

@@ -27,6 +27,15 @@ class Bottomshow extends EnterEvent {
   List<Object?> get props => [bottom];
 }
 
+class AddCertification extends EnterEvent {
+  final List<File>? certifications;
+
+  AddCertification({this.certifications});
+
+  @override
+  List<Object?> get props => [certifications];
+}
+
 class Profiledit extends EnterEvent {
   final File? fimage;
   final String? name;
@@ -35,7 +44,7 @@ class Profiledit extends EnterEvent {
   final String? birth;
   final int? location;
   final int? gender;
-  final String? consultationPrice;
+  final int? consultationPrice;
   final List<File>? certification;
   Profiledit({
     this.fimage,

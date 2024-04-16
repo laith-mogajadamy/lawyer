@@ -9,6 +9,7 @@ import 'package:lawyer/screens/welcome/splash.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
+
   runApp(const MyApp());
 }
 
