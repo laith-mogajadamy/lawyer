@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/addgeneralquestion.dart';
@@ -9,8 +12,10 @@ import 'package:lawyer/screens/general-question/user_general_question.dart';
 import 'package:lawyer/screens/profile_edit.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/enter.dart';
+import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/graydivider.dart';
 import 'package:lawyer/screens/widgets/profile_row.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class PersonalProfile extends StatelessWidget {
   const PersonalProfile({super.key});
@@ -24,7 +29,7 @@ class PersonalProfile extends StatelessWidget {
           body: SafeArea(
               child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Column(
+            child: ListView(
               children: [
                 (state.user.image.isEmpty)
                     ? Icon(
@@ -36,29 +41,35 @@ class PersonalProfile extends StatelessWidget {
                         radius: 75.r,
                         backgroundImage: NetworkImage(state.user.image),
                       ),
-                Text(
-                  (state.user.name.isNotEmpty)
-                      ? state.user.name
-                      : "CLIENT'S NAME",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                      decorationThickness: 2,
-                      decorationColor: AppColor.apporange),
-                ),
-                Text(
-                  "GENDER",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.bold,
+                Center(
+                  child: Text(
+                    (state.user.name.isNotEmpty)
+                        ? state.user.name
+                        : "CLIENT'S NAME",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24.sp,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        decorationThickness: 2,
+                        decorationColor: AppColor.apporange),
                   ),
                 ),
-                Text(
-                  "DOB  E-MAIL",
-                  style: TextStyle(
-                    fontSize: 14.sp,
+                Center(
+                  child: Text(
+                    "GENDER",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    "DOB  E-MAIL",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                    ),
                   ),
                 ),
                 Row(
@@ -79,6 +90,63 @@ class PersonalProfile extends StatelessWidget {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    Text(
+                      "CERTIFICATIONS",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                (state.user.certification.isEmpty)
+                    ? const SizedBox.shrink()
+                    : SizedBox(
+                        height: size.height / 3,
+                        child: ListView.builder(
+                          itemCount: state.user.certification.length,
+                          padding: const EdgeInsets.all(8),
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return FutureBuilder<File>(
+                                future: DefaultCacheManager().getSingleFile(
+                                    state.user.certification[index]),
+                                builder: (context, snapshot) {
+                                  print("snapshot=$snapshot");
+                                  return (snapshot.hasData)
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            PDFApi().openPDF(
+                                                context, snapshot.data!);
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5.w),
+                                            child: Material(
+                                              elevation: 5,
+                                              child: Container(
+                                                width: size.width / 2,
+                                                decoration: const BoxDecoration(
+                                                  color: AppColor.appgray,
+                                                ),
+                                                child:
+                                                    PdfDocumentLoader.openFile(
+                                                  pageNumber: 1,
+                                                  snapshot.data!.path,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink();
+                                });
+                          },
+                        ),
+                      ),
                 ProfileRow(
                     text: "MESSAGES", icon: Icons.mail_rounded, ontap: () {}),
                 const Graydivider(),
@@ -132,10 +200,33 @@ class PersonalProfile extends StatelessWidget {
                 const Graydivider(),
                 BlocListener<EnterBloc, EnterState>(
                   listenWhen: (previous, current) {
-                    return previous.formStatus != current.formStatus;
+                    return previous.logoutStatus != current.logoutStatus;
                   },
                   listener: (context, state) {
-                    if (state.formStatus is SubmissionSuccess) {
+                    if (state.logoutStatus is FormSubmitting) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            backgroundColor: AppColor.whiteColor,
+                            elevation: 5,
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Black18text(text: "Logging out...."),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                CircularProgressIndicator(
+                                  color: AppColor.apporange,
+                                  strokeWidth: 8.w,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else if (state.logoutStatus is SubmissionSuccess) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.green,
@@ -151,7 +242,7 @@ class PersonalProfile extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => const Enter()),
                       );
-                    } else if (state.formStatus is SubmissionFailed) {
+                    } else if (state.logoutStatus is SubmissionFailed) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           backgroundColor: Colors.red,

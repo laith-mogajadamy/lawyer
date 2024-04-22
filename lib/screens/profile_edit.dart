@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
@@ -342,33 +343,71 @@ class _ProfileEditState extends State<ProfileEdit> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<EnterBloc>().add(
-                            Profiledit(
-                                fimage: fimage,
-                                name: name.text.trim(),
-                                email: email.text.trim(),
-                                number: number.text.trim(),
-                                birth: birth.text.trim(),
-                                location: int.parse(location.text.trim()),
-                                gender: int.parse(gender.text.trim()),
-                                consultationPrice:
-                                    int.parse(consultationprice.text.trim()),
-                                certification: _certification),
-                          );
+                  BlocListener<EnterBloc, EnterState>(
+                    listenWhen: (previous, current) {
+                      return previous.editStatus != current.editStatus;
                     },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(size.width / 2.3, size.height / 15),
-                      backgroundColor: Colors.orange,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: Text(
-                      "save",
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                    listener: (context, state) {
+                      if (state.editStatus is SubmissionSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.green,
+                            duration: const Duration(seconds: 2),
+                            content: Text(
+                              state.message,
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.white),
+                            ),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      } else if (state.editStatus is SubmissionFailed) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 2),
+                            content: Text(
+                              state.message,
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<EnterBloc>().add(
+                              Profiledit(
+                                  fimage: fimage,
+                                  name: name.text.trim(),
+                                  email: email.text.trim(),
+                                  number: number.text.trim(),
+                                  birth: birth.text.trim(),
+                                  location: int.parse(location.text.trim()),
+                                  gender: int.parse(gender.text.trim()),
+                                  consultationPrice:
+                                      int.parse(consultationprice.text.trim()),
+                                  certification: _certification),
+                            );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(size.width / 2.3, size.height / 15),
+                        backgroundColor: Colors.orange,
+                        shape: const StadiumBorder(),
+                      ),
+                      child: (state.editStatus is FormSubmitting)
+                          ? CircularProgressIndicator(
+                              color: AppColor.whiteColor,
+                              strokeWidth: 2.w,
+                            )
+                          : Text(
+                              "save",
+                              style: TextStyle(
+                                  fontSize: 20.sp,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
                     ),
                   ),
                 ],

@@ -1,10 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/chatpage.dart';
 import 'package:lawyer/screens/consultation.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/graydivider.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class Legalconsultantprofile extends StatelessWidget {
   final Lawyer lawyer;
@@ -83,29 +88,49 @@ class Legalconsultantprofile extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: size.height / 4,
-                child: ListView.builder(
-                  itemCount: 10,
-                  padding: const EdgeInsets.all(8),
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Material(
-                        elevation: 5,
-                        child: Container(
-                          width: size.width / 2,
-                          decoration:
-                              const BoxDecoration(color: AppColor.appgray),
-                        ),
+              (lawyer.certification.isEmpty)
+                  ? const SizedBox.shrink()
+                  : SizedBox(
+                      height: size.height / 3,
+                      child: ListView.builder(
+                        itemCount: lawyer.certification.length,
+                        padding: const EdgeInsets.all(8),
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return FutureBuilder<File>(
+                            future: DefaultCacheManager()
+                                .getSingleFile(lawyer.certification[index]),
+                            builder: (context, snapshot) => snapshot.hasData
+                                ? GestureDetector(
+                                    onTap: () {
+                                      PDFApi().openPDF(context, snapshot.data!);
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5.w),
+                                      child: Material(
+                                        elevation: 5,
+                                        child: Container(
+                                          width: size.width / 2,
+                                          decoration: const BoxDecoration(
+                                              // color: AppColor.appgray,
+                                              ),
+                                          child: PdfDocumentLoader.openFile(
+                                            pageNumber: 1,
+                                            snapshot.data!.path,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
+                    ),
+              const Graydivider(),
               Row(
                 children: [
                   Text(

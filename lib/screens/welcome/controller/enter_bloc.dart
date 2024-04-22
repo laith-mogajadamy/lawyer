@@ -67,7 +67,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     on<Profiledit>((event, emit) async {
       print("Profiledit");
       print(state.token);
-      emit(state.copyWith());
+      emit(state.copyWith(editStatus: FormSubmitting()));
       Response response = await Uploadfile.profileedit(
         state.user.id,
         state.token,
@@ -90,6 +90,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           state.copyWith(
             user: LawyerModel.fromJson(response.data),
             message: " profile edit successed",
+            editStatus: SubmissionSuccess(),
           ),
         );
         print("state.message${state.message}");
@@ -99,6 +100,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         emit(
           state.copyWith(
             message: " profile edit failed",
+            editStatus: SubmissionFailed(state.message),
           ),
         );
       }
@@ -265,6 +267,11 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     });
 
     on<Logout>((event, emit) async {
+      emit(
+        state.copyWith(
+          logoutStatus: FormSubmitting(),
+        ),
+      );
       http.Response response = await Auth.logout(state.token);
       Map responsemap = await jsonDecode(response.body);
       print("message==${state.message}");
@@ -294,7 +301,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
                   practices: [],
                   consultations: [],
                   generalquestions: []),
-              formStatus: SubmissionSuccess(),
+              logoutStatus: SubmissionSuccess(),
               message: responsemap["message"],
               email: "",
               password: "",
@@ -305,10 +312,10 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         emit(
           state.copyWith(
               message: responsemap["message"],
-              formStatus: SubmissionFailed(state.message),
+              logoutStatus: SubmissionFailed(state.message),
               islogedin: "false"),
         );
-        print(state.formStatus);
+        print(state.logoutStatus);
       }
     });
   }

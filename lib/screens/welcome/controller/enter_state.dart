@@ -5,6 +5,9 @@ class EnterState extends Equatable {
   final bool bottom;
   final File? fimage;
   final List<File>? certifications;
+  final FormSubmissionStatus editStatus;
+  final FormSubmissionStatus logoutStatus;
+
   //didnt use it
   // final User user;
   //
@@ -31,6 +34,9 @@ class EnterState extends Equatable {
     this.bottom = false,
     this.fimage,
     this.certifications = const [],
+    this.editStatus = const InitialFormStatus(),
+    this.logoutStatus = const InitialFormStatus(),
+
     //
     this.user = const Lawyer(
       id: 0,
@@ -67,6 +73,9 @@ class EnterState extends Equatable {
     bool? bottom,
     File? fimage,
     List<File>? certifications,
+    FormSubmissionStatus? editStatus,
+    FormSubmissionStatus? logoutStatus,
+
     //
     Lawyer? user,
     String? token,
@@ -91,6 +100,9 @@ class EnterState extends Equatable {
       bottom: bottom ?? this.bottom,
       fimage: fimage ?? this.fimage,
       certifications: certifications ?? this.certifications,
+      editStatus: editStatus ?? this.editStatus,
+      logoutStatus: logoutStatus ?? this.logoutStatus,
+
       //
       user: user ?? this.user,
       token: token ?? this.token,
@@ -111,6 +123,8 @@ class EnterState extends Equatable {
         bottom,
         fimage,
         certifications,
+        editStatus,
+        logoutStatus,
         //
         user,
         token,

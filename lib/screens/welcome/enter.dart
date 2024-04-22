@@ -18,7 +18,7 @@ class Enter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               width: size.width,
               child: SvgPicture.asset(
                 "assets/svg/Element-3.svg",

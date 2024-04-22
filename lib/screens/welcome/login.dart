@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
@@ -139,13 +140,18 @@ class _LoginState extends State<Login> {
                       backgroundColor: Colors.orange,
                       shape: const StadiumBorder(),
                     ),
-                    child: Text(
-                      "next",
-                      style: TextStyle(
-                          fontSize: 20.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
-                    ),
+                    child: (state.formStatus is FormSubmitting)
+                        ? CircularProgressIndicator(
+                            color: AppColor.whiteColor,
+                            strokeWidth: 4.w,
+                          )
+                        : Text(
+                            "next",
+                            style: TextStyle(
+                                fontSize: 20.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
                   ),
                 ),
               ],
