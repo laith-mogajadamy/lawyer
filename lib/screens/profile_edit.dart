@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
@@ -14,7 +13,7 @@ import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
-import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:lawyer/screens/widgets/pdf_widget.dart';
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key});
@@ -314,29 +313,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  PDFApi().openPDF(
-                                      context, state.certifications![index]);
-                                },
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 5.w),
-                                  child: Material(
-                                    elevation: 5,
-                                    child: Container(
-                                      width: size.width / 2,
-                                      decoration: const BoxDecoration(
-                                          // color: AppColor.appgray,
-                                          ),
-                                      child: PdfDocumentLoader.openFile(
-                                        pageNumber: 1,
-                                        state.certifications![index].path,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
+                              return PdfWidget(
+                                  file: state.certifications![index]);
                             },
                           ),
                         ),

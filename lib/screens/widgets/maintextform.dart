@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/search/search.dart';
 
-class maintextform extends StatelessWidget {
-  const maintextform({
+class Maintextform extends StatelessWidget {
+  const Maintextform({
     super.key,
   });
 

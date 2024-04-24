@@ -13,7 +13,7 @@ class Black16text extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.bold),
+          fontSize: 16.sp, color: Colors.black, fontWeight: FontWeight.normal),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 
 class AddGeneralquestionpage extends StatefulWidget {
   const AddGeneralquestionpage({
@@ -113,6 +114,9 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                       listener: (context, state) {
                         if (state.generalquestionsState ==
                             RequestState.loaded) {
+                          context.read<EnterBloc>().add(
+                                Getuser(),
+                              );
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: Colors.green,

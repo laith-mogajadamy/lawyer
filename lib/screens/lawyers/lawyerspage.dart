@@ -15,7 +15,7 @@ class Lawyerspage extends StatelessWidget {
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            maintextform(),
+            Maintextform(),
             Orange22text(text: "Lawyers"),
             Expanded(child: Lawyerscomponent()),
           ],

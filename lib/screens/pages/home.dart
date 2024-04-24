@@ -6,7 +6,7 @@ import 'package:lawyer/screens/general-question/general_question.dart';
 import 'package:lawyer/screens/lawyers/lawyerspage.dart';
 import 'package:lawyer/screens/lawyers/legalConsultantpage.dart';
 import 'package:lawyer/screens/lawyers/typingCenterpage.dart';
-import 'package:lawyer/screens/widgets/black20text.dart';
+import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/maintextform.dart';
 
 class Home extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           Padding(
             padding:
                 EdgeInsets.only(top: 3.h, left: 5.w, right: 5.w, bottom: 10.h),
-            child: const maintextform(),
+            child: const Maintextform(),
           ),
           Column(
             children: [
@@ -173,25 +173,6 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           ),
           SizedBox(
             height: 10.h,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
-            child: Row(
-              children: [
-                Container(
-                  width: size.width / 3,
-                  height: size.height / 13,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage(
-                        "assets/images/output-onlinepngtools.png",
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

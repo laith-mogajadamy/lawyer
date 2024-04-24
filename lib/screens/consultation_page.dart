@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/models/consultation.dart';
 import 'package:lawyer/screens/consultation/controller/consultation_bloc.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/question_and_title.dart';
 import 'package:lawyer/screens/widgets/replay_text_field.dart';
 
@@ -17,6 +20,8 @@ class ConsultationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("*************");
+    print(consultation.answer);
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => ConsultationBloc(),
@@ -68,6 +73,7 @@ class ConsultationPage extends StatelessWidget {
                                 ),
                               ),
                             );
+                            context.read<EnterBloc>().add(Getuser());
                           } else if (state.consultationState ==
                               RequestState.error) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -117,6 +123,14 @@ class ConsultationPage extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
+                    (consultation.answer.isEmpty)
+                        ? const SizedBox.shrink()
+                        : Column(
+                            children: [
+                              const Black22text(text: "Answer "),
+                              Black22text(text: consultation.answer)
+                            ],
+                          ),
                   ],
                 ),
               ),

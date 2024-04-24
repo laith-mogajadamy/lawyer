@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/massegemodel.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
@@ -35,64 +36,6 @@ class _ChatPageState extends State<ChatPage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      bottomNavigationBar: (bottom)
-          ? Container(
-              height: size.height / 8,
-              width: size.width,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: AppColor.appgray,
-                      blurRadius: 3.r,
-                      spreadRadius: 3.r)
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.r),
-                    topRight: Radius.circular(20.r)),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: SizedBox(
-                      height: size.height / 11,
-                      width: size.width / 5,
-                      child: SvgPicture.asset(
-                        "assets/svg/gallery.svg",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: SizedBox(
-                      height: size.height / 11,
-                      width: size.width / 5,
-                      child: Image.asset(
-                        "assets/images/word.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      uploadpdf();
-                    },
-                    child: SizedBox(
-                      height: size.height / 11,
-                      width: size.width / 5,
-                      child: Image.asset(
-                        "assets/images/icons8-acrobat-67.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : const SizedBox.shrink(),
       body: SafeArea(
         child: Column(
           children: [
@@ -124,51 +67,114 @@ class _ChatPageState extends State<ChatPage> {
                 },
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-              height: size.height / 14,
-              width: size.width / 1,
-              child: TextFormField(
-                autofocus: true,
-                onChanged: (string) {},
-                controller: messageController,
-                enabled: true,
-                style: TextStyle(color: Colors.black, fontSize: 18.sp),
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2.h, color: Colors.black),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 2.h, color: Colors.black),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  filled: true,
-                  fillColor: AppColor.appgray,
-                  suffix: InkWell(
-                    onTap: () {
-                      _handleSendMessage();
-                    },
-                    child: Icon(
-                      Icons.send,
-                      size: 25.r,
-                    ),
-                  ),
-                  prefix: InkWell(
-                    onTap: () {
-                      setState(() {
-                        SystemChannels.textInput.invokeMethod('TextInput.hide');
-                        bottom = !bottom;
-                      });
-                    },
-                    child: Icon(
-                      Icons.attachment,
-                      size: 25.r,
+            Column(
+              children: [
+                (bottom)
+                    ? Container(
+                        height: size.height / 10,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColor.appgray,
+                                blurRadius: 3.r,
+                                spreadRadius: 3.r)
+                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                pickimage(ImageSource.gallery);
+                              },
+                              child: SizedBox(
+                                height: size.height / 15,
+                                width: size.width / 8,
+                                child: SvgPicture.asset(
+                                  "assets/svg/gallery.svg",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            // GestureDetector(
+                            //   onTap: () {},
+                            //   child: SizedBox(
+                            //     height: size.height / 15,
+                            //     width: size.width / 8,
+                            //     child: Image.asset(
+                            //       "assets/images/word.png",
+                            //       fit: BoxFit.cover,
+                            //     ),
+                            //   ),
+                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                uploadpdf();
+                              },
+                              child: SizedBox(
+                                height: size.height / 15,
+                                width: size.width / 8,
+                                child: Image.asset(
+                                  "assets/images/icons8-acrobat-67.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+                  height: size.height / 14,
+                  width: size.width / 1,
+                  child: TextFormField(
+                    autofocus: true,
+                    onChanged: (string) {},
+                    controller: messageController,
+                    enabled: true,
+                    style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2.h, color: Colors.black),
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2.h, color: Colors.black),
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      filled: true,
+                      fillColor: AppColor.appgray,
+                      suffix: InkWell(
+                        onTap: () {
+                          _handleSendMessage();
+                        },
+                        child: Icon(
+                          Icons.send,
+                          size: 25.r,
+                        ),
+                      ),
+                      prefix: InkWell(
+                        onTap: () {
+                          setState(() {
+                            SystemChannels.textInput
+                                .invokeMethod('TextInput.hide');
+                            bottom = !bottom;
+                          });
+                        },
+                        child: Icon(
+                          Icons.attachment,
+                          size: 25.r,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
@@ -207,6 +213,29 @@ class _ChatPageState extends State<ChatPage> {
       setState(() {
         messages.insert(0, newMessage);
       });
+    }
+  }
+
+  Future pickimage(ImageSource source) async {
+    try {
+      final Image =
+          await ImagePicker().pickImage(source: source, imageQuality: 100);
+      if (Image == null) {
+        return null;
+      }
+      File file = File(Image.path);
+      print("file= $file");
+      String filename = file.path.split("/").last;
+      print("filename= $filename");
+      String path = file.path;
+      print("path= $path");
+      Message newMessage =
+          Message(isMe: true, text: filename, type: "img", file: file);
+      setState(() {
+        messages.insert(0, newMessage);
+      });
+    } on PlatformException catch (e) {
+      print("failed to pick image $e");
     }
   }
 }

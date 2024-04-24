@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/chatpage.dart';
+import 'package:lawyer/screens/pages/group_massege.dart';
+import 'package:lawyer/screens/pages/person_massege.dart';
+import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/maintextform.dart';
 
 class MassegesPage extends StatefulWidget {
   const MassegesPage({super.key});
@@ -16,103 +20,55 @@ class _MassegesPageState extends State<MassegesPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 5.w),
-            child: SizedBox(
-              height: size.height / 15,
-              child: TextFormField(
-                onChanged: (string) {
-                  setState(() {});
-                },
-                controller: controller,
-                enabled: false,
-                style: TextStyle(color: Colors.black, fontSize: 18.sp),
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  hintText: "search",
-                  hintStyle: const TextStyle(color: Colors.black),
-                  filled: true,
-                  fillColor: AppColor.appgray,
-                  prefixIcon: InkWell(
-                    onTap: () {
-                      // bloc.add(GetSearchProductsEvent(
-                      //     pageNum: 1,
-                      //     search: controller.text,
-                      //     perPage: 100));
-                    },
-                    child: Icon(
-                      Icons.search,
-                      size: 33.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.r),
+
+    TextEditingController textcontroller = TextEditingController();
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          leadingWidth: 0,
+          automaticallyImplyLeading: false,
+          leading: null,
+          actions: null,
+          backgroundColor: AppColor.appgray,
+          bottom: const TabBar(tabs: [
+            Tab(
+              child: Black16text(text: "masseges"),
+            ),
+            Tab(
+              child: Black16text(text: "Groups"),
+            ),
+          ]),
+          title: TextFormField(
+            onChanged: (string) {
+              setState(() {});
+            },
+            controller: textcontroller,
+            enabled: true,
+            style: TextStyle(color: Colors.black, fontSize: 18.sp),
+            decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                hintText: "search",
+                hintStyle: const TextStyle(color: Colors.black),
+                filled: true,
+                fillColor: AppColor.appgray,
+                prefixIcon: InkWell(
+                  onTap: () {},
+                  child: Icon(
+                    Icons.search,
+                    size: 33.sp,
+                    color: Colors.black,
                   ),
                 ),
-              ),
-            ),
+                border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2.h))),
           ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Expanded(
-            child: SizedBox(
-              child: ListView.builder(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChatPage()),
-                        );
-                      },
-                      child: SizedBox(
-                        height: size.height / 12,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.person,
-                              size: 50.r,
-                              color: AppColor.apporange,
-                            ),
-                            SizedBox(
-                              width: 15.w,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: AppColor.appgray,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.w, vertical: 5.h),
-                                child: const Black18text(
-                                    text: "name of the person"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          )
-        ],
+        ),
+        body: TabBarView(children: [PersonMassege(), GroupMassege()]),
       ),
     );
   }

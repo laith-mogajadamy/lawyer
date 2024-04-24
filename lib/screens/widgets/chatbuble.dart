@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/screens/widgets/image_widget.dart';
+import 'package:lawyer/screens/widgets/pdf_widget.dart';
 
 class ChatBubble extends StatelessWidget {
   final bool isMe;
@@ -19,13 +21,26 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (type == "pdf" && file != null) {
-          PDFApi().openPDF(context, file!);
-        }
-      },
-      child: Container(
+    Size size = MediaQuery.of(context).size;
+
+    if (type == "pdf" && file != null) {
+      return Column(
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          PdfWidget(file: file!),
+        ],
+      );
+    } else if (type == "img" && file != null) {
+      return Column(
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          ImageWidget(file: file!),
+        ],
+      );
+    } else {
+      return Container(
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
         padding:
             isMe ? EdgeInsets.only(left: 40.w) : EdgeInsets.only(right: 40.w),
@@ -76,11 +91,6 @@ class ChatBubble extends StatelessWidget {
                         message,
                         textAlign: isMe ? TextAlign.end : TextAlign.start,
                         style: TextStyle(
-                          fontWeight: (type == "pdf")
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                          decoration:
-                              (type == "pdf") ? TextDecoration.underline : null,
                           decorationThickness: 2,
                           decorationColor: AppColor.apporange,
                           color: isMe ? Colors.white : Colors.grey,
@@ -93,7 +103,7 @@ class ChatBubble extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 }

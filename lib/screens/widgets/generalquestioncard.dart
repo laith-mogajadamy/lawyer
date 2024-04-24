@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/general_question.dart';
 import 'package:lawyer/screens/generalquestionpage.dart';
-import 'package:lawyer/screens/widgets/orange22text.dart';
 
 class Generalquestioncard extends StatelessWidget {
   final Generalquestion genralqsttion;
@@ -14,64 +13,110 @@ class Generalquestioncard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  Generalquestionpage(generalquestion: genralqsttion),
-            ),
-          );
-        },
-        child: SizedBox(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CircleAvatar(
-                radius: 30.r,
-                backgroundImage: NetworkImage(genralqsttion.userRequest.image),
-              ),
-              SizedBox(
-                width: 15.w,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 239, 239, 239),
-                  borderRadius: BorderRadius.circular(20.r),
-                  // border: Border.all(color: Colors.black, width: 2.r),
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 3.r,
-                      color: AppColor.appgray,
-                      spreadRadius: 1.r,
-                    )
-                  ],
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Generalquestionpage(generalquestion: genralqsttion),
                 ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 245, 242, 242),
+                borderRadius: BorderRadius.circular(20.r),
+                // border: Border.all(color: Colors.black, width: 2.r),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3.r,
+                    color: AppColor.appgray,
+                    spreadRadius: 1.r,
+                  )
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                child: SizedBox(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Orange22text(text: genralqsttion.userRequest.name),
+                      SizedBox(
+                        height: size.height / 10,
+                        child: ListTile(
+                          leading:
+                              Image.network(genralqsttion.userRequest.image),
+                          title: Text(
+                            genralqsttion.userRequest.name,
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 18.sp,
+                                color: Colors.orange,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                            genralqsttion.date,
+                            style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 14.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          trailing: SizedBox(
+                            width: size.width / 3.2,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "num.of.replies: ",
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 13.sp,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColor.appgray,
+                                    borderRadius: BorderRadius.circular(5.r),
+                                  ),
+                                  padding: EdgeInsets.all(3.w),
+                                  child: Text(
+                                    genralqsttion.replies.length.toString(),
+                                    style: TextStyle(
+                                        overflow: TextOverflow.ellipsis,
+                                        fontSize: 14.sp,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       Text(
                         genralqsttion.question,
                         style: TextStyle(
                             overflow: TextOverflow.ellipsis,
-                            fontSize: 22.sp,
+                            fontSize: 18.sp,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
-                      )
+                      ),
                     ],
                   ),
                 ),
-              )
-            ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

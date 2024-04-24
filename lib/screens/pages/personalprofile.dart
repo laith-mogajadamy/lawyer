@@ -147,21 +147,6 @@ class PersonalProfile extends StatelessWidget {
                           },
                         ),
                       ),
-                ProfileRow(
-                    text: "MESSAGES", icon: Icons.mail_rounded, ontap: () {}),
-                const Graydivider(),
-                ProfileRow(text: "FILES", icon: Icons.folder, ontap: () {}),
-                const Graydivider(),
-                ProfileRow(
-                    text: "CONSULTATIONS",
-                    icon: Icons.file_copy_outlined,
-                    ontap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const UserConsultations()),
-                      );
-                    }),
                 const Graydivider(),
                 ProfileRow(
                   text: "GENERALQUESTIONS",

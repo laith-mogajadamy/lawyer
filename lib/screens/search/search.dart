@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/screens/LegalConsultantProfile.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/lawyercard.dart';
 import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,51 +15,72 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   String dropvalue = "all";
   TextEditingController controller = TextEditingController();
+  bool popup = false;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    List clients = [
-      DropdownMenuItem(
-        value: "Legal consultant",
-        child: Container(
-          width: size.width / 2,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 246, 238, 161),
-              borderRadius: BorderRadius.circular(20.r)),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Black18text(text: "Legal consultant"),
-          ),
-        ),
-      ),
-      DropdownMenuItem(
-        value: "Typing center",
-        child: Container(
-          width: size.width / 2,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 246, 238, 161),
-              borderRadius: BorderRadius.circular(20.r)),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Black18text(text: "Typing center"),
-          ),
-        ),
-      ),
-      DropdownMenuItem(
-        value: "Client",
-        child: Container(
-          width: size.width / 2,
-          decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 246, 238, 161),
-              borderRadius: BorderRadius.circular(20.r)),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Black18text(text: "Client"),
-          ),
-        ),
-      ),
+    List<String> practice = [
+      "Tax",
+      "Business (corporate)",
+      "Family",
+      "Estate Planning",
+      "Emoplyment & Labot",
+      "Personal Injury",
+      "Intellectual Property",
+      "Immigration",
+      "Constitutional",
+      "Criminal Defense",
+      "Bankruptcy",
+      "Entertainment",
     ];
+    List<PopupMenuItem> practiceitem = [];
+    for (var i = 0; i < practice.length; i++) {
+      practiceitem.add(
+        PopupMenuItem(
+          value: practice[i],
+          child: Container(
+            width: size.width / 3,
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.black, width: 2.h))),
+            child: Padding(
+              padding: EdgeInsets.all(5.r),
+              child: Black18text(text: practice[i]),
+            ),
+          ),
+        ),
+      );
+    }
+    List<String> places = [
+      "Abu Dhab",
+      " Dubai",
+      "Abu Dhabi",
+      "Ajman",
+      "Al Ain",
+      "Fujairah",
+      "Ras Al Khaima",
+      "Sharjah",
+      "Um Al Quwain"
+    ];
+    List<PopupMenuItem> placesitems = [];
+    for (var i = 0; i < places.length; i++) {
+      placesitems.add(
+        PopupMenuItem(
+          value: places[i],
+          child: Container(
+            width: size.width / 3,
+            decoration: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: Colors.black, width: 2.h))),
+            child: Padding(
+              padding: EdgeInsets.all(5.r),
+              child: Black18text(text: places[i]),
+            ),
+          ),
+        ),
+      );
+    }
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -82,99 +100,15 @@ class _SearchState extends State<Search> {
                           icon: Icon(
                             FontAwesomeIcons.sliders,
                             size: 35.r,
-                            color: Colors.orange,
+                            color: AppColor.appgray,
                           ),
                           position: PopupMenuPosition.under,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.r)),
-                          color: const Color.fromARGB(255, 246, 238, 161),
+                          color: AppColor.appgray,
                           itemBuilder: (BuildContext context) {
-                            return [
-                              PopupMenuItem(
-                                value: "Abu Dhab",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Abu Dhab"),
-                                  ),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: "Dubai ",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Dubai"),
-                                  ),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: "Dubai ",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Dubai"),
-                                  ),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: "Dubai ",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Dubai"),
-                                  ),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: "Dubai ",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Dubai"),
-                                  ),
-                                ),
-                              ),
-                              PopupMenuItem(
-                                value: "Dubai ",
-                                child: Container(
-                                  width: size.width / 3,
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Black18text(text: "Dubai"),
-                                  ),
-                                ),
-                              ),
-                            ];
+                            popup = !popup;
+                            return (popup) ? placesitems : practiceitem;
                           },
                         ),
                       ),
@@ -184,8 +118,6 @@ class _SearchState extends State<Search> {
                           child: TextFormField(
                             onChanged: (string) {
                               setState(() {});
-                              // bloc.add(GetSearchProductsEvent(
-                              //     pageNum: 1, search: string, perPage: 100));
                             },
                             controller: controller,
                             enabled: true,
@@ -198,8 +130,7 @@ class _SearchState extends State<Search> {
                               hintText: "search",
                               hintStyle: const TextStyle(color: Colors.grey),
                               filled: true,
-                              fillColor:
-                                  const Color.fromARGB(255, 246, 238, 161),
+                              fillColor: AppColor.appgray,
                               prefixIcon: InkWell(
                                 onTap: () {
                                   // bloc.add(GetSearchProductsEvent(

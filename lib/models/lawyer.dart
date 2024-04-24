@@ -6,13 +6,13 @@ class Lawyer extends Equatable {
   final int id;
   final String name;
   final String email;
-  final String? birth;
+  final dynamic birth;
   final dynamic gender;
-  final String phone;
+  final dynamic phone;
   final dynamic consultationPrice;
   final dynamic isactive;
   final dynamic location;
-  final String? yearsOfPractice;
+  final dynamic yearsOfPractice;
   final dynamic numOfConsultation;
   final dynamic closedConsultation;
   final String image;

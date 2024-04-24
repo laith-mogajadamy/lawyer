@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/screens/consultation/user_consultations.dart';
 import 'package:lawyer/screens/pages/filespage.dart';
 import 'package:lawyer/screens/pages/home.dart';
 import 'package:lawyer/screens/pages/massegespage.dart';
@@ -46,7 +47,7 @@ class _MyPagesState extends State<MyPages> {
             physics: const NeverScrollableScrollPhysics(),
             children: const [
               Home(),
-              FilesPage(),
+              UserConsultations(),
               MassegesPage(),
               PersonalProfile(),
             ],
@@ -60,7 +61,7 @@ class _MyPagesState extends State<MyPages> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.file_open),
-              label: "Files",
+              label: "Consultations",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.message),
@@ -79,7 +80,7 @@ class _MyPagesState extends State<MyPages> {
             });
           },
           selectedItemColor: Colors.orange,
-          selectedFontSize: 16.sp,
+          selectedFontSize: 14.sp,
           selectedIconTheme: IconThemeData(size: 30.r, color: Colors.orange),
           showUnselectedLabels: true,
           unselectedIconTheme: IconThemeData(size: 30.r, color: Colors.grey),

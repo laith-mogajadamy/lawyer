@@ -27,6 +27,7 @@ class InfoInput extends StatelessWidget {
       children: [
         SizedBox(child: Black22text(text: name)),
         SizedBox(
+          height: size.height / 18,
           width: size.width / 2,
           child: TextFormField(
             controller: controller,
@@ -35,17 +36,12 @@ class InfoInput extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 18.sp),
             cursorColor: Colors.black,
             decoration: InputDecoration(
-              fillColor: const Color.fromARGB(255, 253, 242, 150),
-              filled: true,
-              hintText: hint,
-              hintStyle: TextStyle(color: Colors.grey, fontSize: 16.sp),
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(
-                  30.r,
+                hintText: hint,
+                hintStyle: TextStyle(color: Colors.black45, fontSize: 16.sp),
+                border: UnderlineInputBorder(
+                    borderSide: BorderSide(width: 3.h, color: Colors.black))
+                // border: UnderlineInputBorder(),
                 ),
-              ),
-            ),
           ),
         )
       ],

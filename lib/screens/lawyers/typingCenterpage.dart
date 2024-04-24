@@ -15,7 +15,7 @@ class TypingCenterpage extends StatelessWidget {
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            maintextform(),
+            Maintextform(),
             Orange22text(text: "typing Center"),
             Expanded(child: TypingCentercomponent()),
           ],

@@ -1,19 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:lawyer/core/services/auth.dart';
 import 'package:lawyer/core/services/uploadfile.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/models/consultation.dart';
-import 'package:lawyer/models/consultationmodel.dart';
 import 'package:lawyer/models/general_question.dart';
-import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
 
@@ -223,27 +219,27 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       if (response.statusCode == 201) {
         emit(
           state.copyWith(
-            name: responsemap["user"]["name"],
-            id: responsemap["user"]["id"],
-            number: responsemap["user"]["phone"],
-            image: responsemap["user"]["image"],
+            // name: responsemap["user"]["name"],
+            // id: responsemap["user"]["id"],
+            // number: responsemap["user"]["phone"],
+            // image: responsemap["user"]["image"],
             email: state.email,
-            birth: responsemap["user"]["birth"],
-            consultationPrice: responsemap["user"]["consultationPrice"],
-            gender: responsemap["user"]["gender"],
-            location: responsemap["user"]["location"],
+            // birth: responsemap["user"]["birth"],
+            // consultationPrice: responsemap["user"]["consultationPrice"],
+            // gender: responsemap["user"]["gender"],
+            // location: responsemap["user"]["location"],
             password: state.password,
-            token: responsemap["access_token"],
-            consultations: List<ConsultationsModel>.from(
-              (responsemap["user"]["consultations"] as List).map(
-                (e) => ConsultationsModel.fromJson(e),
-              ),
-            ),
-            generalquestions: List<GeneralquestionModel>.from(
-              (responsemap["user"]["generalQuestions"] as List).map(
-                (e) => GeneralquestionModel.fromJson(e),
-              ),
-            ),
+            // token: responsemap["access_token"],
+            // consultations: List<ConsultationsModel>.from(
+            //   (responsemap["user"]["consultations"] as List).map(
+            //     (e) => ConsultationsModel.fromJson(e),
+            //   ),
+            // ),
+            // generalquestions: List<GeneralquestionModel>.from(
+            //   (responsemap["user"]["generalQuestions"] as List).map(
+            //     (e) => GeneralquestionModel.fromJson(e),
+            //   ),
+            // ),
             message: " log in successed",
             formStatus: SubmissionSuccess(),
             islogedin: "true",
@@ -256,6 +252,9 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         print("token:${responsemap["accessToken"]}");
         print("++++++++++++++");
         print(state.formStatus);
+        add(
+          LoginSubmitted(),
+        );
       } else {
         emit(
           state.copyWith(

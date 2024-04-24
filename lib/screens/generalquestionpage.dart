@@ -5,6 +5,7 @@ import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/models/general_question.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/question_and_title.dart';
@@ -93,6 +94,9 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                       listener: (context, state) {
                         if (state.generalquestionsState ==
                             RequestState.loaded) {
+                          context.read<EnterBloc>().add(
+                                Getuser(),
+                              );
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               backgroundColor: Colors.green,

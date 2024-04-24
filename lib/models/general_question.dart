@@ -6,7 +6,7 @@ class Generalquestion extends Equatable {
   final int id;
   final String question;
   final String date;
-  final int isReply;
+  final dynamic isReply;
   final LawyerModel userRequest;
   final List<RepliesModel> replies;
   const Generalquestion({
@@ -26,8 +26,8 @@ class Generalquestion extends Equatable {
 class Replies extends Equatable {
   final int id;
   final String reply;
-  final String? rate;
-  final String date;
+  final dynamic rate;
+  final dynamic date;
   final LawyerModel userResponse;
 
   const Replies({

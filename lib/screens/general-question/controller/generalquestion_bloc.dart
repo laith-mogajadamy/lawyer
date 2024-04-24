@@ -8,6 +8,7 @@ import 'package:lawyer/models/general_question.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/screens/general-question/data/general_question_reqwest.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 
 part 'generalquestion_event.dart';
 part 'generalquestion_state.dart';
@@ -72,6 +73,7 @@ class GeneralquestionBloc
           emit(state.copyWith(
               generalquestionreplyMessage: responsemap["message"],
               generalquestionsState: RequestState.loaded));
+          add(GetGeneralquestion());
         } else {
           emit(state.copyWith(
             generalquestionsState: RequestState.error,
@@ -103,6 +105,7 @@ class GeneralquestionBloc
               generalquestionreplyMessage:
                   "generalquestion added successfully ",
               generalquestionsState: RequestState.loaded));
+          add(GetGeneralquestion());
         } else {
           emit(state.copyWith(
             generalquestionsState: RequestState.error,

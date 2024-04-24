@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/enter.dart';
@@ -29,24 +30,43 @@ class _SplashState extends State<Splash> {
             if (state.islogedin == "true") {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const MyPages()),
+                MaterialPageRoute(
+                  builder: (context) => const MyPages(),
+                ),
               );
             } else if (state.islogedin == "false") {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const Enter()),
+                MaterialPageRoute(
+                  builder: (context) => const Enter(),
+                ),
               );
             }
           },
         );
       },
       child: Scaffold(
+        backgroundColor: AppColor.appgray,
         body: SizedBox(
-          width: size.width,
           height: size.height,
-          child: Image.asset(
-            "assets/images/splash2.jpeg",
-            fit: BoxFit.cover,
+          width: size.width,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox(
+                height: size.height,
+                width: size.width,
+                child: Image.asset(
+                  "assets/images/rm222batch5-kul-10.jpg",
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Image.asset(
+                "assets/images/splash.png",
+                fit: BoxFit.cover,
+                color: AppColor.appgray,
+              ),
+            ],
           ),
         ),
       ),
