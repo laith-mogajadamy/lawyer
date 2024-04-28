@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/login.dart';
 import 'package:lawyer/screens/welcome/register.dart';
@@ -42,7 +43,7 @@ class Enter extends StatelessWidget {
                   shape: StadiumBorder(
                       side: BorderSide(color: Colors.black, width: 1.5.w))),
               child: Text(
-                "LOGIN",
+                S.of(context).login,
                 style: TextStyle(
                     fontSize: 19.sp,
                     color: Colors.black,
@@ -64,7 +65,7 @@ class Enter extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "GUEST",
+                S.of(context).GUEST,
                 style: TextStyle(
                     fontSize: 19.sp,
                     color: Colors.black,
@@ -84,7 +85,7 @@ class Enter extends StatelessWidget {
                   shape: StadiumBorder(
                       side: BorderSide(color: Colors.black, width: 1.5.w))),
               child: Text(
-                "REGISTER",
+                S.of(context).REGISTER,
                 style: TextStyle(
                     fontSize: 17.sp,
                     color: Colors.black,
@@ -92,7 +93,7 @@ class Enter extends StatelessWidget {
               ),
             ),
             Text(
-              "ABOUT US",
+              S.of(context).ABOUTUS,
               style: TextStyle(
                   fontSize: 18.sp,
                   color: Colors.black,

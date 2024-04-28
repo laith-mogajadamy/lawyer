@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/general_question.dart';
 import 'package:lawyer/screens/lawyers/lawyerspage.dart';
 import 'package:lawyer/screens/lawyers/legalConsultantpage.dart';
@@ -55,7 +55,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             children: [
               Column(
                 children: [
-                  const Black16text(text: "LAWYER"),
+                  Black16text(text: S.of(context).Lawyers),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               ),
               Column(
                 children: [
-                  const Black16text(text: "LEGAL CONSULTANT"),
+                  Black16text(text: S.of(context).LegalConsultant),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Black16text(text: "typing Centers "),
+              Black16text(text: S.of(context).typingCenter),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -146,7 +146,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Black16text(text: "GENERAL QUESTIONS "),
+              Black16text(text: S.of(context).GeneralQuestions),
               GestureDetector(
                 onTap: () {
                   Navigator.push(

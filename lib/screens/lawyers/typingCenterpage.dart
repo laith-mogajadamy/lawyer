@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/lawyers/typingCentercomponent.dart';
 import 'package:lawyer/screens/widgets/maintextform.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
@@ -12,12 +13,12 @@ class TypingCenterpage extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: 30.h),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Maintextform(),
-            Orange22text(text: "typing Center"),
-            Expanded(child: TypingCentercomponent()),
+            const Maintextform(),
+            Orange22text(text: S.of(context).typingCenter),
+            const Expanded(child: TypingCentercomponent()),
           ],
         ),
       ),

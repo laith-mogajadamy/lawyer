@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
@@ -96,7 +97,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     children: [
                       Column(
                         children: [
-                          const Black18text(text: "Gallery"),
+                          Black18text(text: S.of(context).Gallery),
                           GestureDetector(
                             onTap: () {
                               pickimage(ImageSource.gallery).then(
@@ -122,7 +123,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ),
                       Column(
                         children: [
-                          const Black18text(text: "Camera"),
+                          Black18text(text: S.of(context).Camera),
                           GestureDetector(
                             onTap: () {
                               pickimage(ImageSource.camera).then(
@@ -157,10 +158,10 @@ class _ProfileEditState extends State<ProfileEdit> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     children: [
-                      Black22text(text: "BRIEFCASE"),
-                      Orange22text(text: "Profile Edit"),
+                      const Black22text(text: "BRIEFCASE"),
+                      Orange22text(text: S.of(context).ProfileEdit),
                     ],
                   ),
                   GestureDetector(
@@ -209,33 +210,34 @@ class _ProfileEditState extends State<ProfileEdit> {
                     child: Column(
                       children: [
                         InfoInput(
-                            name: "Name/Company",
+                            name: S.of(context).Name,
                             hint: "Client name",
-                            validator: (value) =>
-                                state.isValidName ? null : "name is too short",
+                            validator: (value) => state.isValidName
+                                ? null
+                                : S.of(context).namevalidate,
                             onchange: null,
                             controller: name),
                         SizedBox(
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "Email address",
+                            name: S.of(context).email,
                             hint: "Client@gmail.com",
                             validator: (value) => state.isValidEmail
                                 ? null
-                                : "Email is too short",
+                                : S.of(context).emailvalidate,
                             onchange: null,
                             controller: email),
                         SizedBox(
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "Contact number",
+                            name: S.of(context).Contactnumber,
                             hint: "000000000",
                             validator: (value) {
                               return state.isValidnumber
                                   ? null
-                                  : "number is too short";
+                                  : S.of(context).numbervalidate;
                             },
                             onchange: null,
                             controller: number),
@@ -243,7 +245,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "birth",
+                            name: S.of(context).birth,
                             hint: "d/m/y",
                             validator: null,
                             onchange: null,
@@ -252,7 +254,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "location",
+                            name: S.of(context).location,
                             hint: "0",
                             validator: null,
                             onchange: null,
@@ -261,7 +263,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "gender",
+                            name: S.of(context).Gender,
                             hint: "male/female",
                             validator: null,
                             onchange: null,
@@ -270,7 +272,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                           height: 20.h,
                         ),
                         InfoInput(
-                            name: "consultation price",
+                            name: S.of(context).consultationprice,
                             hint: "50",
                             validator: null,
                             onchange: null,
@@ -292,7 +294,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       shape: const StadiumBorder(),
                     ),
                     child: Text(
-                      "add certification",
+                      S.of(context).addcertification,
                       style: TextStyle(
                           fontSize: 18.sp,
                           color: Colors.black,
@@ -380,7 +382,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                               strokeWidth: 2.w,
                             )
                           : Text(
-                              "save",
+                              S.of(context).save,
                               style: TextStyle(
                                   fontSize: 20.sp,
                                   color: Colors.black,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/enums.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/consultation.dart';
 import 'package:lawyer/screens/consultation/controller/consultation_bloc.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
@@ -35,7 +35,7 @@ class ConsultationPage extends StatelessWidget {
                   children: [
                     Center(
                       child: Text(
-                        "Consultation",
+                        S.of(context).Consultations,
                         style: TextStyle(
                           fontSize: 28.sp,
                           fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class ConsultationPage extends StatelessWidget {
                     ),
                     ReplayTextField(
                       controller: controller,
-                      hint: "Type your answer with details",
+                      hint: S.of(context).Typeyouranswerwithdetails,
                     ),
                     SizedBox(
                       height: 10.h,
@@ -111,7 +111,7 @@ class ConsultationPage extends StatelessWidget {
                             ),
                           ),
                           child: Text(
-                            " send",
+                            S.of(context).Send,
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 color: Colors.black,
@@ -127,7 +127,7 @@ class ConsultationPage extends StatelessWidget {
                         ? const SizedBox.shrink()
                         : Column(
                             children: [
-                              const Black22text(text: "Answer "),
+                              Black22text(text: S.of(context).Answer),
                               Black22text(text: consultation.answer)
                             ],
                           ),

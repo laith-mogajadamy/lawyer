@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
-import 'package:lawyer/screens/chatpage.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/group_massege.dart';
 import 'package:lawyer/screens/pages/person_massege.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/maintextform.dart';
 
 class MassegesPage extends StatefulWidget {
   const MassegesPage({super.key});
@@ -19,7 +17,7 @@ class _MassegesPageState extends State<MassegesPage> {
   TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
 
     TextEditingController textcontroller = TextEditingController();
     return DefaultTabController(
@@ -33,12 +31,12 @@ class _MassegesPageState extends State<MassegesPage> {
           leading: null,
           actions: null,
           backgroundColor: AppColor.appgray,
-          bottom: const TabBar(tabs: [
+          bottom: TabBar(tabs: [
             Tab(
-              child: Black16text(text: "masseges"),
+              child: Black16text(text: S.of(context).masseges),
             ),
             Tab(
-              child: Black16text(text: "Groups"),
+              child: Black16text(text: S.of(context).Groups),
             ),
           ]),
           title: TextFormField(
@@ -52,7 +50,7 @@ class _MassegesPageState extends State<MassegesPage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.r),
                 ),
-                hintText: "search",
+                hintText: S.of(context).search,
                 hintStyle: const TextStyle(color: Colors.black),
                 filled: true,
                 fillColor: AppColor.appgray,
@@ -68,7 +66,7 @@ class _MassegesPageState extends State<MassegesPage> {
                     borderSide: BorderSide(color: Colors.black, width: 2.h))),
           ),
         ),
-        body: TabBarView(children: [PersonMassege(), GroupMassege()]),
+        body: const TabBarView(children: [PersonMassege(), GroupMassege()]),
       ),
     );
   }

@@ -1,0 +1,93 @@
+{  
+    "title":"BRIEfCASE",
+    "login":"تسجيل الدخول",
+    "REGISTER":"انشاء حساب",
+    "GUEST":"ضيف",
+    "ABOUTUS":"معلوماتنا",
+    
+    "email":"الايميل",
+    "emailvalidate":"الايميل قصير جدا",
+    "Password":"كلمة السر",
+    "passwordvalidate":"كلمة السر قصيرة جدا",
+    "LogInbotton":"سجل دخول",
+    "Don't have an account":"لا تمتلك حساب؟",
+    "SignUp":"انشاء حساب",
+
+    "select":"اختر",
+    "Name":"الاسم/الشركة",
+    "namevalidate":"الاسم قصير جدا",
+    "Emailaddress":"عنوان الايميل ",
+    "Contactnumber":"رقم الهاتف",
+    "numbervalidate": "الرقم قصير جدا",
+    "register":"انشاء حساب",
+    "Alreadyhaveanaccount":"هل لديك حساب بالفعل؟",
+    "":"",
+
+    "Myconsultations":"استشاراتي",
+    "youdonthaveanyconsultations": "ليس لديك أي استشارات",
+
+    "GeneralQuestions": "أسئلة عامة",
+    "youdonthaveanygeneralquestions":"ليس لديك أي أسئلة عامة",
+    "MyGeneralQuestions":"أسئلتي العامة",
+
+    "Lawyers":"المحامون",
+    "LegalConsultant":"مستشار قانوني",
+    "typingCenter":"مركز الطباعة",
+
+    "masseges":"رسائل",
+    "Groups":"مجموعات",
+    "search":"بحث",
+
+    "Home":"الرئيسية",
+    "Consultations":"الاستشارات",
+    "Profile": "الملف الشخصي",
+
+    "Gender":"الجنس",
+    "location":"الموقع",
+    "CERTIFICATIONS":"الشهادات",
+    "POSTAGENERALQUESTION":"نشر سؤال عام",
+    "ProfileEdit": "تعديل الملف الشخصي",
+    "Loggingout":" .... جار تسجيل الخروج",
+    "LOGOUT":"تسجيل خروج",
+    "Changethelanguage":"غير اللغة",
+
+
+
+    "results": "النتائج:",
+    "typeorselecttosearch":"اكتب أو حدد للبحث",
+
+    "General_n_Question": "سؤال عام",
+    "TypeyourGeneralquestionhere":"اكتب سؤالك العام هنا",
+    "YOURQUESTIONMAYORMAYNOTBEANSWERED":"قد يتم الإجابة على سؤالك أو قد لا يتم ذلك",
+    "Send":"إرسال" ,
+
+    "Typeyouranswerwithdetails":"اكتب إجابتك بالتفاصيل",
+    "Answer":"الإجابة",
+
+    "Typeyourquestiontilte":"اكتب عنوان سؤالك",
+    "Typeyourquestionwithdetails":"اكتب سؤالك بالتفاصيل",
+    "THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION":"سيتم تكلفة الإجابة التفصيلية استنادًا إلى سعر أو تكلفة محامي التخصص الخاصة بهذه الاستشارة",
+    "paysend":"ادفع وأرسل",
+    "IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT":"إذا لم يتم الرد خلال 48 ساعة، سيتم إرجاع أموالك إلى حسابك",
+    "TYPEYOURreplay": "اكتب ردك",
+    "byansweringmoregeneralquestionyouwillgethigherchancestobeatthetopofthesearchresult":"من خلال الإجابة على المزيد من الأسئلة العامة، ستحصل على فرص أعلى للظهور في أعلى نتائج البحث",
+    "replayes":"الردود",
+    "closedConsultation":"الاستشارات المغلقة",
+    "EXPERTISE":"الخبرة",
+    "sendaquestion": "إرسال سؤال",
+    "chat":"دردشة",
+
+
+    "Gallery":"المعرض",
+    "Camera":"الكاميرا",
+
+    "birth":"تاريخ الميلاد",
+    "consultationprice":"سعر الاستشارة",
+    "addcertification":"إضافة شهادة",
+    "save":"حفظ",
+
+    "numOfConsultation":"عدد الاستشارات",
+    "yearsOfPractice":"سنوات الخبرة"
+
+
+}

@@ -1,8 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/network/global.dart';
 
-class Lawyersreqwest {
-  static Future<http.Response> getlawyers(
+class Searchrequest {
+  static Future<http.Response> search(
     String token,
   ) async {
     Map<String, String> headers = {

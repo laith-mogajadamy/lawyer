@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/register.dart';
@@ -63,11 +64,11 @@ class _LoginState extends State<Login> {
                       child: Column(
                         children: [
                           InfoInput(
-                              name: "email",
+                              name: S.of(context).email,
                               hint: "Client@gmail.com",
                               validator: (value) => state.isValidEmail
                                   ? null
-                                  : "Email or Username is too short",
+                                  : S.of(context).emailvalidate,
                               onchange: (value) =>
                                   context.read<EnterBloc>().add(
                                         LoginEmailChanged(email: value),
@@ -77,11 +78,11 @@ class _LoginState extends State<Login> {
                             height: 30.h,
                           ),
                           InfoInput(
-                              name: "Password",
+                              name: S.of(context).Password,
                               hint: "*******",
                               validator: (value) => state.isValidPassword
                                   ? null
-                                  : 'Password is too short',
+                                  : S.of(context).passwordvalidate,
                               onchange: (value) =>
                                   context.read<EnterBloc>().add(
                                         LoginPasswordChanged(password: value),
@@ -156,7 +157,7 @@ class _LoginState extends State<Login> {
                                       strokeWidth: 4.w,
                                     )
                                   : Text(
-                                      "Log In",
+                                      S.of(context).LogInbotton,
                                       style: TextStyle(
                                           fontSize: 20.sp,
                                           color: Colors.white,
@@ -171,7 +172,7 @@ class _LoginState extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Black16text(text: "Don't have an account?"),
+                      Black16text(text: S.of(context).donthaveanaccount),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -181,7 +182,7 @@ class _LoginState extends State<Login> {
                               ),
                             );
                           },
-                          child: const Black18text(text: "SignUp"))
+                          child: Black18text(text: S.of(context).SignUp))
                     ],
                   ),
                 ],

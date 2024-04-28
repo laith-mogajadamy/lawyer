@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/user_general_question_component.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 
@@ -7,12 +8,12 @@ class UserGeneralquestion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-            Orange22text(text: " My General Questions"),
-            Expanded(child: UserGeneralquestioncomponent()),
+            Orange22text(text: S.of(context).MyGeneralQuestions),
+            const Expanded(child: UserGeneralquestioncomponent()),
           ],
         ),
       ),

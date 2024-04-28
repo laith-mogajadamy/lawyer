@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/generalquestioncard.dart';
@@ -16,7 +17,7 @@ class _FilesPageState extends State<UserGeneralquestioncomponent> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return BlocBuilder<EnterBloc, EnterState>(
       builder: (context, state) {
         if (state.user.generalquestions!.isNotEmpty) {
@@ -29,8 +30,9 @@ class _FilesPageState extends State<UserGeneralquestioncomponent> {
             },
           );
         } else {
-          return const Center(
-            child: Black22text(text: "you dont have any generalquestions"),
+          return Center(
+            child:
+                Black22text(text: S.of(context).youdonthaveanygeneralquestions),
           );
         }
       },

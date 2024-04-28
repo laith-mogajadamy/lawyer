@@ -7,6 +7,7 @@ class EnterState extends Equatable {
   final List<File>? certifications;
   final FormSubmissionStatus editStatus;
   final FormSubmissionStatus logoutStatus;
+  final String language;
 
   //didnt use it
   // final User user;
@@ -36,6 +37,7 @@ class EnterState extends Equatable {
     this.certifications = const [],
     this.editStatus = const InitialFormStatus(),
     this.logoutStatus = const InitialFormStatus(),
+    this.language = 'en',
 
     //
     this.user = const Lawyer(
@@ -75,6 +77,7 @@ class EnterState extends Equatable {
     List<File>? certifications,
     FormSubmissionStatus? editStatus,
     FormSubmissionStatus? logoutStatus,
+    String? language,
 
     //
     Lawyer? user,
@@ -102,6 +105,7 @@ class EnterState extends Equatable {
       certifications: certifications ?? this.certifications,
       editStatus: editStatus ?? this.editStatus,
       logoutStatus: logoutStatus ?? this.logoutStatus,
+      language: language ?? this.language,
 
       //
       user: user ?? this.user,
@@ -125,6 +129,7 @@ class EnterState extends Equatable {
         certifications,
         editStatus,
         logoutStatus,
+        language,
         //
         user,
         token,

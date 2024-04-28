@@ -9,6 +9,15 @@ class Getuser extends EnterEvent {
   List<Object?> get props => [];
 }
 
+class LanguageChanged extends EnterEvent {
+  final String? language;
+
+  LanguageChanged({this.language});
+
+  @override
+  List<Object?> get props => [language];
+}
+
 class ImageChange extends EnterEvent {
   final File? fimage;
 

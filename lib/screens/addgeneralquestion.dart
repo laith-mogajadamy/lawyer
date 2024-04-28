@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 
@@ -39,7 +40,7 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                 children: [
                   Center(
                     child: Text(
-                      "General \nQuestion",
+                      S.of(context).General_n_Question,
                       style: TextStyle(
                           fontSize: 28.sp,
                           fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          hintText: "Type your GENERAL question HERE",
+                          hintText: S.of(context).TypeyourGeneralquestionhere,
                           hintStyle: TextStyle(
                               fontSize: 24.sp,
                               color: AppColor.apporange,
@@ -93,7 +94,7 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                     width: size.width,
                     child: Text(
                       textAlign: TextAlign.center,
-                      "YOUR QUESTION MAY OR MAY NOT BE ANSWERED",
+                      S.of(context).YOURQUESTIONMAYORMAYNOTBEANSWERED,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColor.apporange,
@@ -165,7 +166,7 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                           ),
                         ),
                         child: Text(
-                          " send",
+                          S.of(context).Send,
                           style: TextStyle(
                               fontSize: 18.sp,
                               color: Colors.black,

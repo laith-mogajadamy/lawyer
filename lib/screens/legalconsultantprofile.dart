@@ -4,9 +4,10 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
+import 'package:lawyer/screens/add_consultation.dart';
 import 'package:lawyer/screens/chatpage.dart';
-import 'package:lawyer/screens/consultation.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/graydivider.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -52,7 +53,7 @@ class Legalconsultantprofile extends StatelessWidget {
                     size: 10.r,
                   ),
                   Text(
-                    " location: ${lawyer.location}",
+                    " ${S.of(context).location} ${lawyer.location}",
                     style: TextStyle(
                       color: AppColor.apporange,
                       fontSize: 14.sp,
@@ -62,7 +63,7 @@ class Legalconsultantprofile extends StatelessWidget {
                 ],
               ),
               Text(
-                " closedConsultation: ${lawyer.closedConsultation}",
+                " ${S.of(context).closedConsultation}: ${lawyer.closedConsultation}",
                 style: TextStyle(
                   color: AppColor.apporange,
                   fontSize: 18.sp,
@@ -70,7 +71,7 @@ class Legalconsultantprofile extends StatelessWidget {
                 ),
               ),
               Text(
-                "consultationPrice:${lawyer.consultationPrice}",
+                "${S.of(context).consultationprice}:${lawyer.consultationPrice}",
                 style: TextStyle(
                   color: AppColor.apporange,
                   fontSize: 18.sp,
@@ -80,7 +81,7 @@ class Legalconsultantprofile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "CERTIFICATIONS & AWARDS",
+                    S.of(context).CERTIFICATIONS,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -134,7 +135,7 @@ class Legalconsultantprofile extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "EXPERTISE",
+                    S.of(context).EXPERTISE,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -148,7 +149,7 @@ class Legalconsultantprofile extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        "CONSULTAION",
+                        S.of(context).Consultations,
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.bold,
@@ -173,14 +174,14 @@ class Legalconsultantprofile extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Consultation(
+                                builder: (context) => AddConsultation(
                                   lawyer: lawyer,
                                 ),
                               ),
                             );
                           },
                           child: Text(
-                            "send a question",
+                            S.of(context).sendaquestion,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.bold,
@@ -207,7 +208,7 @@ class Legalconsultantprofile extends StatelessWidget {
                               size: 60.r,
                               color: AppColor.apporange,
                             ),
-                            const Black18text(text: "chat")
+                            Black18text(text: S.of(context).chat)
                           ],
                         ),
                       )

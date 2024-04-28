@@ -20,37 +20,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => EnterBloc()..add(Getuser()),
-      child: ScreenUtilInit(
-          designSize: const Size(393, 786),
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (BuildContext context, Widget? child) {
-            return MaterialApp(
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
-              debugShowCheckedModeBanner: false,
-              title: 'BRIEfCASE',
-              theme: ThemeData(
-                // Notice that the counter didn't reset back to zero; the application
-                // state is not lost during the reload. To reset the state, use hot
-                // restart instead.
-                //
-                // This works for code too, not just values: Most code changes can be
-                // tested with just a hot reload.
-                colorScheme: ColorScheme.fromSeed(
-                  seedColor: Colors.black,
-                  primary: Colors.black,
-                ),
-                useMaterial3: true,
-              ),
-              home: const Splash(),
-            );
-          }),
+      child: BlocBuilder<EnterBloc, EnterState>(
+        builder: (context, state) {
+          return ScreenUtilInit(
+              designSize: const Size(393, 786),
+              minTextAdapt: true,
+              splitScreenMode: true,
+              builder: (BuildContext context, Widget? child) {
+                return MaterialApp(
+                  locale: Locale(state.language),
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: S.delegate.supportedLocales,
+                  debugShowCheckedModeBanner: false,
+                  title: 'BRIEfCASE',
+                  theme: ThemeData(
+                    // Notice that the counter didn't reset back to zero; the application
+                    // state is not lost during the reload. To reset the state, use hot
+                    // restart instead.
+                    //
+                    // This works for code too, not just values: Most code changes can be
+                    // tested with just a hot reload.
+                    colorScheme: ColorScheme.fromSeed(
+                      seedColor: Colors.black,
+                      primary: Colors.black,
+                    ),
+                    useMaterial3: true,
+                  ),
+                  home: const Splash(),
+                );
+              });
+        },
+      ),
     );
   }
 }

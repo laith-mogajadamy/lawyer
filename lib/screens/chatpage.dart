@@ -239,3 +239,99 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 }
+// import 'package:flutter/material.dart';
+// import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+// class ChatPage extends StatefulWidget {
+//   @override
+//   _ChatPageState createState() => _ChatPageState();
+// }
+
+// class _ChatPageState extends State<ChatPage> {
+//   IO.Socket socket;
+//   List<String> messages = [];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Create Socket.IO instance and connect
+//     socket = IO.io('your_socket_server_url');
+//     socket.connect();
+
+//     // Listen for 'message' event
+//     socket.on('message', (data) {
+//       setState(() {
+//         messages.add(data.toString());
+//       });
+//     });
+//   }
+
+//   @override
+//   void dispose() {
+//     // Close the connection when the page is disposed
+//     socket.close();
+//     super.dispose();
+//   }
+
+//   void sendMessage(String message) {
+//     // Emit 'message' event
+//     socket.emit('message', message);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Chat Page'),
+//       ),
+//       body: Column(
+//         children: [
+//           Expanded(
+//             child: ListView.builder(
+//               itemCount: messages.length,
+//               itemBuilder: (context, index) {
+//                 return ListTile(
+//                   title: Text(messages[index]),
+//                 );
+//               },
+//             ),
+//           ),
+//           Container(
+//             padding: EdgeInsets.all(10),
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                   child: TextField(
+//                     onChanged: (value) {
+//                       // Update the message text
+//                     },
+//                   ),
+//                 ),
+//                 IconButton(
+//                   icon: Icon(Icons.send),
+//                   onPressed: () {
+//                     // Send the message
+//                     sendMessage('message text');
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+
+// to add message history
+
+
+// List<String> messageHistory = prefs.getStringList('messageHistory') ?? [];
+// socket.on('message', (data) {
+//   setState(() {
+//     messages.add(data.toString());
+//     messageHistory.add(data.toString());
+//     prefs.setStringList('messageHistory', messageHistory);
+//   });
+// });

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/generated/l10n.dart';
+import 'package:lawyer/screens/search/controller/search_bloc.dart';
+import 'package:lawyer/screens/search/search_component.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lottie/lottie.dart';
+import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Search extends StatefulWidget {
@@ -81,120 +85,113 @@ class _SearchState extends State<Search> {
         ),
       );
     }
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(top: 3.h),
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height / 15,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: size.width / 8,
-                        child: PopupMenuButton(
-                          icon: Icon(
-                            FontAwesomeIcons.sliders,
-                            size: 35.r,
-                            color: AppColor.appgray,
-                          ),
-                          position: PopupMenuPosition.under,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.r)),
-                          color: AppColor.appgray,
-                          itemBuilder: (BuildContext context) {
-                            popup = !popup;
-                            return (popup) ? placesitems : practiceitem;
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: size.width / 1.2,
-                        child: Form(
-                          child: TextFormField(
-                            onChanged: (string) {
-                              setState(() {});
-                            },
-                            controller: controller,
-                            enabled: true,
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 18.sp),
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.r),
-                              ),
-                              hintText: "search",
-                              hintStyle: const TextStyle(color: Colors.grey),
-                              filled: true,
-                              fillColor: AppColor.appgray,
-                              prefixIcon: InkWell(
-                                onTap: () {
-                                  // bloc.add(GetSearchProductsEvent(
-                                  //     pageNum: 1,
-                                  //     search: controller.text,
-                                  //     perPage: 100));
+    return BlocProvider(
+      create: (context) => SearchBloc(),
+      child: BlocBuilder<SearchBloc, SearchState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(top: 3.h),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height / 15,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: size.width / 8,
+                              child: PopupMenuButton(
+                                onSelected: (value) {
+                                  context.read<SearchBloc>().add(
+                                        Searchlawyers(query: value),
+                                      );
                                 },
-                                child: Icon(
-                                  Icons.search,
-                                  size: 33.sp,
-                                  color: Colors.black,
+                                icon: Icon(
+                                  FontAwesomeIcons.sliders,
+                                  size: 35.r,
+                                  color: AppColor.appgray,
                                 ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.r),
+                                position: PopupMenuPosition.under,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.r)),
+                                color: AppColor.appgray,
+                                itemBuilder: (BuildContext context) {
+                                  popup = !popup;
+                                  return (popup) ? placesitems : practiceitem;
+                                },
                               ),
                             ),
-                          ),
+                            SizedBox(
+                              width: size.width / 1.2,
+                              child: Form(
+                                child: TextFormField(
+                                  onChanged: (string) {
+                                    context.read<SearchBloc>().add(
+                                          Searchlawyers(query: string),
+                                        );
+                                  },
+                                  controller: controller,
+                                  enabled: true,
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 18.sp),
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                    hintText: S.of(context).search,
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    filled: true,
+                                    fillColor: AppColor.appgray,
+                                    prefixIcon: InkWell(
+                                      onTap: () {
+                                        // bloc.add(GetSearchProductsEvent(
+                                        //     pageNum: 1,
+                                        //     search: controller.text,
+                                        //     perPage: 100));
+                                      },
+                                      child: Icon(
+                                        Icons.search,
+                                        size: 33.sp,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      child: Text(
+                        S.of(context).results,
+                        style: TextStyle(fontSize: 20.sp),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    (state.lawyers.isEmpty)
+                        ? Center(
+                            child: Black22text(
+                                text: S.of(context).typeorselecttosearch),
+                          )
+                        : const Searchcomponent(),
+                  ],
                 ),
               ),
-              SizedBox(
-                child: Text(
-                  "results :",
-                  style: TextStyle(fontSize: 20.sp),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              (controller.value.text.isEmpty)
-                  ? Center(
-                      child: Lottie.asset(
-                        'assets/lottie/searching.json',
-                        fit: BoxFit.cover,
-                        height: 250.h,
-                      ),
-                    )
-                  : Expanded(
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: 5,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           const Legalconsultantprofile()),
-                              // );
-                            },
-                            // child: const Lawyerscard(lawyer: ,),
-                          );
-                        },
-                      ),
-                    )
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

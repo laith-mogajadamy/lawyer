@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/login.dart';
@@ -99,11 +100,11 @@ class _RegisterState extends State<Register> {
                         child: Column(
                           children: [
                             InfoInput(
-                                name: "Name/Company",
+                                name: S.of(context).Name,
                                 hint: "Client name",
                                 validator: (value) => state.isValidName
                                     ? null
-                                    : "name is too short",
+                                    : S.of(context).namevalidate,
                                 onchange: (value) =>
                                     context.read<EnterBloc>().add(
                                           LoginNameChanged(name: value),
@@ -113,11 +114,11 @@ class _RegisterState extends State<Register> {
                               height: 20.h,
                             ),
                             InfoInput(
-                                name: "Email address",
+                                name: S.of(context).Emailaddress,
                                 hint: "Client@gmail.com",
                                 validator: (value) => state.isValidEmail
                                     ? null
-                                    : "Email is too short",
+                                    : S.of(context).emailvalidate,
                                 onchange: (value) =>
                                     context.read<EnterBloc>().add(
                                           LoginEmailChanged(email: value),
@@ -127,12 +128,12 @@ class _RegisterState extends State<Register> {
                               height: 20.h,
                             ),
                             InfoInput(
-                                name: "Contact number",
+                                name: S.of(context).Contactnumber,
                                 hint: "000000000",
                                 validator: (value) {
                                   return state.isValidnumber
                                       ? null
-                                      : "number is too short";
+                                      : S.of(context).numbervalidate;
                                 },
                                 onchange: (value) {
                                   return context.read<EnterBloc>().add(
@@ -144,11 +145,11 @@ class _RegisterState extends State<Register> {
                               height: 20.h,
                             ),
                             InfoInput(
-                                name: "Password",
+                                name: S.of(context).Password,
                                 hint: "*******",
                                 validator: (value) => state.isValidPassword
                                     ? null
-                                    : 'Password is too short',
+                                    : S.of(context).passwordvalidate,
                                 onchange: (value) =>
                                     context.read<EnterBloc>().add(
                                           LoginPasswordChanged(password: value),
@@ -181,7 +182,7 @@ class _RegisterState extends State<Register> {
                                   borderRadius: BorderRadius.circular(20.r),
                                   hint: Text(
                                     (state.type.isEmpty)
-                                        ? "select"
+                                        ? S.of(context).select
                                         : types[int.parse(state.type) - 1],
                                     style: TextStyle(
                                         fontSize: 18.sp, color: Colors.black),
@@ -265,7 +266,7 @@ class _RegisterState extends State<Register> {
                                         strokeWidth: 4.w,
                                       )
                                     : Text(
-                                        "next",
+                                        S.of(context).register,
                                         style: TextStyle(
                                             fontSize: 20.sp,
                                             color: Colors.black,
@@ -283,7 +284,7 @@ class _RegisterState extends State<Register> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Black16text(text: "Already have an account?"),
+                        Black16text(text: S.of(context).Alreadyhaveanaccount),
                         TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -293,7 +294,7 @@ class _RegisterState extends State<Register> {
                                 ),
                               );
                             },
-                            child: const Black18text(text: "Log In"))
+                            child: Black18text(text: S.of(context).LogInbotton))
                       ],
                     ),
                   ],

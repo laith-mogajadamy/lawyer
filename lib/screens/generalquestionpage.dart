@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/general_question.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
@@ -44,7 +45,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                 children: [
                   Center(
                     child: Text(
-                      "General Question",
+                      S.of(context).GeneralQuestions,
                       style: TextStyle(
                         fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                   ),
                   ReplayTextField(
                     controller: controller,
-                    hint: "TYPE YOUR replay",
+                    hint: S.of(context).TYPEYOURreplay,
                   ),
                   SizedBox(
                     height: 10.h,
@@ -73,7 +74,9 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                     width: size.width,
                     child: Text(
                       textAlign: TextAlign.center,
-                      "by answering more general question you will get higher chances to be at the top of the search result",
+                      S
+                          .of(context)
+                          .byansweringmoregeneralquestionyouwillgethigherchancestobeatthetopofthesearchresult,
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: AppColor.apporange,
@@ -146,7 +149,7 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                           ),
                         ),
                         child: Text(
-                          " send",
+                          S.of(context).Send,
                           style: TextStyle(
                               fontSize: 18.sp,
                               color: Colors.black,
@@ -162,7 +165,9 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                     color: Colors.black,
                     thickness: 2.h,
                   ),
-                  const Center(child: Black22text(text: "replayes")),
+                  Center(
+                    child: Black22text(text: S.of(context).replayes),
+                  ),
                   SizedBox(
                     height: 10.h,
                   ),

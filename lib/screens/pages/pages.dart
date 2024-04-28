@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/consultation/user_consultations.dart';
-import 'package:lawyer/screens/pages/filespage.dart';
 import 'package:lawyer/screens/pages/home.dart';
 import 'package:lawyer/screens/pages/massegespage.dart';
 import 'package:lawyer/screens/pages/personalprofile.dart';
@@ -54,22 +54,22 @@ class _MyPagesState extends State<MyPages> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
+              icon: const Icon(Icons.home),
+              label: S.of(context).Home,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.file_open),
-              label: "Consultations",
+              icon: const Icon(Icons.file_open),
+              label: S.of(context).Consultations,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.message),
-              label: "messages",
+              icon: const Icon(Icons.message),
+              label: S.of(context).masseges,
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: "Profile",
+              icon: const Icon(Icons.person),
+              label: S.of(context).Profile,
             ),
           ],
           currentIndex: select,

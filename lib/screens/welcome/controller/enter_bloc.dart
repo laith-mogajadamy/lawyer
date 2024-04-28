@@ -60,6 +60,14 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       }
     });
     //
+    on<LanguageChanged>((event, emit) async {
+      emit(
+        state.copyWith(
+          language: event.language,
+        ),
+      );
+    });
+    //
     on<Profiledit>((event, emit) async {
       print("Profiledit");
       print(state.token);

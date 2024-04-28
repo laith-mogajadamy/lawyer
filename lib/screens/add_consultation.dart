@@ -3,20 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/enums.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/consultation/controller/consultation_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 
-class Consultation extends StatefulWidget {
+// ignore: must_be_immutable
+class AddConsultation extends StatelessWidget {
   final Lawyer lawyer;
 
-  const Consultation({super.key, required this.lawyer});
+  AddConsultation({super.key, required this.lawyer});
 
-  @override
-  State<Consultation> createState() => _ConsultationState();
-}
-
-class _ConsultationState extends State<Consultation> {
   TextEditingController title = TextEditingController();
 
   TextEditingController description = TextEditingController();
@@ -36,13 +33,13 @@ class _ConsultationState extends State<Consultation> {
                 child: Column(
                   children: [
                     Text(
-                      "CONSULTANTION",
+                      S.of(context).Consultations,
                       style: TextStyle(
                         fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Black18text(text: "lawyer`s name"),
+                    Black18text(text: lawyer.name),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -60,7 +57,7 @@ class _ConsultationState extends State<Consultation> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          hintText: "Type your question tilte",
+                          hintText: S.of(context).Typeyourquestiontilte,
                           hintStyle: TextStyle(
                               fontSize: 24.sp,
                               color: AppColor.apporange,
@@ -94,7 +91,7 @@ class _ConsultationState extends State<Consultation> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          hintText: "Type your question with details",
+                          hintText: S.of(context).Typeyourquestionwithdetails,
                           hintStyle: TextStyle(
                               fontSize: 24.sp,
                               color: AppColor.apporange,
@@ -120,7 +117,9 @@ class _ConsultationState extends State<Consultation> {
                       width: size.width,
                       child: Text(
                         textAlign: TextAlign.center,
-                        "THE DETAIL ANSWER WILL COST BASED ON THE LAW PRACTITIONER'S RATE OR SET PRICE OF THIS CONSULTAION",
+                        S
+                            .of(context)
+                            .THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION,
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: AppColor.apporange,
@@ -185,7 +184,7 @@ class _ConsultationState extends State<Consultation> {
                             // print(response.status.toString());
                             context.read<ConsultationBloc>().add(
                                 Addconsultation(
-                                    id: widget.lawyer.id,
+                                    id: lawyer.id,
                                     title: title.text.trim(),
                                     description: description.text.trim()));
                             title.clear();
@@ -199,7 +198,7 @@ class _ConsultationState extends State<Consultation> {
                             ),
                           ),
                           child: Text(
-                            "pay & send",
+                            S.of(context).paysend,
                             style: TextStyle(
                                 fontSize: 18.sp,
                                 color: Colors.black,
@@ -217,7 +216,9 @@ class _ConsultationState extends State<Consultation> {
                       width: size.width,
                       child: Text(
                         textAlign: TextAlign.center,
-                        "IF NOT ANSWERED IN 48 HOURS YOUR MONEY WILL BE SENT BACK TO YOUR ACCOUNT",
+                        S
+                            .of(context)
+                            .IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT,
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: AppColor.apporange,

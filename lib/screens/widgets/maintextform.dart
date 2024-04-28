@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/search/search.dart';
 
 class Maintextform extends StatelessWidget {
@@ -42,7 +43,7 @@ class Maintextform extends StatelessWidget {
                       color: Colors.black,
                     ),
                     Text(
-                      "  search  ",
+                      S.of(context).search,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 18.sp,

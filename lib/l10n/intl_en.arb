@@ -1,3 +1,91 @@
 {
-    
+    "title":"BRIEfCASE",
+    "login":"login",
+    "REGISTER":"REGISTER",
+    "GUEST":"GUEST",
+    "ABOUTUS": "ABOUT US",
+
+    "email":"email",
+    "emailvalidate":"Email or Username is too short",
+    "Password":"Password",
+    "passwordvalidate":"Password is too short",
+    "LogInbotton":"Log In",
+    "donthaveanaccount":"Don't have an account?",
+    "SignUp":"SignUp",
+
+    "select":"select",
+    "Name":"Name/Company",
+    "namevalidate":"name is too short",
+    "Emailaddress":"Email address",
+    "Contactnumber":"Contact number",
+    "numbervalidate": "number is too short",
+    "register":"Register",
+    "Alreadyhaveanaccount":"Already have an account?",
+    "":"",
+
+    "Myconsultations":" My consultations",
+    "youdonthaveanyconsultations": "you dont have any consultations",
+
+    "GeneralQuestions": "General Questions",
+    "youdonthaveanygeneralquestions":"you dont have any generalquestions",
+    "MyGeneralQuestions":" My General Questions",
+
+    "Lawyers":"Lawyers",
+    "LegalConsultant":"Legal Consultant",
+    "typingCenter":"typing Center",
+
+    "masseges":"Masseges",
+    "Groups":"Groups",
+    "search":"search",
+
+    "Home":"Home",
+    "Consultations":"Consultations",
+    "Profile": "Profile",
+
+    "Gender":"Gender",
+    "location":"location",
+    "CERTIFICATIONS":"Certifications",
+    "POSTAGENERALQUESTION":"Post a General Question",
+    "ProfileEdit": "Profile Edit",
+    "Loggingout":"Logging out....",
+    "LOGOUT":"Log Out",
+    "Changethelanguage":"Change the language",
+
+
+    "results": "results :",
+    "typeorselecttosearch":"type or select to search",
+
+    "General_n_Question": "General \nQuestion",
+    "TypeyourGeneralquestionhere":"Type your General question here",
+    "YOURQUESTIONMAYORMAYNOTBEANSWERED":"YOUR QUESTION MAY OR MAY NOT BE ANSWERED",
+    "Send":"Send" ,
+
+    "Typeyouranswerwithdetails":"Type your answer with details",
+    "Answer":"Answer",
+
+    "Typeyourquestiontilte":"Type your question tilte",
+    "Typeyourquestionwithdetails":"Type your question with details",
+    "THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION":"THE DETAIL ANSWER WILL COST BASED ON THE LAW PRACTITIONER'S RATE OR SET PRICE OF THIS CONSULTAION",
+    "paysend":"pay & send",
+    "IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT":"IF NOT ANSWERED IN 48 HOURS YOUR MONEY WILL BE SENT BACK TO YOUR ACCOUNT",
+    "TYPEYOURreplay": "Type your replay",
+    "byansweringmoregeneralquestionyouwillgethigherchancestobeatthetopofthesearchresult":"by answering more general question you will get higher chances to be at the top of the search result",
+    "replayes":"Replayes",
+    "closedConsultation":"ClosedConsultation",
+    "EXPERTISE":"Expertise",
+    "sendaquestion": "send a question",
+    "chat":"Chat",
+
+
+    "Gallery":"Gallery",
+    "Camera":"Camera",
+
+    "birth":"Birth",
+    "consultationprice":"consultation price",
+    "addcertification":"add certification",
+    "save":"Save",
+
+    "numOfConsultation":"Num Of Consultation",
+    "yearsOfPractice":"Years Of Practice"
+  
 }

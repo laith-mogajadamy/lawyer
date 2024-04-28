@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/LegalConsultantProfile.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -58,25 +59,29 @@ class Lawyerscard extends StatelessWidget {
                         Black22text(text: lawyer.name),
                         Row(
                           children: [
-                            const Black18text(text: "numOfConsultation: "),
+                            Black18text(
+                                text: "${S.of(context).numOfConsultation}: "),
                             Black18text(text: "${lawyer.numOfConsultation}"),
                           ],
                         ),
                         Row(
                           children: [
-                            const Black18text(text: "closedConsultation: "),
+                            Black18text(
+                                text: "${S.of(context).closedConsultation}: "),
                             Black18text(text: "${lawyer.closedConsultation}"),
                           ],
                         ),
                         Row(
                           children: [
-                            const Black18text(text: "yearsOfPractice: "),
-                            Black18text(text: lawyer.yearsOfPractice!),
+                            Black18text(
+                                text: "${S.of(context).yearsOfPractice}: "),
+                            Black18text(text: "${lawyer.yearsOfPractice}"),
                           ],
                         ),
                         Row(
                           children: [
-                            const Black18text(text: "consultationPrice: "),
+                            Black18text(
+                                text: "${S.of(context).consultationprice}: "),
                             Black18text(text: "${lawyer.consultationPrice!}"),
                           ],
                         ),
