@@ -155,7 +155,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             onchange: null,
                             controller: email),
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
                         ),
                         InfoInput(
                             name: S.of(context).Contactnumber,
