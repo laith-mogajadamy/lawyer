@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/screens/chat/chatpage.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
-import 'package:lawyer/screens/chatpage.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 
 class GroupMassege extends StatelessWidget {
@@ -38,13 +38,13 @@ class GroupMassege extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                     child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChatPage()),
-                        );
-                      },
+                      // onTap: () {
+                      //   Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const ChatPage()),
+                      //   );
+                      // },
                       child: SizedBox(
                         height: size.height / 12,
                         child: Row(

@@ -24,6 +24,10 @@ class _SplashState extends State<Splash> {
 
     return BlocListener<EnterBloc, EnterState>(
       listener: (context, state) {
+        print("splash");
+        print(state.message);
+
+        print(state.islogedin);
         Future.delayed(
           const Duration(seconds: 2),
           () {

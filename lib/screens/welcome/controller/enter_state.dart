@@ -4,14 +4,16 @@ class EnterState extends Equatable {
   final String islogedin;
   final bool bottom;
   final File? fimage;
+  final File? feid;
+  final File? beid;
+
   final List<File>? certifications;
+  final List<File>? license;
+
   final FormSubmissionStatus editStatus;
   final FormSubmissionStatus logoutStatus;
   final String language;
 
-  //didnt use it
-  // final User user;
-  //
   //
   final Lawyer user;
   final int id;
@@ -21,9 +23,25 @@ class EnterState extends Equatable {
   final String email;
   bool get isValidEmail => email.length > 10;
   final String password;
+  final String retypePassword;
   bool get isValidPassword => password.length > 6;
   final String number;
   bool get isValidnumber => number.length >= 10;
+
+  final String gender;
+  final String birth;
+  final String country;
+  final String city;
+  final String eidnumber;
+  final String dob;
+  final String landline;
+  final String occupation;
+  final String consultationprice;
+  final String biography;
+
+//
+  final String destenation;
+
   final String type;
   final FormSubmissionStatus formStatus;
   final String message;
@@ -34,7 +52,10 @@ class EnterState extends Equatable {
     this.islogedin = '',
     this.bottom = false,
     this.fimage,
+    this.feid,
+    this.beid,
     this.certifications = const [],
+    this.license = const [],
     this.editStatus = const InitialFormStatus(),
     this.logoutStatus = const InitialFormStatus(),
     this.language = 'en',
@@ -58,13 +79,29 @@ class EnterState extends Equatable {
       practices: [],
       consultations: [],
       generalquestions: [],
+      senderMessage: [],
+      receiverMessage: [],
     ),
     this.token = '',
     this.id = 0,
     this.email = '',
     this.password = '',
+    this.retypePassword = '',
     this.name = '',
     this.number = '',
+    this.gender = '',
+    this.birth = '',
+    this.country = '',
+    this.city = '',
+    this.eidnumber = '',
+    this.dob = '',
+    this.landline = '',
+    this.occupation = '',
+    this.consultationprice = '',
+    this.biography = '',
+
+    //
+    this.destenation = '',
     this.type = '',
     this.message = '',
     this.formStatus = const InitialFormStatus(),
@@ -74,7 +111,10 @@ class EnterState extends Equatable {
     String? islogedin,
     bool? bottom,
     File? fimage,
+    File? feid,
+    File? beid,
     List<File>? certifications,
+    List<File>? license,
     FormSubmissionStatus? editStatus,
     FormSubmissionStatus? logoutStatus,
     String? language,
@@ -86,11 +126,22 @@ class EnterState extends Equatable {
     String? email,
     String? image,
     String? password,
+    String? retypePassword,
     String? name,
     String? number,
+    String? gender,
     String? birth,
-    int? gender,
-    String? consultationPrice,
+    String? country,
+    String? city,
+    String? eidnumber,
+    String? dob,
+    String? landline,
+    String? occupation,
+    String? consultationprice,
+    String? biography,
+
+    //
+    String? destenation,
     int? location,
     String? type,
     String? message,
@@ -102,7 +153,12 @@ class EnterState extends Equatable {
       islogedin: islogedin ?? this.islogedin,
       bottom: bottom ?? this.bottom,
       fimage: fimage ?? this.fimage,
+      feid: feid ?? this.feid,
+      beid: beid ?? this.beid,
+
       certifications: certifications ?? this.certifications,
+      license: license ?? this.license,
+
       editStatus: editStatus ?? this.editStatus,
       logoutStatus: logoutStatus ?? this.logoutStatus,
       language: language ?? this.language,
@@ -113,8 +169,24 @@ class EnterState extends Equatable {
       id: id ?? this.id,
       email: email ?? this.email,
       password: password ?? this.password,
+      retypePassword: retypePassword ?? this.retypePassword,
       name: name ?? this.name,
       number: number ?? this.number,
+      gender: gender ?? this.gender,
+      birth: birth ?? this.birth,
+      country: country ?? this.country,
+      city: city ?? this.city,
+      eidnumber: eidnumber ?? this.eidnumber,
+      dob: dob ?? this.dob,
+      landline: landline ?? this.landline,
+      occupation: occupation ?? this.occupation,
+      consultationprice: consultationprice ?? this.consultationprice,
+      biography: biography ?? this.biography,
+
+      //
+
+      destenation: destenation ?? this.destenation,
+
       type: type ?? this.type,
       message: message ?? this.message,
       formStatus: formStatus ?? this.formStatus,
@@ -126,7 +198,10 @@ class EnterState extends Equatable {
         islogedin,
         bottom,
         fimage,
+        feid,
+        beid,
         certifications,
+        license,
         editStatus,
         logoutStatus,
         language,
@@ -136,9 +211,22 @@ class EnterState extends Equatable {
         id,
         email,
         password,
+        retypePassword,
         name,
         number,
+        gender,
+        birth,
+        country,
+        city,
+        eidnumber,
+        dob,
+        landline,
+        occupation,
+        consultationprice,
+        biography,
+        //
 
+        destenation,
         type,
 
         message,

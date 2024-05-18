@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/search/controller/search_bloc.dart';
 import 'package:lawyer/screens/search/search_component.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/black22text.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lawyer/screens/widgets/black16text.dart';
+import 'package:lawyer/screens/general-question/general_question.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -17,177 +15,147 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  String dropvalue = "all";
   TextEditingController controller = TextEditingController();
-  bool popup = false;
-
+  bool filter = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    List<String> practice = [
-      "Tax",
-      "Business (corporate)",
-      "Family",
-      "Estate Planning",
-      "Emoplyment & Labot",
-      "Personal Injury",
-      "Intellectual Property",
-      "Immigration",
-      "Constitutional",
-      "Criminal Defense",
-      "Bankruptcy",
-      "Entertainment",
-    ];
-    List<PopupMenuItem> practiceitem = [];
-    for (var i = 0; i < practice.length; i++) {
-      practiceitem.add(
-        PopupMenuItem(
-          value: practice[i],
-          child: Container(
-            width: size.width / 3,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.black, width: 2.h))),
-            child: Padding(
-              padding: EdgeInsets.all(5.r),
-              child: Black18text(text: practice[i]),
-            ),
-          ),
-        ),
-      );
-    }
-    List<String> places = [
-      "Abu Dhab",
-      " Dubai",
-      "Abu Dhabi",
-      "Ajman",
-      "Al Ain",
-      "Fujairah",
-      "Ras Al Khaima",
-      "Sharjah",
-      "Um Al Quwain"
-    ];
-    List<PopupMenuItem> placesitems = [];
-    for (var i = 0; i < places.length; i++) {
-      placesitems.add(
-        PopupMenuItem(
-          value: places[i],
-          child: Container(
-            width: size.width / 3,
-            decoration: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: Colors.black, width: 2.h))),
-            child: Padding(
-              padding: EdgeInsets.all(5.r),
-              child: Black18text(text: places[i]),
-            ),
-          ),
-        ),
-      );
-    }
+
     return BlocProvider(
       create: (context) => SearchBloc(),
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(top: 3.h),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: size.height / 15,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: size.width / 8,
-                              child: PopupMenuButton(
-                                onSelected: (value) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(top: 3.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    height: size.height / 16,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: size.width / 1.2,
+                            child: Form(
+                              child: TextFormField(
+                                onTap: () {
+                                  filter = !state.filter;
+
                                   context.read<SearchBloc>().add(
-                                        Searchlawyers(query: value),
+                                        Filtershow(filter: filter),
+                                      );
+                                  if (filter) {
+                                    context.read<SearchBloc>().add(
+                                          Searchlawyers(query: ''),
+                                        );
+                                  } else {
+                                    controller.clear();
+                                  }
+                                },
+                                onChanged: (string) {
+                                  context.read<SearchBloc>().add(
+                                        Searchlawyers(query: string),
                                       );
                                 },
-                                icon: Icon(
-                                  FontAwesomeIcons.sliders,
-                                  size: 35.r,
-                                  color: AppColor.appgray,
-                                ),
-                                position: PopupMenuPosition.under,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.r)),
-                                color: AppColor.appgray,
-                                itemBuilder: (BuildContext context) {
-                                  popup = !popup;
-                                  return (popup) ? placesitems : practiceitem;
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width / 1.2,
-                              child: Form(
-                                child: TextFormField(
-                                  onChanged: (string) {
-                                    context.read<SearchBloc>().add(
-                                          Searchlawyers(query: string),
-                                        );
-                                  },
-                                  controller: controller,
-                                  enabled: true,
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 18.sp),
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.r),
+                                controller: controller,
+                                enabled: true,
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18.sp),
+                                decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.black, width: 2.w),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  hintText: S
+                                      .of(context)
+                                      .WhoareyoulookingforTaxLawyer,
+                                  hintStyle: const TextStyle(
+                                      color: Colors.black, fontSize: 14),
+                                  prefixIcon: InkWell(
+                                    onTap: () {
+                                      // bloc.add(GetSearchProductsEvent(
+                                      //     pageNum: 1,
+                                      //     search: controller.text,
+                                      //     perPage: 100));
+                                    },
+                                    child: Icon(
+                                      Icons.search,
+                                      size: 33.sp,
+                                      color: Colors.black,
                                     ),
-                                    hintText: S.of(context).search,
-                                    hintStyle:
-                                        const TextStyle(color: Colors.grey),
-                                    filled: true,
-                                    fillColor: AppColor.appgray,
-                                    prefixIcon: InkWell(
-                                      onTap: () {
-                                        // bloc.add(GetSearchProductsEvent(
-                                        //     pageNum: 1,
-                                        //     search: controller.text,
-                                        //     perPage: 100));
-                                      },
-                                      child: Icon(
-                                        Icons.search,
-                                        size: 33.sp,
-                                        color: Colors.black,
-                                      ),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 2.w,
                                     ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(20.r),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 2.w,
                                     ),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.black,
+                                      width: 2.w,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20.r),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  (state.filter)
+                      ? const Expanded(child: Searchcomponent())
+                      : Padding(
+                          padding: EdgeInsets.only(bottom: size.height / 50),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Black16text(text: S.of(context).GeneralQuestions),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Generalquestion()),
+                                  );
+                                },
+                                child: Container(
+                                  width: size.width / 1.2,
+                                  height: size.height / 6,
+                                  decoration: BoxDecoration(
+                                    image: const DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage(
+                                        "assets/images/general question.jpg",
+                                      ),
+                                    ),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Text(
-                        S.of(context).results,
-                        style: TextStyle(fontSize: 20.sp),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    (state.lawyers.isEmpty)
-                        ? Center(
-                            child: Black22text(
-                                text: S.of(context).typeorselecttosearch),
-                          )
-                        : const Searchcomponent(),
-                  ],
-                ),
+                ],
               ),
             ),
           );

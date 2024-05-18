@@ -10,7 +10,6 @@ import 'package:lawyer/screens/welcome/splash.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.init();
-
   runApp(const MyApp());
 }
 
@@ -39,12 +38,7 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   title: 'BRIEfCASE',
                   theme: ThemeData(
-                    // Notice that the counter didn't reset back to zero; the application
-                    // state is not lost during the reload. To reset the state, use hot
-                    // restart instead.
-                    //
-                    // This works for code too, not just values: Most code changes can be
-                    // tested with just a hot reload.
+                    canvasColor: Colors.transparent,
                     colorScheme: ColorScheme.fromSeed(
                       seedColor: Colors.black,
                       primary: Colors.black,

@@ -41,51 +41,64 @@ class _MyPagesState extends State<MyPages> {
         }
       },
       child: Scaffold(
-        body: SafeArea(
-          child: PageView(
-            controller: controller,
-            physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              Home(),
-              UserConsultations(),
-              MassegesPage(),
-              PersonalProfile(),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
-              label: S.of(context).Home,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.file_open),
-              label: S.of(context).Consultations,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.message),
-              label: S.of(context).masseges,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person),
-              label: S.of(context).Profile,
-            ),
+        extendBody: true,
+        body: PageView(
+          controller: controller,
+          physics: const NeverScrollableScrollPhysics(),
+          children: const [
+            Home(),
+            UserConsultations(),
+            MassegesPage(),
+            PersonalProfile(),
           ],
-          currentIndex: select,
-          onTap: (index) {
-            setState(() {
-              select = index;
-              controller.jumpToPage(select);
-            });
-          },
-          selectedItemColor: Colors.orange,
-          selectedFontSize: 14.sp,
-          selectedIconTheme: IconThemeData(size: 30.r, color: Colors.orange),
-          showUnselectedLabels: true,
-          unselectedIconTheme: IconThemeData(size: 30.r, color: Colors.grey),
-          unselectedItemColor: Colors.grey,
-          type: BottomNavigationBarType.fixed,
+        ),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(color: Colors.black, width: 2.h),
+              ),
+            ),
+            child: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.home),
+                  label: S.of(context).Home,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.file_open),
+                  label: S.of(context).Consultations,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.message),
+                  label: S.of(context).masseges,
+                ),
+                BottomNavigationBarItem(
+                  icon: const Icon(Icons.person),
+                  label: S.of(context).Profile,
+                ),
+              ],
+              currentIndex: select,
+              onTap: (index) {
+                setState(() {
+                  select = index;
+                  controller.jumpToPage(select);
+                });
+              },
+              elevation: 0,
+              selectedItemColor: Colors.orange,
+              selectedFontSize: 12.sp,
+              unselectedFontSize: 10.sp,
+              selectedIconTheme:
+                  IconThemeData(size: 30.r, color: Colors.orange),
+              showUnselectedLabels: true,
+              unselectedIconTheme:
+                  IconThemeData(size: 25.r, color: Colors.grey),
+              unselectedItemColor: Colors.grey,
+              type: BottomNavigationBarType.fixed,
+            ),
+          ),
         ),
       ),
     );

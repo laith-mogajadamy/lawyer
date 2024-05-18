@@ -29,11 +29,12 @@ class ImageChange extends EnterEvent {
 
 class Bottomshow extends EnterEvent {
   final bool? bottom;
+  final String? destenation;
 
-  Bottomshow({this.bottom});
+  Bottomshow({this.bottom, this.destenation});
 
   @override
-  List<Object?> get props => [bottom];
+  List<Object?> get props => [bottom, destenation];
 }
 
 class AddCertification extends EnterEvent {
@@ -99,6 +100,15 @@ class LoginPasswordChanged extends EnterEvent {
   List<Object?> get props => [password];
 }
 
+class LoginReTypePasswordChanged extends EnterEvent {
+  final String? retypePassword;
+
+  LoginReTypePasswordChanged({this.retypePassword});
+
+  @override
+  List<Object?> get props => [retypePassword];
+}
+
 class LoginNameChanged extends EnterEvent {
   final String? name;
 
@@ -115,6 +125,96 @@ class LoginNumberChanged extends EnterEvent {
 
   @override
   List<Object?> get props => [number];
+}
+
+class GenderChanged extends EnterEvent {
+  final String? gender;
+
+  GenderChanged({this.gender});
+
+  @override
+  List<Object?> get props => [gender];
+}
+
+class BirthChanged extends EnterEvent {
+  final String? birth;
+
+  BirthChanged({this.birth});
+
+  @override
+  List<Object?> get props => [birth];
+}
+
+class CountryChanged extends EnterEvent {
+  final String? country;
+
+  CountryChanged({this.country});
+
+  @override
+  List<Object?> get props => [country];
+}
+
+class CityChanged extends EnterEvent {
+  final String? city;
+
+  CityChanged({this.city});
+
+  @override
+  List<Object?> get props => [city];
+}
+
+class EidNumberChanged extends EnterEvent {
+  final String? eidnumber;
+
+  EidNumberChanged({this.eidnumber});
+
+  @override
+  List<Object?> get props => [eidnumber];
+}
+
+class DobChanged extends EnterEvent {
+  final String? dob;
+
+  DobChanged({this.dob});
+
+  @override
+  List<Object?> get props => [dob];
+}
+
+class LandLineChanged extends EnterEvent {
+  final String? landline;
+
+  LandLineChanged({this.landline});
+
+  @override
+  List<Object?> get props => [landline];
+}
+
+class OccupationChanged extends EnterEvent {
+  final String? occupation;
+
+  OccupationChanged({this.occupation});
+
+  @override
+  List<Object?> get props => [occupation];
+}
+
+class ConsultationPriceChanged extends EnterEvent {
+  final String? consultationprice;
+
+  ConsultationPriceChanged({this.consultationprice});
+
+  @override
+  List<Object?> get props => [consultationprice];
+}
+
+class BiographyChanged extends EnterEvent {
+  final String? biography;
+
+  BiographyChanged({this.biography});
+
+  @override
+  List<Object?> get props => [biography];
 }
 
 class TypeChanged extends EnterEvent {

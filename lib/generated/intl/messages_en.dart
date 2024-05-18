@@ -26,15 +26,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "Alreadyhaveanaccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "Answer": MessageLookupByLibrary.simpleMessage("Answer"),
+        "Back": MessageLookupByLibrary.simpleMessage("Back"),
+        "Biography": MessageLookupByLibrary.simpleMessage("Biography:"),
         "CERTIFICATIONS":
             MessageLookupByLibrary.simpleMessage("Certifications"),
         "Camera": MessageLookupByLibrary.simpleMessage("Camera"),
+        "Certifications":
+            MessageLookupByLibrary.simpleMessage("Certifications:"),
         "Changethelanguage":
             MessageLookupByLibrary.simpleMessage("Change the language"),
+        "City": MessageLookupByLibrary.simpleMessage("City"),
         "Consultations": MessageLookupByLibrary.simpleMessage("Consultations"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("Contact number"),
+        "Country": MessageLookupByLibrary.simpleMessage("Country"),
+        "EIDNumber": MessageLookupByLibrary.simpleMessage("EID Number"),
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("Expertise"),
         "Emailaddress": MessageLookupByLibrary.simpleMessage("Email address"),
+        "Expertise": MessageLookupByLibrary.simpleMessage("Expertise :"),
+        "FindTheRightLegalConsultation": MessageLookupByLibrary.simpleMessage(
+            "    Find The Right\n Legal Consultation"),
+        "Front": MessageLookupByLibrary.simpleMessage("Front"),
         "GUEST": MessageLookupByLibrary.simpleMessage("GUEST"),
         "Gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "Gender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -48,9 +59,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "IF NOT ANSWERED IN 48 HOURS YOUR MONEY WILL BE SENT BACK TO YOUR ACCOUNT"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("Log Out"),
+        "LandLine": MessageLookupByLibrary.simpleMessage("Land Line"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("Lawyers"),
         "LegalConsultant":
             MessageLookupByLibrary.simpleMessage("Legal Consultant"),
+        "License": MessageLookupByLibrary.simpleMessage("License:"),
+        "Location": MessageLookupByLibrary.simpleMessage("Location"),
         "LogInbotton": MessageLookupByLibrary.simpleMessage("Log In"),
         "Loggingout": MessageLookupByLibrary.simpleMessage("Logging out...."),
         "MyGeneralQuestions":
@@ -58,12 +72,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "Myconsultations":
             MessageLookupByLibrary.simpleMessage(" My consultations"),
         "Name": MessageLookupByLibrary.simpleMessage("Name/Company"),
+        "Next": MessageLookupByLibrary.simpleMessage("Next"),
+        "Occupation": MessageLookupByLibrary.simpleMessage("Occupation"),
         "POSTAGENERALQUESTION":
             MessageLookupByLibrary.simpleMessage("Post a General Question"),
         "Password": MessageLookupByLibrary.simpleMessage("Password"),
+        "Persons": MessageLookupByLibrary.simpleMessage("Persons"),
+        "Practice": MessageLookupByLibrary.simpleMessage("Practice"),
         "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "ProfileEdit": MessageLookupByLibrary.simpleMessage("Profile Edit"),
         "REGISTER": MessageLookupByLibrary.simpleMessage("REGISTER"),
+        "RetypePassword":
+            MessageLookupByLibrary.simpleMessage("Re-type Password "),
         "Send": MessageLookupByLibrary.simpleMessage("Send"),
         "SignUp": MessageLookupByLibrary.simpleMessage("SignUp"),
         "THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION":
@@ -79,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Type your question tilte"),
         "Typeyourquestionwithdetails": MessageLookupByLibrary.simpleMessage(
             "Type your question with details"),
+        "UploadEID": MessageLookupByLibrary.simpleMessage("Upload EID"),
+        "WhoareyoulookingforTaxLawyer": MessageLookupByLibrary.simpleMessage(
+            "Who are you looking for? Tax Lawyer?"),
         "YOURQUESTIONMAYORMAYNOTBEANSWERED":
             MessageLookupByLibrary.simpleMessage(
                 "YOUR QUESTION MAY OR MAY NOT BE ANSWERED"),

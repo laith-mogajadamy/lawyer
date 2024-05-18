@@ -126,10 +126,15 @@ class _LoginState extends State<Login> {
                             },
                             child: ElevatedButton(
                               onPressed: () {
+                                print(state.email);
+                                print(state.password);
                                 if (formKey.currentState!.validate()) {
-                                  context
-                                      .read<EnterBloc>()
-                                      .add(LoginSubmitted());
+                                  if ((state.formStatus is FormSubmitting)) {
+                                  } else {
+                                    context
+                                        .read<EnterBloc>()
+                                        .add(LoginSubmitted());
+                                  }
                                 }
 
                                 print(state.email);

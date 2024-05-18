@@ -130,6 +130,16 @@ class S {
     );
   }
 
+  /// `Re-type Password `
+  String get RetypePassword {
+    return Intl.message(
+      'Re-type Password ',
+      name: 'RetypePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Password is too short`
   String get passwordvalidate {
     return Intl.message(
@@ -250,6 +260,136 @@ class S {
     );
   }
 
+  /// `Country`
+  String get Country {
+    return Intl.message(
+      'Country',
+      name: 'Country',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get City {
+    return Intl.message(
+      'City',
+      name: 'City',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `EID Number`
+  String get EIDNumber {
+    return Intl.message(
+      'EID Number',
+      name: 'EIDNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload EID`
+  String get UploadEID {
+    return Intl.message(
+      'Upload EID',
+      name: 'UploadEID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Front`
+  String get Front {
+    return Intl.message(
+      'Front',
+      name: 'Front',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back`
+  String get Back {
+    return Intl.message(
+      'Back',
+      name: 'Back',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Land Line`
+  String get LandLine {
+    return Intl.message(
+      'Land Line',
+      name: 'LandLine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Occupation`
+  String get Occupation {
+    return Intl.message(
+      'Occupation',
+      name: 'Occupation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get Next {
+    return Intl.message(
+      'Next',
+      name: 'Next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expertise :`
+  String get Expertise {
+    return Intl.message(
+      'Expertise :',
+      name: 'Expertise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Certifications:`
+  String get Certifications {
+    return Intl.message(
+      'Certifications:',
+      name: 'Certifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `License:`
+  String get License {
+    return Intl.message(
+      'License:',
+      name: 'License',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Biography:`
+  String get Biography {
+    return Intl.message(
+      'Biography:',
+      name: 'Biography',
+      desc: '',
+      args: [],
+    );
+  }
+
   // skipped getter for the '' key
 
   /// ` My consultations`
@@ -357,6 +497,56 @@ class S {
     return Intl.message(
       'search',
       name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Who are you looking for? Tax Lawyer?`
+  String get WhoareyoulookingforTaxLawyer {
+    return Intl.message(
+      'Who are you looking for? Tax Lawyer?',
+      name: 'WhoareyoulookingforTaxLawyer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `    Find The Right\n Legal Consultation`
+  String get FindTheRightLegalConsultation {
+    return Intl.message(
+      '    Find The Right\n Legal Consultation',
+      name: 'FindTheRightLegalConsultation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Persons`
+  String get Persons {
+    return Intl.message(
+      'Persons',
+      name: 'Persons',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get Location {
+    return Intl.message(
+      'Location',
+      name: 'Location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Practice`
+  String get Practice {
+    return Intl.message(
+      'Practice',
+      name: 'Practice',
       desc: '',
       args: [],
     );

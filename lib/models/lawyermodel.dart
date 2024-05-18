@@ -1,6 +1,7 @@
 import 'package:lawyer/models/consultationmodel.dart';
 import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/models/lawyer.dart';
+import 'package:lawyer/models/messagemodel.dart';
 
 class LawyerModel extends Lawyer {
   const LawyerModel({
@@ -21,6 +22,8 @@ class LawyerModel extends Lawyer {
     required super.practices,
     required super.consultations,
     required super.generalquestions,
+    required super.senderMessage,
+    required super.receiverMessage,
   });
 
   factory LawyerModel.fromJson(Map<String, dynamic> json) => LawyerModel(
@@ -47,6 +50,16 @@ class LawyerModel extends Lawyer {
         generalquestions: List<GeneralquestionModel>.from(
           ((json['generalQuestions'] ?? []) as List).map(
             (e) => GeneralquestionModel.fromJson(e),
+          ),
+        ),
+        senderMessage: List<MessageModel>.from(
+          ((json['senderMessage'] ?? []) as List).map(
+            (e) => MessageModel.fromJson(e),
+          ),
+        ),
+        receiverMessage: List<MessageModel>.from(
+          ((json['receiverMessage'] ?? []) as List).map(
+            (e) => MessageModel.fromJson(e),
           ),
         ),
       );

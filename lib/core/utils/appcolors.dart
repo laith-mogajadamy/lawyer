@@ -8,5 +8,7 @@ class AppColor {
 
   static const whiteColor = Color(0xffffffff);
 
+  static const offblack = const Color.fromARGB(255, 68, 68, 68);
+
   static const appgray = Color(0xffbfbdba);
 }

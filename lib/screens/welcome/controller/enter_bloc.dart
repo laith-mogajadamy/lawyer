@@ -29,9 +29,12 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       emit(state.copyWith(
         formStatus: FormSubmitting(),
       ));
-      http.Response response = await Auth.login(useremail!, userpassword!);
-      Map responsemap = await jsonDecode(response.body);
 
+      http.Response response = await Auth.login(useremail!, userpassword!);
+      print(response);
+
+      var responsemap = await jsonDecode(response.body);
+      print(responsemap);
       if (response.statusCode == 200) {
         emit(
           state.copyWith(
@@ -46,6 +49,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         Preferences.savetoken(responsemap["access_token"]);
         print("token:${responsemap["access_token"]}");
         print("userid:${state.user.id}");
+        print("senderMessage:${state.user.senderMessage}");
+        print("receiverMessage:${state.user.receiverMessage}");
 
         print("user:${state.user}");
         print("user consultations:${state.user.consultations}");
@@ -58,6 +63,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               islogedin: "false"),
         );
       }
+
+      print(state.islogedin);
     });
     //
     on<LanguageChanged>((event, emit) async {
@@ -112,24 +119,60 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     //
     on<ImageChange>((event, emit) async {
       print(" ImageChange");
+      print(" destenation${state.destenation}");
 
-      emit(
-        state.copyWith(fimage: event.fimage),
-      );
-      print("image=${state.fimage!.path}");
+      if (state.destenation == "profileImage") {
+        emit(
+          state.copyWith(fimage: event.fimage),
+        );
+        print("image=${state.fimage!.path}");
+      }
+      if (state.destenation == "fronteid") {
+        emit(
+          state.copyWith(feid: event.fimage),
+        );
+        print("fronteid=${state.feid!.path}");
+      }
+      if (state.destenation == "backeid") {
+        emit(
+          state.copyWith(beid: event.fimage),
+        );
+        print("backeid=${state.beid!.path}");
+      }
+      if (state.destenation == "Certifications") {
+        final newcertifications = List.of(state.certifications!)
+          ..add(event.fimage!);
+        emit(
+          state.copyWith(certifications: newcertifications),
+        );
+        print("Certifications=${state.certifications}");
+      }
+      if (state.destenation == "license") {
+        final newcertifications = List.of(state.license!)..add(event.fimage!);
+        emit(
+          state.copyWith(license: newcertifications),
+        );
+        print("license=${state.license}");
+      }
     });
     on<AddCertification>((event, emit) async {
       print(" AddCertification");
-
+      List<File>? newcertifications;
+      for (var i = 0; i < event.certifications!.length; i++) {
+        newcertifications = List.of(state.certifications!)
+          ..add(event.certifications![i]);
+      }
       emit(
-        state.copyWith(certifications: event.certifications),
+        state.copyWith(certifications: newcertifications),
       );
-      print("certifications=${state.certifications}");
+      print("Certifications=${state.certifications}");
     });
     on<Bottomshow>((event, emit) async {
-      print("show bottom");
       emit(
-        state.copyWith(bottom: event.bottom),
+        state.copyWith(
+          bottom: event.bottom,
+          destenation: event.destenation,
+        ),
       );
     });
     //
@@ -145,6 +188,12 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         password: event.password,
       ));
     });
+    on<LoginReTypePasswordChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        retypePassword: event.retypePassword,
+      ));
+    });
     on<LoginNameChanged>((event, emit) async {
       emit(state.copyWith(
         formStatus: const InitialFormStatus(),
@@ -157,6 +206,67 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         number: event.number,
       ));
     });
+    on<GenderChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        gender: event.gender,
+      ));
+    });
+    on<BirthChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        birth: event.birth,
+      ));
+    });
+    on<CountryChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        country: event.country,
+      ));
+    });
+    on<CityChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        city: event.city,
+      ));
+    });
+    on<EidNumberChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        eidnumber: event.eidnumber,
+      ));
+    });
+    on<DobChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        dob: event.dob,
+      ));
+    });
+    on<LandLineChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        landline: event.landline,
+      ));
+    });
+    on<OccupationChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        occupation: event.occupation,
+      ));
+    });
+    on<ConsultationPriceChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        consultationprice: event.consultationprice,
+      ));
+    });
+    on<BiographyChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        biography: event.biography,
+      ));
+    });
+    //
     on<TypeChanged>((event, emit) async {
       emit(state.copyWith(
         formStatus: const InitialFormStatus(),
@@ -225,34 +335,18 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       print("statusCode==${response.statusCode}");
       print("*********");
       if (response.statusCode == 201) {
-        emit(
-          state.copyWith(
-            // name: responsemap["user"]["name"],
-            // id: responsemap["user"]["id"],
-            // number: responsemap["user"]["phone"],
-            // image: responsemap["user"]["image"],
-            email: state.email,
-            // birth: responsemap["user"]["birth"],
-            // consultationPrice: responsemap["user"]["consultationPrice"],
-            // gender: responsemap["user"]["gender"],
-            // location: responsemap["user"]["location"],
-            password: state.password,
-            // token: responsemap["access_token"],
-            // consultations: List<ConsultationsModel>.from(
-            //   (responsemap["user"]["consultations"] as List).map(
-            //     (e) => ConsultationsModel.fromJson(e),
-            //   ),
-            // ),
-            // generalquestions: List<GeneralquestionModel>.from(
-            //   (responsemap["user"]["generalQuestions"] as List).map(
-            //     (e) => GeneralquestionModel.fromJson(e),
-            //   ),
-            // ),
-            message: " log in successed",
-            formStatus: SubmissionSuccess(),
-            islogedin: "true",
-          ),
+        add(
+          LoginSubmitted(),
         );
+        // emit(
+        //   state.copyWith(
+        //     email: state.email,
+        //     password: state.password,
+        //     message: " log in successed",
+        //     formStatus: SubmissionSuccess(),
+        //     islogedin: "true",
+        //   ),
+        // );
         Preferences.savetoken(responsemap["accessToken"]);
         Preferences.saveemail(state.email);
         Preferences.savepassword(state.password);
@@ -260,9 +354,6 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         print("token:${responsemap["accessToken"]}");
         print("++++++++++++++");
         print(state.formStatus);
-        add(
-          LoginSubmitted(),
-        );
       } else {
         emit(
           state.copyWith(
@@ -291,23 +382,27 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         emit(
           state.copyWith(
               user: const Lawyer(
-                  id: 0,
-                  name: "",
-                  email: '',
-                  birth: "",
-                  gender: 0,
-                  phone: "",
-                  consultationPrice: 0,
-                  isactive: 0,
-                  location: 0,
-                  yearsOfPractice: "",
-                  numOfConsultation: 0,
-                  closedConsultation: 0,
-                  image: "",
-                  certification: [],
-                  practices: [],
-                  consultations: [],
-                  generalquestions: []),
+                id: 0,
+                name: "",
+                email: '',
+                birth: "",
+                gender: 0,
+                phone: "",
+                consultationPrice: 0,
+                isactive: 0,
+                location: 0,
+                yearsOfPractice: "",
+                numOfConsultation: 0,
+                closedConsultation: 0,
+                image: "",
+                certification: [],
+                practices: [],
+                consultations: [],
+                generalquestions: [],
+                senderMessage: [],
+                receiverMessage: [],
+              ),
+              type: '',
               logoutStatus: SubmissionSuccess(),
               message: responsemap["message"],
               email: "",

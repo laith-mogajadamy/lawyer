@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/login.dart';
@@ -39,14 +40,14 @@ class Enter extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                   fixedSize: Size(size.width / 3, size.height / 17),
-                  backgroundColor: Colors.orange,
+                  backgroundColor: AppColor.offblack,
                   shape: StadiumBorder(
                       side: BorderSide(color: Colors.black, width: 1.5.w))),
               child: Text(
                 S.of(context).login,
                 style: TextStyle(
                     fontSize: 19.sp,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -59,7 +60,7 @@ class Enter extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(size.width / 3, size.height / 17),
-                backgroundColor: Colors.orange,
+                backgroundColor: AppColor.offblack,
                 shape: StadiumBorder(
                   side: BorderSide(color: Colors.black, width: 1.5.w),
                 ),
@@ -68,7 +69,7 @@ class Enter extends StatelessWidget {
                 S.of(context).GUEST,
                 style: TextStyle(
                     fontSize: 19.sp,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -81,14 +82,14 @@ class Enter extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                   fixedSize: Size(size.width / 3, size.height / 17),
-                  backgroundColor: Colors.orange,
+                  backgroundColor: AppColor.offblack,
                   shape: StadiumBorder(
                       side: BorderSide(color: Colors.black, width: 1.5.w))),
               child: Text(
                 S.of(context).REGISTER,
                 style: TextStyle(
                     fontSize: 17.sp,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
             ),

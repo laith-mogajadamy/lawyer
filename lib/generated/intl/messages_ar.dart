@@ -26,13 +26,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "Alreadyhaveanaccount":
             MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
         "Answer": MessageLookupByLibrary.simpleMessage("الإجابة"),
+        "Back": MessageLookupByLibrary.simpleMessage("الخلف"),
+        "Biography": MessageLookupByLibrary.simpleMessage("السيرة الذاتية:"),
         "CERTIFICATIONS": MessageLookupByLibrary.simpleMessage("الشهادات"),
         "Camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
+        "Certifications": MessageLookupByLibrary.simpleMessage("الشهادات:"),
         "Changethelanguage": MessageLookupByLibrary.simpleMessage("غير اللغة"),
+        "City": MessageLookupByLibrary.simpleMessage("المدينة"),
         "Consultations": MessageLookupByLibrary.simpleMessage("الاستشارات"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+        "Country": MessageLookupByLibrary.simpleMessage("الدولة"),
+        "EIDNumber":
+            MessageLookupByLibrary.simpleMessage("رقم الهوية الاماراتية"),
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("الخبرة"),
         "Emailaddress": MessageLookupByLibrary.simpleMessage("عنوان الايميل "),
+        "Expertise": MessageLookupByLibrary.simpleMessage("الاختصاصات:"),
+        "FindTheRightLegalConsultation": MessageLookupByLibrary.simpleMessage(
+            "    جد الاستشارة    \n القانونية المناسبة"),
+        "Front": MessageLookupByLibrary.simpleMessage("الأمام"),
         "GUEST": MessageLookupByLibrary.simpleMessage("ضيف"),
         "Gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "Gender": MessageLookupByLibrary.simpleMessage("الجنس"),
@@ -44,9 +55,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "إذا لم يتم الرد خلال 48 ساعة، سيتم إرجاع أموالك إلى حسابك"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
+        "LandLine": MessageLookupByLibrary.simpleMessage("الخط الارضي"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("المحامون"),
         "LegalConsultant":
             MessageLookupByLibrary.simpleMessage("مستشار قانوني"),
+        "License": MessageLookupByLibrary.simpleMessage("الرخصة:"),
+        "Location": MessageLookupByLibrary.simpleMessage("المكان"),
         "LogInbotton": MessageLookupByLibrary.simpleMessage("سجل دخول"),
         "Loggingout":
             MessageLookupByLibrary.simpleMessage(" .... جار تسجيل الخروج"),
@@ -54,13 +68,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أسئلتي العامة"),
         "Myconsultations": MessageLookupByLibrary.simpleMessage("استشاراتي"),
         "Name": MessageLookupByLibrary.simpleMessage("الاسم/الشركة"),
+        "Next": MessageLookupByLibrary.simpleMessage("التالي"),
+        "Occupation": MessageLookupByLibrary.simpleMessage("التخصص"),
         "POSTAGENERALQUESTION":
             MessageLookupByLibrary.simpleMessage("نشر سؤال عام"),
         "Password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
+        "Persons": MessageLookupByLibrary.simpleMessage("الأشخاص"),
+        "Practice": MessageLookupByLibrary.simpleMessage("المهنة"),
         "Profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "ProfileEdit":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "REGISTER": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
+        "RetypePassword":
+            MessageLookupByLibrary.simpleMessage("اعد كتابة كلمة السر"),
         "Send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "SignUp": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
         "THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION":
@@ -75,6 +95,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اكتب عنوان سؤالك"),
         "Typeyourquestionwithdetails":
             MessageLookupByLibrary.simpleMessage("اكتب سؤالك بالتفاصيل"),
+        "UploadEID": MessageLookupByLibrary.simpleMessage("ارفع الهوية"),
+        "WhoareyoulookingforTaxLawyer":
+            MessageLookupByLibrary.simpleMessage("على من تبحث؟ محامي الضرائب؟"),
         "YOURQUESTIONMAYORMAYNOTBEANSWERED":
             MessageLookupByLibrary.simpleMessage(
                 "قد يتم الإجابة على سؤالك أو قد لا يتم ذلك"),
@@ -88,11 +111,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاستشارات المغلقة"),
         "consultationprice":
             MessageLookupByLibrary.simpleMessage("سعر الاستشارة"),
+        "donthaveanaccount":
+            MessageLookupByLibrary.simpleMessage("لا تمتلك حساب؟"),
         "email": MessageLookupByLibrary.simpleMessage("الايميل"),
         "emailvalidate":
             MessageLookupByLibrary.simpleMessage("الايميل قصير جدا"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
-        "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
         "masseges": MessageLookupByLibrary.simpleMessage("رسائل"),
         "namevalidate": MessageLookupByLibrary.simpleMessage("الاسم قصير جدا"),
         "numOfConsultation":

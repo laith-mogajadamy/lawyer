@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 
 // ignore: must_be_immutable
@@ -25,10 +26,10 @@ class InfoInput extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(child: Black22text(text: name)),
+        SizedBox(child: Black18text(text: name)),
         SizedBox(
           height: size.height / 18,
-          width: size.width / 2,
+          width: size.width / 2.2,
           child: TextFormField(
             controller: controller,
             validator: validator,

@@ -1,17 +1,14 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
+import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 import 'package:lawyer/screens/widgets/pdf_widget.dart';
@@ -25,31 +22,10 @@ class ProfileEdit extends StatefulWidget {
 
 class _ProfileEditState extends State<ProfileEdit> {
   bool bottom = false;
-  TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController number = TextEditingController();
-  TextEditingController birth = TextEditingController();
-  TextEditingController location = TextEditingController();
-  TextEditingController gender = TextEditingController();
-  TextEditingController consultationprice = TextEditingController();
+  late EnterBloc _enterBloc;
 
   final formKey = GlobalKey<FormState>();
   List<File> _certification = [];
-  File? fimage;
-
-  Future pickimage(ImageSource source) async {
-    try {
-      final Image =
-          await ImagePicker().pickImage(source: source, imageQuality: 50);
-      if (Image == null) {
-        return null;
-      }
-      final imagetemp = File(Image.path);
-      fimage = imagetemp;
-    } on PlatformException catch (e) {
-      print("failed to pick image $e");
-    }
-  }
 
   Future uploadpdf() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
@@ -70,87 +46,37 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController number = TextEditingController();
+  TextEditingController birth = TextEditingController();
+  TextEditingController location = TextEditingController();
+  TextEditingController gender = TextEditingController();
+  TextEditingController consultationprice = TextEditingController();
+
+  @override
+  void initState() {
+    _enterBloc = context.read<EnterBloc>();
+    name.text = _enterBloc.state.user.name;
+    email.text = _enterBloc.state.user.email;
+    number.text = _enterBloc.state.user.phone;
+    birth.text = _enterBloc.state.user.birth.toString();
+    location.text = _enterBloc.state.user.location.toString();
+    gender.text = _enterBloc.state.user.gender.toString();
+    consultationprice.text = _enterBloc.state.user.consultationPrice.toString();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return BlocBuilder<EnterBloc, EnterState>(
       builder: (context, state) {
         return Scaffold(
-          bottomNavigationBar: (state.bottom)
-              ? Container(
-                  height: size.height / 8,
-                  width: size.width,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          color: AppColor.appgray,
-                          blurRadius: 3.r,
-                          spreadRadius: 3.r)
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.r),
-                        topRight: Radius.circular(20.r)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          Black18text(text: S.of(context).Gallery),
-                          GestureDetector(
-                            onTap: () {
-                              pickimage(ImageSource.gallery).then(
-                                (value) => context.read<EnterBloc>().add(
-                                      ImageChange(fimage: fimage),
-                                    ),
-                              );
-                              bottom = !bottom;
-                              context
-                                  .read<EnterBloc>()
-                                  .add(Bottomshow(bottom: bottom));
-                            },
-                            child: SizedBox(
-                              height: size.height / 11,
-                              width: size.width / 5,
-                              child: SvgPicture.asset(
-                                "assets/svg/gallery.svg",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Black18text(text: S.of(context).Camera),
-                          GestureDetector(
-                            onTap: () {
-                              pickimage(ImageSource.camera).then(
-                                (value) => context.read<EnterBloc>().add(
-                                      ImageChange(fimage: fimage),
-                                    ),
-                              );
-                              bottom = !bottom;
-                              context
-                                  .read<EnterBloc>()
-                                  .add(Bottomshow(bottom: bottom));
-                            },
-                            child: SizedBox(
-                              height: size.height / 11,
-                              width: size.width / 5,
-                              child: SvgPicture.asset(
-                                "assets/svg/camera.svg",
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              : const SizedBox.shrink(),
+          bottomNavigationBar:
+              (state.bottom) ? const Imagepicker() : const SizedBox.shrink(),
           body: Padding(
             padding: EdgeInsets.symmetric(vertical: 25.h),
             child: SingleChildScrollView(
@@ -165,45 +91,45 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ],
                   ),
                   GestureDetector(
-                      onTap: () {
-                        bottom = !bottom;
-                        context
-                            .read<EnterBloc>()
-                            .add(Bottomshow(bottom: bottom));
-                      },
-                      child: Stack(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        children: [
-                          (state.fimage != null)
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.green, width: 3.w),
-                                    borderRadius: BorderRadius.circular(100.r),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 75.r,
-                                    backgroundImage: FileImage(state.fimage!),
-                                  ),
-                                )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.green, width: 3.w),
-                                    borderRadius: BorderRadius.circular(100.r),
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 75.r,
-                                    backgroundImage:
-                                        NetworkImage(state.user.image),
-                                  ),
+                    onTap: () {
+                      bottom = !bottom;
+                      context.read<EnterBloc>().add(Bottomshow(
+                          bottom: bottom, destenation: "profileImage"));
+                    },
+                    child: Stack(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      children: [
+                        (state.fimage != null)
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.green, width: 3.w),
+                                  borderRadius: BorderRadius.circular(100.r),
                                 ),
-                          Icon(
-                            Icons.edit,
-                            size: 30.r,
-                          ),
-                        ],
-                      )),
+                                child: CircleAvatar(
+                                  radius: 75.r,
+                                  backgroundImage: FileImage(state.fimage!),
+                                ),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.green, width: 3.w),
+                                  borderRadius: BorderRadius.circular(100.r),
+                                ),
+                                child: CircleAvatar(
+                                  radius: 75.r,
+                                  backgroundImage:
+                                      NetworkImage(state.user.image),
+                                ),
+                              ),
+                        Icon(
+                          Icons.edit,
+                          size: 30.r,
+                        ),
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
@@ -218,7 +144,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             onchange: null,
                             controller: name),
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
                         ),
                         InfoInput(
                             name: S.of(context).email,
@@ -359,7 +285,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       onPressed: () {
                         context.read<EnterBloc>().add(
                               Profiledit(
-                                  fimage: fimage,
+                                  fimage: state.fimage,
                                   name: name.text.trim(),
                                   email: email.text.trim(),
                                   number: number.text.trim(),

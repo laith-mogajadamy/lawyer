@@ -1,6 +1,6 @@
 {  
     "title":"BRIEfCASE",
-    "login":"تسجيل الدخول",
+    "login":"تسجيل دخول",
     "REGISTER":"انشاء حساب",
     "GUEST":"ضيف",
     "ABOUTUS":"معلوماتنا",
@@ -8,9 +8,10 @@
     "email":"الايميل",
     "emailvalidate":"الايميل قصير جدا",
     "Password":"كلمة السر",
+    "RetypePassword":"اعد كتابة كلمة السر",
     "passwordvalidate":"كلمة السر قصيرة جدا",
     "LogInbotton":"سجل دخول",
-    "Don't have an account":"لا تمتلك حساب؟",
+    "donthaveanaccount":"لا تمتلك حساب؟",
     "SignUp":"انشاء حساب",
 
     "select":"اختر",
@@ -21,6 +22,21 @@
     "numbervalidate": "الرقم قصير جدا",
     "register":"انشاء حساب",
     "Alreadyhaveanaccount":"هل لديك حساب بالفعل؟",
+    "Country":"الدولة",
+    "City":"المدينة",
+    "EIDNumber":"رقم الهوية الاماراتية",
+    "UploadEID":"ارفع الهوية",
+    "Front":"الأمام",
+    "Back":"الخلف", 
+    "LandLine":"الخط الارضي",
+    "Occupation":"التخصص",
+    "Next":"التالي",
+    "Expertise":"الاختصاصات:",
+    "Certifications":"الشهادات:",  
+    "License":"الرخصة:",
+    "Biography":"السيرة الذاتية:",
+
+
     "":"",
 
     "Myconsultations":"استشاراتي",
@@ -37,6 +53,11 @@
     "masseges":"رسائل",
     "Groups":"مجموعات",
     "search":"بحث",
+    "WhoareyoulookingforTaxLawyer":"على من تبحث؟ محامي الضرائب؟",
+    "FindTheRightLegalConsultation":"    جد الاستشارة    \n القانونية المناسبة",
+    "Persons":"الأشخاص",
+    "Location":"المكان",
+    "Practice":"المهنة",
 
     "Home":"الرئيسية",
     "Consultations":"الاستشارات",

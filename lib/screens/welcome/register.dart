@@ -5,7 +5,9 @@ import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
+import 'package:lawyer/screens/welcome/client_register.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
+import 'package:lawyer/screens/welcome/lawyer_register.dart';
 import 'package:lawyer/screens/welcome/login.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
@@ -45,8 +47,8 @@ class _RegisterState extends State<Register> {
     Size size = MediaQuery.of(context).size;
     List<String> types = [
       "Lawyer",
-      "Legal consultant",
-      "Typing center",
+      // "Legal consultant",
+      // "Typing center",
       "Client"
     ];
 
@@ -173,7 +175,7 @@ class _RegisterState extends State<Register> {
                                     color: Colors.black,
                                   ),
                                   alignment: Alignment.center,
-                                  dropdownColor: Colors.white,
+                                  dropdownColor: AppColor.appgray,
                                   underline: const SizedBox(
                                     width: 0,
                                     height: 0,
@@ -193,87 +195,107 @@ class _RegisterState extends State<Register> {
                                     context.read<EnterBloc>().add(
                                           TypeChanged(type: v),
                                         );
+                                    print(v);
+
+                                    if (v == "2") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ClientRegister()),
+                                      );
+                                    } else if (v == "1") {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LawyerRegister()),
+                                      );
+                                    }
                                   },
                                 ),
                               ),
                             ),
-                            BlocListener<EnterBloc, EnterState>(
-                              listener: (context, state) {
-                                if (state.formStatus is SubmissionSuccess) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: Colors.green,
-                                      duration: const Duration(seconds: 2),
-                                      content: Text(
-                                        state.message,
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  );
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const MyPages()),
-                                  );
-                                } else if (state.formStatus
-                                    is SubmissionFailed) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      backgroundColor: Colors.red,
-                                      duration: const Duration(seconds: 2),
-                                      content: Text(
-                                        state.message,
-                                        style: TextStyle(
-                                            fontSize: 14.sp,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              },
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (formKey.currentState!.validate()) {
-                                    context
-                                        .read<EnterBloc>()
-                                        .add(RegisterSubmitted());
-                                  }
+                            // BlocListener<EnterBloc, EnterState>(
+                            //   listener: (context, state) {
+                            //     if (state.formStatus is SubmissionSuccess) {
+                            //       ScaffoldMessenger.of(context).showSnackBar(
+                            //         SnackBar(
+                            //           backgroundColor: Colors.green,
+                            //           duration: const Duration(seconds: 2),
+                            //           content: Text(
+                            //             state.message,
+                            //             style: TextStyle(
+                            //                 fontSize: 14.sp,
+                            //                 color: Colors.white),
+                            //           ),
+                            //         ),
+                            //       );
+                            //       Navigator.pushReplacement(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) => const MyPages()),
+                            //       );
+                            //     } else if (state.formStatus
+                            //         is SubmissionFailed) {
+                            //       ScaffoldMessenger.of(context).showSnackBar(
+                            //         SnackBar(
+                            //           backgroundColor: Colors.red,
+                            //           duration: const Duration(seconds: 2),
+                            //           content: Text(
+                            //             state.message,
+                            //             style: TextStyle(
+                            //                 fontSize: 14.sp,
+                            //                 color: Colors.white),
+                            //           ),
+                            //         ),
+                            //       );
+                            //     }
+                            //   },
+                            //   child: ElevatedButton(
+                            //     onPressed: () {
+                            //       if (formKey.currentState!.validate()) {
+                            //         if ((state.formStatus is FormSubmitting)) {
+                            //         } else {
+                            //           context
+                            //               .read<EnterBloc>()
+                            //               .add(RegisterSubmitted());
+                            //         }
+                            //       }
 
-                                  print(state.email);
-                                  print("=============");
-                                  print(state.name);
-                                  print("=============");
-                                  print(state.number);
-                                  print("=============");
-                                  print(state.password);
-                                  print("=============");
-                                  print(state.type);
-                                  print("=============");
-                                  print(state.formStatus);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  fixedSize:
-                                      Size(size.width / 1.2, size.height / 18),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 68, 68, 68),
-                                  shape: const BeveledRectangleBorder(),
-                                ),
-                                child: (state.formStatus is FormSubmitting)
-                                    ? CircularProgressIndicator(
-                                        color: AppColor.whiteColor,
-                                        strokeWidth: 4.w,
-                                      )
-                                    : Text(
-                                        S.of(context).register,
-                                        style: TextStyle(
-                                            fontSize: 20.sp,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                              ),
-                            ),
+                            //       print(state.email);
+                            //       print("=============");
+                            //       print(state.name);
+                            //       print("=============");
+                            //       print(state.number);
+                            //       print("=============");
+                            //       print(state.password);
+                            //       print("=============");
+                            //       print(state.type);
+                            //       print("=============");
+                            //       print(state.formStatus);
+                            //     },
+                            //     style: ElevatedButton.styleFrom(
+                            //       fixedSize:
+                            //           Size(size.width / 1.2, size.height / 18),
+                            //       backgroundColor:
+                            //           const Color.fromARGB(255, 68, 68, 68),
+                            //       shape: const BeveledRectangleBorder(),
+                            //     ),
+                            //     child: (state.formStatus is FormSubmitting)
+                            //         ? CircularProgressIndicator(
+                            //             color: AppColor.whiteColor,
+                            //             strokeWidth: 4.w,
+                            //           )
+                            //         : Text(
+                            //             S.of(context).register,
+                            //             style: TextStyle(
+                            //                 fontSize: 20.sp,
+                            //                 color: Colors.black,
+                            //                 fontWeight: FontWeight.bold),
+                            //           ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Black18text extends StatelessWidget {
-  final String text;
-  const Black18text({
+class Black11text extends StatelessWidget {
+  final String? text;
+  const Black11text({
     super.key,
     required this.text,
   });
@@ -11,9 +11,9 @@ class Black18text extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       style: TextStyle(
-          fontSize: 18.sp, color: Colors.black, fontWeight: FontWeight.bold),
+          fontSize: 11.sp, color: Colors.black, fontWeight: FontWeight.normal),
     );
   }
 }

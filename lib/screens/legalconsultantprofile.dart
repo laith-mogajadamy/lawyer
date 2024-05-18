@@ -7,10 +7,10 @@ import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/add_consultation.dart';
-import 'package:lawyer/screens/chatpage.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/graydivider.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:lawyer/screens/chat/chatpage.dart';
 
 class Legalconsultantprofile extends StatelessWidget {
   final Lawyer lawyer;
@@ -89,12 +89,12 @@ class Legalconsultantprofile extends StatelessWidget {
                   ),
                 ],
               ),
-              (lawyer.certification.isEmpty)
+              (lawyer.certification!.isEmpty)
                   ? const SizedBox.shrink()
                   : SizedBox(
                       height: size.height / 3,
                       child: ListView.builder(
-                        itemCount: lawyer.certification.length,
+                        itemCount: lawyer.certification!.length,
                         padding: const EdgeInsets.all(8),
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -102,7 +102,7 @@ class Legalconsultantprofile extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return FutureBuilder<File>(
                             future: DefaultCacheManager()
-                                .getSingleFile(lawyer.certification[index]),
+                                .getSingleFile(lawyer.certification![index]),
                             builder: (context, snapshot) => snapshot.hasData
                                 ? GestureDetector(
                                     onTap: () {
@@ -197,7 +197,10 @@ class Legalconsultantprofile extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ChatPage()),
+                                builder: (context) => ChatPage(
+                                      user: lawyer,
+                                      token: "",
+                                    )),
                           );
                         },
                         child: Column(

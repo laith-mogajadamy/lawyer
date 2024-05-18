@@ -107,12 +107,12 @@ class PersonalProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  (state.user.certification.isEmpty)
+                  (state.user.certification!.isEmpty)
                       ? const SizedBox.shrink()
                       : SizedBox(
                           height: size.height / 3,
                           child: ListView.builder(
-                            itemCount: state.user.certification.length,
+                            itemCount: state.user.certification!.length,
                             padding: const EdgeInsets.all(8),
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),
@@ -120,7 +120,7 @@ class PersonalProfile extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return FutureBuilder<File>(
                                   future: DefaultCacheManager().getSingleFile(
-                                      state.user.certification[index]),
+                                      state.user.certification![index]),
                                   builder: (context, snapshot) {
                                     print("snapshot=$snapshot");
                                     return (snapshot.hasData)
