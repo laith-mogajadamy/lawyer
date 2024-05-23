@@ -1,7 +1,9 @@
 import 'package:lawyer/models/consultationmodel.dart';
 import 'package:lawyer/models/generalquestionmodel.dart';
+import 'package:lawyer/models/group_model.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/messagemodel.dart';
+import 'package:lawyer/models/notifications_model.dart';
 
 class LawyerModel extends Lawyer {
   const LawyerModel({
@@ -24,6 +26,8 @@ class LawyerModel extends Lawyer {
     required super.generalquestions,
     required super.senderMessage,
     required super.receiverMessage,
+    required super.unreadNotifications,
+    required super.groups,
   });
 
   factory LawyerModel.fromJson(Map<String, dynamic> json) => LawyerModel(
@@ -60,6 +64,16 @@ class LawyerModel extends Lawyer {
         receiverMessage: List<MessageModel>.from(
           ((json['receiverMessage'] ?? []) as List).map(
             (e) => MessageModel.fromJson(e),
+          ),
+        ),
+        unreadNotifications: List<NotificationsModel>.from(
+          ((json['unreadNotifications'] ?? []) as List).map(
+            (e) => NotificationsModel.fromJson(e),
+          ),
+        ),
+        groups: List<GroupsModel>.from(
+          ((json['groups'] ?? []) as List).map(
+            (e) => GroupsModel.fromJson(e),
           ),
         ),
       );

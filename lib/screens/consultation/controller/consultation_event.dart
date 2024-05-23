@@ -24,3 +24,28 @@ class Answerconsultation extends ConsultationEvent {
   @override
   List<Object?> get props => [id, answer];
 }
+
+class SendInvoice extends ConsultationEvent {
+  final String invoiceId;
+  final String senderid;
+  final String receiverid;
+  final String consultationid;
+  final String invoicevalue;
+
+  SendInvoice({
+    required this.invoiceId,
+    required this.senderid,
+    required this.receiverid,
+    required this.consultationid,
+    required this.invoicevalue,
+  });
+
+  @override
+  List<Object?> get props => [
+        invoiceId,
+        senderid,
+        receiverid,
+        consultationid,
+        invoicevalue,
+      ];
+}

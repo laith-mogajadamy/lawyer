@@ -6,7 +6,7 @@ import 'package:lawyer/core/services/pdf_api.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
-import 'package:lawyer/screens/add_consultation.dart';
+import 'package:lawyer/screens/consultation/add_consultation.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/graydivider.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -194,13 +194,15 @@ class Legalconsultantprofile extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                      user: lawyer,
-                                      token: "",
-                                    )),
+                              builder: (context) => ChatPage(
+                                myself: null,
+                                otheruser: lawyer,
+                                token: "",
+                              ),
+                            ),
                           );
                         },
                         child: Column(

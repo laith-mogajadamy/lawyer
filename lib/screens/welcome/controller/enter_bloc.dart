@@ -401,6 +401,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
                 generalquestions: [],
                 senderMessage: [],
                 receiverMessage: [],
+                unreadNotifications: [],
+                groups: [],
               ),
               type: '',
               logoutStatus: SubmissionSuccess(),

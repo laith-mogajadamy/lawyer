@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
 import 'package:lawyer/models/message.dart';
 
 class MessageModel extends Message {
   const MessageModel({
     required super.isMe,
-    required super.text,
+    required super.message,
     required super.type,
     required super.file,
     required super.attachment,
@@ -16,7 +15,7 @@ class MessageModel extends Message {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         isMe: json['isMe'] ?? false,
-        text: json['message'] ?? '',
+        message: json['message'] ?? '',
         type: json['type'] ?? '',
         file: json['file'] ?? File(''),
         attachment: json['attachment'] ?? '',

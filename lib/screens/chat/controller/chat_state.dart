@@ -7,12 +7,13 @@ class ChatState extends Equatable {
   List<Message> messages;
   final String usermessage;
   final bool bottom;
-
+  final String pushertoken;
   ChatState({
     this.token = '',
     this.messages = const [],
     this.usermessage = '',
     this.bottom = false,
+    this.pushertoken = '',
   });
 
   ChatState copyWith({
@@ -20,12 +21,14 @@ class ChatState extends Equatable {
     List<Message>? messages,
     String? usermessage,
     bool? bottom,
+    String? pushertoken,
   }) {
     return ChatState(
       token: token ?? this.token,
       messages: messages ?? this.messages,
       usermessage: usermessage ?? this.usermessage,
       bottom: bottom ?? this.bottom,
+      pushertoken: pushertoken ?? this.pushertoken,
     );
   }
 
@@ -35,5 +38,6 @@ class ChatState extends Equatable {
         messages,
         usermessage,
         bottom,
+        pushertoken,
       ];
 }

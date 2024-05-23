@@ -81,6 +81,8 @@ class EnterState extends Equatable {
       generalquestions: [],
       senderMessage: [],
       receiverMessage: [],
+      unreadNotifications: [],
+      groups: [],
     ),
     this.token = '',
     this.id = 0,

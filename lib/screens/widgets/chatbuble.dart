@@ -1,40 +1,33 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/models/message.dart';
 import 'package:lawyer/screens/widgets/pdf_widget.dart';
 
 class ChatBubble extends StatelessWidget {
-  final bool isMe;
-  final String? message;
-  final String? attachment;
+  final Message message;
 
-  final String type;
-  final File? file;
-  const ChatBubble(
-      {super.key,
-      required this.message,
-      required this.attachment,
-      required this.isMe,
-      required this.type,
-      required this.file});
+  const ChatBubble({
+    super.key,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if (attachment!.isNotEmpty) {
-      if (attachment!.split(".").last == "pdf") {
+    if (message.attachment!.isNotEmpty) {
+      if (message.attachment!.split(".").last == "pdf") {
         return Column(
           crossAxisAlignment:
-              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              message.isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            PdfWidget(file: file!),
+            PdfWidget(file: message.file!),
           ],
         );
       } else {
         return Column(
           crossAxisAlignment:
-              isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              message.isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
@@ -46,7 +39,7 @@ class ChatBubble extends StatelessWidget {
                   decoration: const BoxDecoration(
                       // color: AppColor.appgray,
                       ),
-                  child: Image.network(attachment!),
+                  child: Image.network(message.attachment!),
                 ),
               ),
             ),
@@ -56,22 +49,25 @@ class ChatBubble extends StatelessWidget {
     } else {
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-        padding:
-            isMe ? EdgeInsets.only(left: 40.w) : EdgeInsets.only(right: 40.w),
+        padding: message.isMe!
+            ? EdgeInsets.only(left: 40.w)
+            : EdgeInsets.only(right: 40.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Column(
-              mainAxisAlignment:
-                  isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-              crossAxisAlignment:
-                  isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              mainAxisAlignment: message.isMe!
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.start,
+              crossAxisAlignment: message.isMe!
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 Container(
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                   decoration: BoxDecoration(
-                    gradient: isMe
+                    gradient: message.isMe!
                         ? const LinearGradient(
                             begin: Alignment.topRight,
                             end: Alignment.bottomLeft,
@@ -82,7 +78,7 @@ class ChatBubble extends StatelessWidget {
                             end: Alignment.bottomLeft,
                             stops: [0.1, 1],
                             colors: [Color(0xFFEBF5FC), Color(0xFFEBF5FC)]),
-                    borderRadius: isMe
+                    borderRadius: message.isMe!
                         ? BorderRadius.only(
                             topRight: Radius.circular(15.r),
                             topLeft: Radius.circular(15.r),
@@ -97,17 +93,18 @@ class ChatBubble extends StatelessWidget {
                           ),
                   ),
                   child: Column(
-                    crossAxisAlignment: isMe
+                    crossAxisAlignment: message.isMe!
                         ? CrossAxisAlignment.end
                         : CrossAxisAlignment.start,
                     children: [
                       Text(
-                        message!,
-                        textAlign: isMe ? TextAlign.end : TextAlign.start,
+                        message.message!,
+                        textAlign:
+                            message.isMe! ? TextAlign.end : TextAlign.start,
                         style: TextStyle(
                           decorationThickness: 2,
                           decorationColor: AppColor.apporange,
-                          color: isMe ? Colors.white : Colors.grey,
+                          color: message.isMe! ? Colors.white : Colors.grey,
                         ),
                       )
                     ],

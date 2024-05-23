@@ -73,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(" My consultations"),
         "Name": MessageLookupByLibrary.simpleMessage("Name/Company"),
         "Next": MessageLookupByLibrary.simpleMessage("Next"),
+        "Notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "Occupation": MessageLookupByLibrary.simpleMessage("Occupation"),
         "POSTAGENERALQUESTION":
             MessageLookupByLibrary.simpleMessage("Post a General Question"),

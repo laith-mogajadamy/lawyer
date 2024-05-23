@@ -7,6 +7,8 @@ class ConsultationState extends Equatable {
   final String consultationMessage;
   //
   final String consultationreplyMessage;
+  final RequestState invoicestate;
+  final String invoiceMessage;
 
   const ConsultationState({
     this.token = '',
@@ -15,15 +17,21 @@ class ConsultationState extends Equatable {
     this.consultationMessage = '',
     //
     this.consultationreplyMessage = '',
+    //
+    this.invoicestate = RequestState.loading,
+    this.invoiceMessage = '',
   });
 
   ConsultationState copyWith({
     String? token,
     //
-    final RequestState? consultationState,
-    final String? consultationMessage,
+    RequestState? consultationState,
+    String? consultationMessage,
     //
-    final String? consultationreplyMessage,
+    String? consultationreplyMessage,
+    //
+    RequestState? invoicestate,
+    String? invoiceMessage,
   }) {
     return ConsultationState(
       token: token ?? this.token,
@@ -34,6 +42,9 @@ class ConsultationState extends Equatable {
       //
       consultationreplyMessage:
           consultationreplyMessage ?? this.consultationreplyMessage,
+      //
+      invoicestate: invoicestate ?? this.invoicestate,
+      invoiceMessage: invoiceMessage ?? this.invoiceMessage,
     );
   }
 
@@ -44,6 +55,9 @@ class ConsultationState extends Equatable {
         consultationState,
         consultationMessage,
         //
-        consultationreplyMessage
+        consultationreplyMessage,
+        //
+        invoicestate,
+        invoiceMessage,
       ];
 }

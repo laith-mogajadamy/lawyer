@@ -5,7 +5,7 @@ import 'package:lawyer/models/lawyer.dart';
 
 class Message extends Equatable {
   final bool? isMe;
-  final String? text;
+  final String? message;
   final String? type;
   final File? file;
   final String? attachment;
@@ -14,7 +14,7 @@ class Message extends Equatable {
 
   const Message({
     required this.isMe,
-    required this.text,
+    required this.message,
     required this.type,
     required this.file,
     required this.attachment,
@@ -24,5 +24,5 @@ class Message extends Equatable {
 
   @override
   List<Object?> get props =>
-      [isMe, text, type, file, attachment, sender, receiver];
+      [isMe, message, type, file, attachment, sender, receiver];
 }

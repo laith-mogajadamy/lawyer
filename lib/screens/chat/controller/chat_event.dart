@@ -77,3 +77,10 @@ class Bottomshow extends ChatEvent {
   @override
   List<Object?> get props => [bottom, destenation];
 }
+
+class GetPusherConfig extends ChatEvent {
+  GetPusherConfig();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
@@ -11,126 +10,107 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
+import 'package:lawyer/models/group.dart';
 import 'package:lawyer/models/lawyer.dart';
-import 'package:lawyer/models/lawyermodel.dart';
 import 'package:lawyer/models/message.dart';
 import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
-import 'package:pusher_client/pusher_client.dart';
 
-class ChatPage extends StatefulWidget {
-  final Lawyer? myself;
-
-  final Lawyer? otheruser;
+class GroupChatPage extends StatefulWidget {
+  final Lawyer user;
+  final Groups group;
   final String token;
-  const ChatPage({
+  const GroupChatPage({
     super.key,
-    required this.myself,
-    required this.otheruser,
+    required this.user,
     required this.token,
+    required this.group,
   });
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<GroupChatPage> createState() => _GroupChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _GroupChatPageState extends State<GroupChatPage> {
   final TextEditingController messageController = TextEditingController();
   bool bottom = false;
   File? pfile;
-  late Channel channel;
-  late PusherClient pusher;
   StreamController<List<Message>> streamController =
       StreamController.broadcast(sync: true);
-  StreamController<Message> eventData = StreamController<Message>.broadcast();
-  pusherinit() async {
-    Response response =
-        await GetPusherConfigrequest.getpusherconfig(widget.token);
-    String pushertoken =
-        response.data['options']['auth']['headers']['Authorization'];
-    print(pushertoken);
-    try {
-      pusher = PusherClient(
-        "21c93d7ae9ded5a63591",
-        PusherOptions(
-          wsPort: 6001,
-          cluster: 'ap2',
-          // encrypted: false,
-          auth: PusherAuth(
-            "https://main.briefcaseplatform.com/api/pusher/auth",
-            headers: {
-              "Accept": "application/json",
-              "Content-type": "application/json",
-              "Authorization": pushertoken,
-            },
-          ),
-        ),
-        // autoConnect: true,
-        // enableLogging: true,
+
+  addStreamData() async {
+    while (true) {
+      await Future.delayed(
+        const Duration(seconds: 3),
       );
-      await pusher.connect();
-      print("===========");
+      Response response;
 
-      print(pusher.getSocketId());
-    } catch (e) {
-      print(e);
+      print(widget.token);
+
+      response = await GetMessagesInGroup.getmessagesingroup(
+          //we need an id for the group
+          1,
+          widget.token);
+      List<Message> messages = List<MessageModel>.from(
+        (response.data['messages'] as List).map(
+          (e) => MessageModel.fromJson(e),
+        ),
+      );
+      print(response);
+
+      streamController.sink.add(messages);
     }
-
-    channel = pusher.subscribe("private-chat-channel-${widget.myself!.id}");
-    print(channel);
-    print(channel.runtimeType);
-    print(channel.name);
-    // channel.trigger('chatMessage', jsonEncode({"message": "hi"}));
-    await channel.bind('chatMessage', (event) async {
-      if (event!.data != null) {
-        var jsonData = jsonDecode(event.data!);
-        print(event.data);
-        Message message = Message(
-          isMe: (jsonData['sender_id'] == widget.myself!.id) ? true : false,
-          message: jsonData['message'],
-          type: "",
-          file: File(""),
-          attachment: jsonData['attachment'],
-          sender: null,
-          receiver: LawyerModel.fromJson(
-            jsonData['receiver'] ?? {},
-          ),
-        );
-
-        eventData.sink.add(message);
-      } else {}
-      //initialize the message from stream and add it
-    });
   }
 
-  disactive() async {
-    channel.unbind('chatMessage');
+  // Stream<List<Message>> messagesStream() async* {
+  //   print(widget.user.id);
 
-    await pusher.unsubscribe("chat-channel-${widget.otheruser!.id}");
-    channel.cancelEventChannelStream();
-    pusher.disconnect();
-  }
+  //   print(widget.token);
+
+  //   await Future.delayed(
+  //     const Duration(seconds: 1),
+  //   );
+  //   Response response = await GetMessagesInChat.getmessages(
+  //     widget.user.id,
+  //     widget.token,
+  //   );
+  //   List<Message> messages = List<MessageModel>.from(
+  //     (response.data['data'] as List).map(
+  //       (e) => MessageModel.fromJson(e),
+  //     ),
+  //   );
+  //   print("yielded messages= ${messages}");
+  //   yield messages;
+  // }
 
   @override
   void initState() {
-    pusherinit();
+    // messagesStream().listen((event) {
+    //   print("listening");
+    //   event.length;
+    //   print(event);
+    //   print(messagesStream());
+    //   return;
+    // });
+    addStreamData();
+
     super.initState();
   }
 
   @override
   void dispose() {
     messageController.dispose();
-    eventData.close();
-    disactive();
+    streamController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return BlocProvider(
       create: (context) => ChatBloc(),
       child: BlocBuilder<ChatBloc, ChatState>(
@@ -139,7 +119,7 @@ class _ChatPageState extends State<ChatPage> {
             appBar: AppBar(
               leadingWidth: size.width / 4,
               backgroundColor: AppColor.appgray,
-              title: Black18text(text: widget.otheruser!.name),
+              title: Black18text(text: widget.group.name),
               leading: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -154,8 +134,12 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                   CircleAvatar(
+                    backgroundColor: Colors.white,
                     radius: 25.r,
-                    backgroundImage: NetworkImage(widget.otheruser!.image),
+                    child: Icon(
+                      Icons.group,
+                      size: 30.r,
+                    ),
                   ),
                 ],
               ),
@@ -174,9 +158,9 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   Expanded(
                     child: StreamBuilder(
-                      stream: eventData.stream,
+                      stream: streamController.stream,
                       builder: (BuildContext context,
-                          AsyncSnapshot<Message> asyncSnapshot) {
+                          AsyncSnapshot<List<Message>> asyncSnapshot) {
                         if (asyncSnapshot.hasError) {
                           return const Text("Error");
                         }
@@ -184,9 +168,8 @@ class _ChatPageState extends State<ChatPage> {
                             ConnectionState.waiting) {
                           return Container();
                         }
-                        List<Message> messages = [];
-
-                        messages.add(asyncSnapshot.data!);
+                        List<Message> messages =
+                            asyncSnapshot.data!.reversed.toList();
                         return ListView.builder(
                           reverse: true,
                           itemCount: messages.length,
@@ -233,12 +216,13 @@ class _ChatPageState extends State<ChatPage> {
                                         print(pfile);
                                         if (mounted) {
                                           context.read<ChatBloc>().add(
-                                              SendMessageInChatEvent(
+                                              SendMessageToGroupEvent(
                                                   attachment: pfile,
                                                   message: pfile!.path
                                                       .split("/")
                                                       .last,
-                                                  id: widget.otheruser!.id));
+                                                  //get te group id
+                                                  id: 1));
                                         }
                                       }
                                       print("************************");
@@ -279,12 +263,13 @@ class _ChatPageState extends State<ChatPage> {
                                         print(pfile);
                                         if (mounted) {
                                           context.read<ChatBloc>().add(
-                                              SendMessageInChatEvent(
+                                              SendMessageToGroupEvent(
                                                   attachment: pfile,
                                                   message: pfile!.path
                                                       .split("/")
                                                       .last,
-                                                  id: widget.otheruser!.id));
+                                                  // get the group id
+                                                  id: 1));
                                         }
                                       }
                                       print("************************");
@@ -343,10 +328,11 @@ class _ChatPageState extends State<ChatPage> {
                                     messageController.text.trim();
                                 if (messageText.isNotEmpty) {
                                   context.read<ChatBloc>().add(
-                                        SendMessageInChatEvent(
+                                        SendMessageToGroupEvent(
                                             attachment: null,
                                             message: messageText,
-                                            id: widget.otheruser!.id),
+                                            // get the  group id
+                                            id: 1),
                                       );
                                   messageController.clear();
                                   // You can add logic here to send the message to the other user or store it.
@@ -427,99 +413,3 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 }
-// import 'package:flutter/material.dart';
-// import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-// class ChatPage extends StatefulWidget {
-//   @override
-//   _ChatPageState createState() => _ChatPageState();
-// }
-
-// class _ChatPageState extends State<ChatPage> {
-//   IO.Socket socket;
-//   List<String> messages = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Create Socket.IO instance and connect
-//     socket = IO.io('your_socket_server_url');
-//     socket.connect();
-
-//     // Listen for 'message' event
-//     socket.on('message', (data) {
-//       setState(() {
-//         messages.add(data.toString());
-//       });
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     // Close the connection when the page is disposed
-//     socket.close();
-//     super.dispose();
-//   }
-
-//   void sendMessage(String message) {
-//     // Emit 'message' event
-//     socket.emit('message', message);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Chat Page'),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: messages.length,
-//               itemBuilder: (context, index) {
-//                 return ListTile(
-//                   title: Text(messages[index]),
-//                 );
-//               },
-//             ),
-//           ),
-//           Container(
-//             padding: EdgeInsets.all(10),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     onChanged: (value) {
-//                       // Update the message text
-//                     },
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: Icon(Icons.send),
-//                   onPressed: () {
-//                     // Send the message
-//                     sendMessage('message text');
-//                   },
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-// to add message history
-
-
-// List<String> messageHistory = prefs.getStringList('messageHistory') ?? [];
-// socket.on('message', (data) {
-//   setState(() {
-//     messages.add(data.toString());
-//     messageHistory.add(data.toString());
-//     prefs.setStringList('messageHistory', messageHistory);
-//   });
-// });

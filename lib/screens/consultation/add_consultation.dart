@@ -6,19 +6,24 @@ import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/consultation/controller/consultation_bloc.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:my_fatoorah/my_fatoorah.dart';
 
-// ignore: must_be_immutable
-class AddConsultation extends StatelessWidget {
+class AddConsultation extends StatefulWidget {
   final Lawyer lawyer;
 
-  AddConsultation({super.key, required this.lawyer});
+  const AddConsultation({super.key, required this.lawyer});
 
+  @override
+  State<AddConsultation> createState() => _AddConsultationState();
+}
+
+class _AddConsultationState extends State<AddConsultation> {
   TextEditingController title = TextEditingController();
 
   TextEditingController description = TextEditingController();
-
+  final ConsultationBloc consultationBloc = ConsultationBloc();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -40,7 +45,7 @@ class AddConsultation extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Black18text(text: lawyer.name),
+                    Black18text(text: widget.lawyer.name),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -166,44 +171,121 @@ class AddConsultation extends StatelessWidget {
                             );
                           }
                         },
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            var response = await MyFatoorah.startPayment(
-                              context: context,
-                              request: MyfatoorahRequest.test(
-                                currencyIso: Country.UAE,
-                                successUrl:
-                                    'https://dealersupport.co.uk/wp-content/uploads/2023/08/iStock-1124532572.jpg',
-                                errorUrl: 'https://www.google.com/',
-                                invoiceAmount: 100,
-                                language: ApiLanguage.Arabic,
-                                token:
-                                    "rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL",
-                              ),
-                            );
-                            print(response.paymentId.toString());
-                            print(response.status.toString());
-                            context.read<ConsultationBloc>().add(
-                                Addconsultation(
-                                    id: lawyer.id,
-                                    title: title.text.trim(),
-                                    description: description.text.trim()));
-                            title.clear();
-                            description.clear();
+                        child:
+                            BlocListener<ConsultationBloc, ConsultationState>(
+                          listener: (context, state) {
+                            if (state.invoicestate == RequestState.loaded) {
+                              context.read<ConsultationBloc>().add(
+                                    Addconsultation(
+                                      id: widget.lawyer.id,
+                                      title: title.text.trim(),
+                                      description: description.text.trim(),
+                                    ),
+                                  );
+                              title.clear();
+                              description.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.green,
+                                  duration: const Duration(seconds: 2),
+                                  content: Text(
+                                    state.invoiceMessage,
+                                    style: TextStyle(
+                                        fontSize: 14.sp, color: Colors.white),
+                                  ),
+                                ),
+                              );
+                              if (state.consultationState ==
+                                  RequestState.loaded) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    duration: const Duration(seconds: 2),
+                                    content: Text(
+                                      state.consultationMessage,
+                                      style: TextStyle(
+                                          fontSize: 14.sp, color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: Colors.red,
+                                    duration: const Duration(seconds: 2),
+                                    content: Text(
+                                      state.consultationMessage,
+                                      style: TextStyle(
+                                          fontSize: 14.sp, color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.red,
+                                  duration: const Duration(seconds: 2),
+                                  content: Text(
+                                    state.invoiceMessage,
+                                    style: TextStyle(
+                                        fontSize: 14.sp, color: Colors.white),
+                                  ),
+                                ),
+                              );
+                            }
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange,
-                            shape: StadiumBorder(
-                              side:
-                                  BorderSide(color: Colors.black, width: 1.5.w),
-                            ),
-                          ),
-                          child: Text(
-                            S.of(context).paysend,
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                          child: BlocBuilder<EnterBloc, EnterState>(
+                            builder: (context, state) {
+                              return ElevatedButton(
+                                onPressed: () async {
+                                  var response = await MyFatoorah.startPayment(
+                                    context: context,
+                                    request: MyfatoorahRequest.test(
+                                      currencyIso: Country.UAE,
+                                      successUrl:
+                                          'https://dealersupport.co.uk/wp-content/uploads/2023/08/iStock-1124532572.jpg',
+                                      errorUrl: 'https://www.google.com/',
+                                      invoiceAmount: 100,
+                                      language: ApiLanguage.Arabic,
+                                      token:
+                                          "rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL",
+                                    ),
+                                  );
+                                  print(response.paymentId.toString());
+                                  print(response.status.toString());
+                                  if (response.status ==
+                                      PaymentStatus.Success) {
+                                    consultationBloc.add(
+                                      SendInvoice(
+                                        invoiceId:
+                                            response.paymentId.toString(),
+                                        senderid: state.user.id.toString(),
+                                        receiverid: widget.lawyer.id.toString(),
+                                        consultationid: '',
+                                        invoicevalue: widget
+                                            .lawyer.consultationPrice
+                                            .toString(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.orange,
+                                  shape: StadiumBorder(
+                                    side: BorderSide(
+                                        color: Colors.black, width: 1.5.w),
+                                  ),
+                                ),
+                                child: Text(
+                                  S.of(context).paysend,
+                                  style: TextStyle(
+                                      fontSize: 18.sp,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),

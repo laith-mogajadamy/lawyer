@@ -71,5 +71,40 @@ class ConsultationBloc extends Bloc<ConsultationEvent, ConsultationState> {
         ));
       }
     });
+    on<SendInvoice>((event, emit) async {
+      print("Addconsultation");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(token: ptoken, invoicestate: RequestState.loading));
+        print("state.token");
+        print(state.token);
+        http.Response response = await ConsultationRequest.sendinvoice(
+            state.token,
+            event.invoiceId,
+            event.senderid,
+            event.receiverid,
+            event.consultationid,
+            event.invoicevalue);
+        var responsemap = await jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+              invoiceMessage: "invoice paied successfully ",
+              invoicestate: RequestState.loaded));
+        } else {
+          emit(state.copyWith(
+            invoiceMessage: responsemap["message"],
+            invoicestate: RequestState.error,
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          consultationMessage: "Unauthenticated",
+          consultationState: RequestState.error,
+        ));
+      }
+    });
   }
 }

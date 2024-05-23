@@ -582,6 +582,16 @@ class S {
     );
   }
 
+  /// `Notifications`
+  String get Notifications {
+    return Intl.message(
+      'Notifications',
+      name: 'Notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Gender`
   String get Gender {
     return Intl.message(

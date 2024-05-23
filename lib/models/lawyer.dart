@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:lawyer/models/consultation.dart';
 import 'package:lawyer/models/general_question.dart';
+import 'package:lawyer/models/group.dart';
 import 'package:lawyer/models/message.dart';
+import 'package:lawyer/models/notifications.dart';
 
 class Lawyer extends Equatable {
   final int id;
@@ -24,6 +26,8 @@ class Lawyer extends Equatable {
 
   final List? certification;
   final List? practices;
+  final List<Notifications>? unreadNotifications;
+  final List<Groups>? groups;
 
   const Lawyer({
     required this.id,
@@ -45,6 +49,8 @@ class Lawyer extends Equatable {
     required this.generalquestions,
     required this.senderMessage,
     required this.receiverMessage,
+    required this.unreadNotifications,
+    required this.groups,
   });
 
   @override
@@ -68,5 +74,7 @@ class Lawyer extends Equatable {
         generalquestions,
         senderMessage,
         receiverMessage,
+        unreadNotifications,
+        groups,
       ];
 }

@@ -41,9 +41,10 @@ class PersonMassege extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ChatPage(
-                                      user: state
+                                      otheruser: state
                                           .user.receiverMessage![index].sender,
                                       token: state.token,
+                                      myself: state.user,
                                     ),
                                   ),
                                 );
@@ -67,8 +68,8 @@ class PersonMassege extends StatelessWidget {
                                   text: state.user.receiverMessage![index]
                                       .sender!.name),
                               subtitle: Black11text(
-                                  text:
-                                      state.user.receiverMessage![index].text),
+                                  text: state
+                                      .user.receiverMessage![index].message),
                             ),
                           );
                         },

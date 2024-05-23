@@ -61,11 +61,13 @@ class SendMessageToGroup {
     FormData formdata = FormData.fromMap(
       {
         "message": message,
-        "attachment": await MultipartFile.fromFile(
-          attachment!.path,
-          filename: attachment.path.split("/").last,
-          contentType: MediaType('image', 'png'),
-        ),
+        "attachment": (attachment != null)
+            ? await MultipartFile.fromFile(
+                attachment.path,
+                filename: attachment.path.split("/").last,
+                contentType: MediaType('image', 'jpg'),
+              )
+            : null
       },
     );
 
@@ -184,6 +186,30 @@ class GetAttachmentsInGroup {
     print(response.statusCode);
 
     print(response.data);
+    return response;
+  }
+}
+
+class GetPusherConfigrequest {
+  static Future getpusherconfig(
+    String? token,
+  ) async {
+    print("GetPusherConfig");
+
+    Map<String, String> headers = {
+      "Accept": "application/json",
+      "Content-type": "application/json",
+      "Authorization": "Bearer $token",
+    };
+
+    Response response = await Dio().get(
+      "${Global.url}pusher_config",
+      options: Options(headers: headers, method: "GET"),
+    );
+    print(response.statusCode);
+
+    print(response.data);
+
     return response;
   }
 }

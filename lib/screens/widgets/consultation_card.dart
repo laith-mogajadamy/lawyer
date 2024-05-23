@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/consultation.dart';
-import 'package:lawyer/screens/consultation_page.dart';
+import 'package:lawyer/screens/consultation/consultation_page.dart';
 
 class ConsultationCard extends StatelessWidget {
   final Consultation consultation;

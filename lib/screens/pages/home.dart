@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
+import 'package:lawyer/screens/notifications_page.dart';
 import 'package:lawyer/screens/search/search.dart';
 
 class Home extends StatefulWidget {
@@ -37,7 +37,14 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotificationsPage(),
+                      ),
+                    );
+                  },
                   icon: Icon(
                     Icons.notifications,
                     size: 30.r,
