@@ -20,7 +20,7 @@ class SendMessageToUser {
             ? await MultipartFile.fromFile(
                 attachment.path,
                 filename: attachment.path.split("/").last,
-                contentType: MediaType('image', 'jpg'),
+                contentType: MediaType('image', 'png'),
               )
             : null
       },

@@ -62,6 +62,7 @@
     "Consultations":"Consultations",
     "Profile": "Profile",
     "Notifications": "Notifications",
+    "Youdonthaveanynotifications":"You dont have any notifications",
 
     "Gender":"Gender",
     "location":"location",
@@ -71,6 +72,7 @@
     "Loggingout":"Logging out....",
     "LOGOUT":"Log Out",
     "Changethelanguage":"Change the language",
+    "Chooselanguage":"Choose the language",
 
 
     "results": "results :",

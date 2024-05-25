@@ -15,18 +15,18 @@ class NotificationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            child: Column(
-              children: [
-                Black22text(text: S.of(context).Notifications),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Expanded(
-                  child: BlocBuilder<EnterBloc, EnterState>(
-                    builder: (context, state) {
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+          child: Column(
+            children: [
+              Black22text(text: S.of(context).Notifications),
+              SizedBox(
+                height: 20.h,
+              ),
+              Expanded(
+                child: BlocBuilder<EnterBloc, EnterState>(
+                  builder: (context, state) {
+                    if (state.user.unreadNotifications!.isNotEmpty) {
                       return ListView.builder(
                         itemCount: state.user.unreadNotifications!.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -47,11 +47,16 @@ class NotificationsPage extends StatelessWidget {
                           );
                         },
                       );
-                    },
-                  ),
+                    } else {
+                      return Center(
+                        child: Black22text(
+                            text: S.of(context).Youdonthaveanynotifications),
+                      );
+                    }
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

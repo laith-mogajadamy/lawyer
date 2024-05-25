@@ -38,6 +38,8 @@ class MyApp extends StatelessWidget {
                   debugShowCheckedModeBanner: false,
                   title: 'BRIEfCASE',
                   theme: ThemeData(
+                    cardColor: Colors.white,
+                    cardTheme: CardTheme(color: Colors.white),
                     canvasColor: Colors.transparent,
                     colorScheme: ColorScheme.fromSeed(
                       seedColor: Colors.black,

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
+import 'package:lawyer/screens/language_change.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/login.dart';
 import 'package:lawyer/screens/welcome/register.dart';
@@ -20,6 +21,26 @@ class Enter extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LanguageChange(),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.language,
+                    size: 30.r,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
             SizedBox(
               width: size.width,
               child: SvgPicture.asset(

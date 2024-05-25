@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Certifications:"),
         "Changethelanguage":
             MessageLookupByLibrary.simpleMessage("Change the language"),
+        "Chooselanguage":
+            MessageLookupByLibrary.simpleMessage("Choose the language"),
         "City": MessageLookupByLibrary.simpleMessage("City"),
         "Consultations": MessageLookupByLibrary.simpleMessage("Consultations"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("Contact number"),
@@ -106,6 +108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "YOURQUESTIONMAYORMAYNOTBEANSWERED":
             MessageLookupByLibrary.simpleMessage(
                 "YOUR QUESTION MAY OR MAY NOT BE ANSWERED"),
+        "Youdonthaveanynotifications": MessageLookupByLibrary.simpleMessage(
+            "You dont have any notifications"),
         "addcertification":
             MessageLookupByLibrary.simpleMessage("add certification"),
         "birth": MessageLookupByLibrary.simpleMessage("Birth"),

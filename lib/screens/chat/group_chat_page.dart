@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
@@ -12,12 +13,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/group.dart';
 import 'package:lawyer/models/lawyer.dart';
+import 'package:lawyer/models/lawyermodel.dart';
 import 'package:lawyer/models/message.dart';
 import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pusher_client/pusher_client.dart';
 
 class GroupChatPage extends StatefulWidget {
   final Lawyer user;
@@ -38,72 +42,135 @@ class _GroupChatPageState extends State<GroupChatPage> {
   final TextEditingController messageController = TextEditingController();
   bool bottom = false;
   File? pfile;
-  StreamController<List<Message>> streamController =
-      StreamController.broadcast(sync: true);
+  late Channel receiverchannel;
+  late Channel senderchannel;
 
-  addStreamData() async {
-    while (true) {
-      await Future.delayed(
-        const Duration(seconds: 3),
-      );
-      Response response;
+  late PusherClient pusher;
+  List<Message> messages = [];
 
-      print(widget.token);
+  StreamController<Message> messagesstream =
+      StreamController<Message>.broadcast();
+  addoldmessages() async {
+    Response response;
 
-      response = await GetMessagesInGroup.getmessagesingroup(
-          //we need an id for the group
-          1,
-          widget.token);
-      List<Message> messages = List<MessageModel>.from(
-        (response.data['messages'] as List).map(
-          (e) => MessageModel.fromJson(e),
-        ),
-      );
-      print(response);
+    print(widget.token);
 
-      streamController.sink.add(messages);
-    }
+    response = await GetMessagesInGroup.getmessagesingroup(
+        //we need an id for the group
+        1,
+        widget.token);
+    List<Message> hmessages = List<MessageModel>.from(
+      (response.data['data'] as List).map(
+        (e) => MessageModel.fromJson(e),
+      ),
+    );
+    print(response);
+    messagesstream.sink.add(hmessages[0]);
+    messages.addAll(hmessages.reversed);
   }
 
-  // Stream<List<Message>> messagesStream() async* {
-  //   print(widget.user.id);
+  pusherinit() async {
+    await addoldmessages();
 
-  //   print(widget.token);
+    Response response =
+        await GetPusherConfigrequest.getpusherconfig(widget.token);
+    String pushertoken =
+        response.data['options']['auth']['headers']['Authorization'];
+    print(pushertoken);
+    try {
+      pusher = PusherClient(
+        "21c93d7ae9ded5a63591",
+        PusherOptions(
+          wsPort: 6001,
+          cluster: 'ap2',
+          // encrypted: false,
+          auth: PusherAuth(
+            "https://main.briefcaseplatform.com/api/pusher/auth",
+            headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json",
+              "Authorization": pushertoken,
+            },
+          ),
+        ),
+        // autoConnect: true,
+        // enableLogging: true,
+      );
+      await pusher.connect();
+      print("===========");
 
-  //   await Future.delayed(
-  //     const Duration(seconds: 1),
-  //   );
-  //   Response response = await GetMessagesInChat.getmessages(
-  //     widget.user.id,
-  //     widget.token,
-  //   );
-  //   List<Message> messages = List<MessageModel>.from(
-  //     (response.data['data'] as List).map(
-  //       (e) => MessageModel.fromJson(e),
-  //     ),
-  //   );
-  //   print("yielded messages= ${messages}");
-  //   yield messages;
-  // }
+      print(pusher.getSocketId());
+    } catch (e) {
+      print(e);
+    }
+// get the group  id
+    receiverchannel = pusher.subscribe("private-group-channel-1");
+    senderchannel = pusher.subscribe("private-group-channel-1");
+    print(receiverchannel.name);
+
+    // channel.trigger('chatMessage', jsonEncode({"message": "hi"}));
+    await receiverchannel.bind('chatMessage', (event) async {
+      if (event!.data != null) {
+        var jsonData = jsonDecode(event.data!);
+        print(event.data);
+        Message message = Message(
+          isMe: (jsonData['sender_id'] == widget.user.id) ? true : false,
+          message: jsonData['message'],
+          type: "",
+          file: File(""),
+          attachment: jsonData['attachment'],
+          sender: null,
+          receiver: LawyerModel.fromJson(
+            jsonData['receiver'] ?? {},
+          ),
+        );
+
+        messagesstream.sink.add(message);
+        messages.insert(0, message);
+      } else {}
+    });
+    await senderchannel.bind('chatMessage', (event) async {
+      if (event!.data != null) {
+        var jsonData = jsonDecode(event.data!);
+        print(event.data);
+        Message message = Message(
+          isMe: (jsonData['sender_id'] == widget.user.id) ? true : false,
+          message: jsonData['message'],
+          type: "",
+          file: File(""),
+          attachment: jsonData['attachment'],
+          sender: null,
+          receiver: LawyerModel.fromJson(
+            jsonData['receiver'] ?? {},
+          ),
+        );
+
+        messagesstream.sink.add(message);
+        messages.insert(0, message);
+      } else {}
+    });
+  }
+
+  disactive() async {
+    receiverchannel.unbind('chatMessage');
+    senderchannel.unbind('chatMessage');
+    // get the group id
+    await pusher.unsubscribe("chat-channel-${1}");
+    await pusher.unsubscribe("chat-channel-${1}");
+    pusher.disconnect();
+    messagesstream.close();
+    messageController.dispose();
+  }
 
   @override
   void initState() {
-    // messagesStream().listen((event) {
-    //   print("listening");
-    //   event.length;
-    //   print(event);
-    //   print(messagesStream());
-    //   return;
-    // });
-    addStreamData();
-
+    pusherinit();
     super.initState();
   }
 
   @override
   void dispose() {
-    messageController.dispose();
-    streamController.close();
+    disactive();
     super.dispose();
   }
 
@@ -115,6 +182,26 @@ class _GroupChatPageState extends State<GroupChatPage> {
       create: (context) => ChatBloc(),
       child: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
+          sendattachment() {
+            if (pfile != null) {
+              print(pfile);
+              context.read<ChatBloc>().add(SendMessageToGroupEvent(
+                  attachment: pfile,
+                  message: null,
+                  //get te group id
+                  id: 1));
+            }
+            print("************************");
+            print(bottom);
+            bottom = !bottom;
+            context.read<ChatBloc>().add(
+                  Bottomshow(
+                    bottom: bottom,
+                  ),
+                );
+            pfile = null;
+          }
+
           return Scaffold(
             appBar: AppBar(
               leadingWidth: size.width / 4,
@@ -158,18 +245,24 @@ class _GroupChatPageState extends State<GroupChatPage> {
                   ),
                   Expanded(
                     child: StreamBuilder(
-                      stream: streamController.stream,
+                      stream: messagesstream.stream,
                       builder: (BuildContext context,
-                          AsyncSnapshot<List<Message>> asyncSnapshot) {
+                          AsyncSnapshot<Message> asyncSnapshot) {
                         if (asyncSnapshot.hasError) {
                           return const Text("Error");
                         }
                         if (asyncSnapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Container();
+                          return Center(
+                            child: LottieBuilder.asset(
+                              "assets/lottie/waiting.json",
+                              height: size.height / 3,
+                              fit: BoxFit.cover,
+                            ),
+                          );
                         }
-                        List<Message> messages =
-                            asyncSnapshot.data!.reversed.toList();
+
+                        print(messages);
                         return ListView.builder(
                           reverse: true,
                           itemCount: messages.length,
@@ -180,6 +273,11 @@ class _GroupChatPageState extends State<GroupChatPage> {
                             return Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
                               child: ChatBubble(
+                                isMe: (message.sender != null)
+                                    ? (message.sender!.id == widget.user.id)
+                                        ? true
+                                        : false
+                                    : message.isMe!,
                                 message: message,
                               ),
                             );
@@ -212,29 +310,8 @@ class _GroupChatPageState extends State<GroupChatPage> {
                                   GestureDetector(
                                     onTap: () async {
                                       await pickimage(ImageSource.gallery);
-                                      if (pfile != null) {
-                                        print(pfile);
-                                        if (mounted) {
-                                          context.read<ChatBloc>().add(
-                                              SendMessageToGroupEvent(
-                                                  attachment: pfile,
-                                                  message: pfile!.path
-                                                      .split("/")
-                                                      .last,
-                                                  //get te group id
-                                                  id: 1));
-                                        }
-                                      }
-                                      print("************************");
 
-                                      print(bottom);
-
-                                      bottom = !bottom;
-                                      context.read<ChatBloc>().add(
-                                            Bottomshow(
-                                              bottom: bottom,
-                                            ),
-                                          );
+                                      sendattachment();
                                     },
                                     child: SizedBox(
                                       height: size.height / 15,
@@ -259,29 +336,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
                                   GestureDetector(
                                     onTap: () async {
                                       await pickpdf();
-                                      if (pfile != null) {
-                                        print(pfile);
-                                        if (mounted) {
-                                          context.read<ChatBloc>().add(
-                                              SendMessageToGroupEvent(
-                                                  attachment: pfile,
-                                                  message: pfile!.path
-                                                      .split("/")
-                                                      .last,
-                                                  // get the group id
-                                                  id: 1));
-                                        }
-                                      }
-                                      print("************************");
-
-                                      print(bottom);
-
-                                      bottom = !bottom;
-                                      context.read<ChatBloc>().add(
-                                            Bottomshow(
-                                              bottom: bottom,
-                                            ),
-                                          );
+                                      sendattachment();
                                     },
                                     child: SizedBox(
                                       height: size.height / 15,

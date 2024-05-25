@@ -592,6 +592,16 @@ class S {
     );
   }
 
+  /// `You dont have any notifications`
+  String get Youdonthaveanynotifications {
+    return Intl.message(
+      'You dont have any notifications',
+      name: 'Youdonthaveanynotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Gender`
   String get Gender {
     return Intl.message(
@@ -667,6 +677,16 @@ class S {
     return Intl.message(
       'Change the language',
       name: 'Changethelanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the language`
+  String get Chooselanguage {
+    return Intl.message(
+      'Choose the language',
+      name: 'Chooselanguage',
       desc: '',
       args: [],
     );

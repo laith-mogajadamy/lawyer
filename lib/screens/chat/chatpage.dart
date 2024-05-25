@@ -19,6 +19,7 @@ import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pusher_client/pusher_client.dart';
 
 class ChatPage extends StatefulWidget {
@@ -41,12 +42,36 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController messageController = TextEditingController();
   bool bottom = false;
   File? pfile;
-  late Channel channel;
+  late Channel receiverchannel;
+  late Channel senderchannel;
+
   late PusherClient pusher;
-  StreamController<List<Message>> streamController =
-      StreamController.broadcast(sync: true);
-  StreamController<Message> eventData = StreamController<Message>.broadcast();
+  List<Message> messages = [];
+
+  StreamController<Message> messagesstream =
+      StreamController<Message>.broadcast();
+  addoldmessages() async {
+    Response response;
+
+    print(widget.token);
+
+    response = await GetMessagesInChat.getmessages(
+        //we need an id for the group
+        widget.otheruser!.id,
+        widget.token);
+    List<Message> hmessages = List<MessageModel>.from(
+      (response.data['data'] as List).map(
+        (e) => MessageModel.fromJson(e),
+      ),
+    );
+    print(response);
+    messagesstream.sink.add(hmessages[0]);
+    messages.addAll(hmessages.reversed);
+  }
+
   pusherinit() async {
+    await addoldmessages();
+
     Response response =
         await GetPusherConfigrequest.getpusherconfig(widget.token);
     String pushertoken =
@@ -79,12 +104,14 @@ class _ChatPageState extends State<ChatPage> {
       print(e);
     }
 
-    channel = pusher.subscribe("private-chat-channel-${widget.myself!.id}");
-    print(channel);
-    print(channel.runtimeType);
-    print(channel.name);
+    receiverchannel =
+        pusher.subscribe("private-chat-channel-${widget.myself!.id}");
+    senderchannel =
+        pusher.subscribe("private-chat-channel-${widget.otheruser!.id}");
+    print(receiverchannel.name);
+
     // channel.trigger('chatMessage', jsonEncode({"message": "hi"}));
-    await channel.bind('chatMessage', (event) async {
+    await receiverchannel.bind('chatMessage', (event) async {
       if (event!.data != null) {
         var jsonData = jsonDecode(event.data!);
         print(event.data);
@@ -100,18 +127,40 @@ class _ChatPageState extends State<ChatPage> {
           ),
         );
 
-        eventData.sink.add(message);
+        messagesstream.sink.add(message);
+        messages.insert(0, message);
       } else {}
-      //initialize the message from stream and add it
+    });
+    await senderchannel.bind('chatMessage', (event) async {
+      if (event!.data != null) {
+        var jsonData = jsonDecode(event.data!);
+        print(event.data);
+        Message message = Message(
+          isMe: (jsonData['sender_id'] == widget.myself!.id) ? true : false,
+          message: jsonData['message'],
+          type: "",
+          file: File(""),
+          attachment: jsonData['attachment'],
+          sender: null,
+          receiver: LawyerModel.fromJson(
+            jsonData['receiver'] ?? {},
+          ),
+        );
+
+        messagesstream.sink.add(message);
+        messages.insert(0, message);
+      } else {}
     });
   }
 
   disactive() async {
-    channel.unbind('chatMessage');
-
+    receiverchannel.unbind('chatMessage');
+    senderchannel.unbind('chatMessage');
     await pusher.unsubscribe("chat-channel-${widget.otheruser!.id}");
-    channel.cancelEventChannelStream();
+    await pusher.unsubscribe("chat-channel-${widget.myself!.id}");
     pusher.disconnect();
+    messagesstream.close();
+    messageController.dispose();
   }
 
   @override
@@ -122,8 +171,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
-    messageController.dispose();
-    eventData.close();
     disactive();
     super.dispose();
   }
@@ -135,6 +182,24 @@ class _ChatPageState extends State<ChatPage> {
       create: (context) => ChatBloc(),
       child: BlocBuilder<ChatBloc, ChatState>(
         builder: (context, state) {
+          sendattachment() {
+            if (pfile != null) {
+              print(pfile);
+
+              context.read<ChatBloc>().add(SendMessageInChatEvent(
+                  attachment: pfile, message: null, id: widget.otheruser!.id));
+            }
+            print("************************");
+            print(bottom);
+            bottom = !bottom;
+            context.read<ChatBloc>().add(
+                  Bottomshow(
+                    bottom: bottom,
+                  ),
+                );
+            pfile = null;
+          }
+
           return Scaffold(
             appBar: AppBar(
               leadingWidth: size.width / 4,
@@ -174,7 +239,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   Expanded(
                     child: StreamBuilder(
-                      stream: eventData.stream,
+                      stream: messagesstream.stream,
                       builder: (BuildContext context,
                           AsyncSnapshot<Message> asyncSnapshot) {
                         if (asyncSnapshot.hasError) {
@@ -182,11 +247,16 @@ class _ChatPageState extends State<ChatPage> {
                         }
                         if (asyncSnapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Container();
+                          return Center(
+                            child: LottieBuilder.asset(
+                              "assets/lottie/waiting.json",
+                              height: size.height / 3,
+                              fit: BoxFit.cover,
+                            ),
+                          );
                         }
-                        List<Message> messages = [];
 
-                        messages.add(asyncSnapshot.data!);
+                        print(messages);
                         return ListView.builder(
                           reverse: true,
                           itemCount: messages.length,
@@ -197,6 +267,11 @@ class _ChatPageState extends State<ChatPage> {
                             return Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.w),
                               child: ChatBubble(
+                                isMe: (message.sender != null)
+                                    ? (message.sender!.id == widget.myself!.id)
+                                        ? true
+                                        : false
+                                    : message.isMe!,
                                 message: message,
                               ),
                             );
@@ -229,28 +304,7 @@ class _ChatPageState extends State<ChatPage> {
                                   GestureDetector(
                                     onTap: () async {
                                       await pickimage(ImageSource.gallery);
-                                      if (pfile != null) {
-                                        print(pfile);
-                                        if (mounted) {
-                                          context.read<ChatBloc>().add(
-                                              SendMessageInChatEvent(
-                                                  attachment: pfile,
-                                                  message: pfile!.path
-                                                      .split("/")
-                                                      .last,
-                                                  id: widget.otheruser!.id));
-                                        }
-                                      }
-                                      print("************************");
-
-                                      print(bottom);
-
-                                      bottom = !bottom;
-                                      context.read<ChatBloc>().add(
-                                            Bottomshow(
-                                              bottom: bottom,
-                                            ),
-                                          );
+                                      sendattachment();
                                     },
                                     child: SizedBox(
                                       height: size.height / 15,
@@ -275,28 +329,7 @@ class _ChatPageState extends State<ChatPage> {
                                   GestureDetector(
                                     onTap: () async {
                                       await pickpdf();
-                                      if (pfile != null) {
-                                        print(pfile);
-                                        if (mounted) {
-                                          context.read<ChatBloc>().add(
-                                              SendMessageInChatEvent(
-                                                  attachment: pfile,
-                                                  message: pfile!.path
-                                                      .split("/")
-                                                      .last,
-                                                  id: widget.otheruser!.id));
-                                        }
-                                      }
-                                      print("************************");
-
-                                      print(bottom);
-
-                                      bottom = !bottom;
-                                      context.read<ChatBloc>().add(
-                                            Bottomshow(
-                                              bottom: bottom,
-                                            ),
-                                          );
+                                      sendattachment();
                                     },
                                     child: SizedBox(
                                       height: size.height / 15,
@@ -427,99 +460,3 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 }
-// import 'package:flutter/material.dart';
-// import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-// class ChatPage extends StatefulWidget {
-//   @override
-//   _ChatPageState createState() => _ChatPageState();
-// }
-
-// class _ChatPageState extends State<ChatPage> {
-//   IO.Socket socket;
-//   List<String> messages = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Create Socket.IO instance and connect
-//     socket = IO.io('your_socket_server_url');
-//     socket.connect();
-
-//     // Listen for 'message' event
-//     socket.on('message', (data) {
-//       setState(() {
-//         messages.add(data.toString());
-//       });
-//     });
-//   }
-
-//   @override
-//   void dispose() {
-//     // Close the connection when the page is disposed
-//     socket.close();
-//     super.dispose();
-//   }
-
-//   void sendMessage(String message) {
-//     // Emit 'message' event
-//     socket.emit('message', message);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Chat Page'),
-//       ),
-//       body: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: messages.length,
-//               itemBuilder: (context, index) {
-//                 return ListTile(
-//                   title: Text(messages[index]),
-//                 );
-//               },
-//             ),
-//           ),
-//           Container(
-//             padding: EdgeInsets.all(10),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     onChanged: (value) {
-//                       // Update the message text
-//                     },
-//                   ),
-//                 ),
-//                 IconButton(
-//                   icon: Icon(Icons.send),
-//                   onPressed: () {
-//                     // Send the message
-//                     sendMessage('message text');
-//                   },
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-
-// to add message history
-
-
-// List<String> messageHistory = prefs.getStringList('messageHistory') ?? [];
-// socket.on('message', (data) {
-//   setState(() {
-//     messages.add(data.toString());
-//     messageHistory.add(data.toString());
-//     prefs.setStringList('messageHistory', messageHistory);
-//   });
-// });

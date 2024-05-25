@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
         "Certifications": MessageLookupByLibrary.simpleMessage("الشهادات:"),
         "Changethelanguage": MessageLookupByLibrary.simpleMessage("غير اللغة"),
+        "Chooselanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
         "City": MessageLookupByLibrary.simpleMessage("المدينة"),
         "Consultations": MessageLookupByLibrary.simpleMessage("الاستشارات"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
@@ -102,6 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "YOURQUESTIONMAYORMAYNOTBEANSWERED":
             MessageLookupByLibrary.simpleMessage(
                 "قد يتم الإجابة على سؤالك أو قد لا يتم ذلك"),
+        "Youdonthaveanynotifications":
+            MessageLookupByLibrary.simpleMessage("لا يوجد لديك اشعارات"),
         "addcertification": MessageLookupByLibrary.simpleMessage("إضافة شهادة"),
         "birth": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
         "byansweringmoregeneralquestionyouwillgethigherchancestobeatthetopofthesearchresult":

@@ -62,7 +62,6 @@ class _SearchState extends State<Search> {
                                       );
                                 },
                                 controller: controller,
-                                enabled: true,
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 18.sp),
                                 decoration: InputDecoration(

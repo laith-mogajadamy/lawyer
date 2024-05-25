@@ -63,6 +63,8 @@
     "Consultations":"الاستشارات",
     "Profile": "الملف الشخصي",
     "Notifications": "الاشعارات",
+    "Youdonthaveanynotifications":"لا يوجد لديك اشعارات",
+
 
     "Gender":"الجنس",
     "location":"الموقع",
@@ -72,6 +74,7 @@
     "Loggingout":" .... جار تسجيل الخروج",
     "LOGOUT":"تسجيل خروج",
     "Changethelanguage":"غير اللغة",
+    "Chooselanguage":"اختر اللغة",
 
 
 
