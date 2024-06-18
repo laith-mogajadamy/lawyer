@@ -31,10 +31,13 @@
     "LandLine":"Land Line",
     "Occupation":"Occupation",
     "Next":"Next",
+    "registeration":"Registeration",
     "Expertise":"Expertise :",
+    "AddExpertise":"AddExpertise",
     "Certifications":"Certifications:",
     "License":"License:",
     "Biography":"Biography:",
+    "Available":"Available 24/7",
 
     "":"",
 
@@ -51,9 +54,17 @@
 
     "masseges":"Masseges",
     "Groups":"Groups",
+    "generalchat":"General Chat",
     "search":"search",
     "WhoareyoulookingforTaxLawyer":"Who are you looking for? Tax Lawyer?",
-    "FindTheRightLegalConsultation":"    Find The Right\n Legal Consultation",
+    "FindYourLawyer":"Find Your Lawyer",
+    "News":"NEWS",
+    "LAWPRACTIONERS":"LAW PRACTIONERS",
+    "Theforum":"The forum",
+    "frequentlyaskedquestions":"Frequently Asked \n     Questions",
+    "translationcompany":"Translation\nCompany",
+    "lawyersAvailable":"Lawyers Available 24/7",
+
     "Persons":"Persons",
     "Location":"Location",
     "Practice":"Practice",
@@ -104,7 +115,7 @@
     "Camera":"Camera",
 
     "birth":"Birth",
-    "consultationprice":"consultation price",
+    "consultationprice":"consultation price:",
     "addcertification":"add certification",
     "save":"Save",
 

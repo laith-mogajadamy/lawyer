@@ -61,3 +61,19 @@ class Addgeneralquestion {
     return response;
   }
 }
+
+class FrequentlyQuestionReqwest {
+  static Future<http.Response> getfrequentlyquestion(
+    String token,
+  ) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      "Authorization": "Bearer $token"
+    };
+    var url = Uri.parse("${Global.url}frequently-question");
+    http.Response response = await http.get(url, headers: headers);
+
+    return response;
+  }
+}

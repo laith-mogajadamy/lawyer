@@ -14,12 +14,14 @@ class NotificationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Black22text(text: S.of(context).Notifications),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
           child: Column(
             children: [
-              Black22text(text: S.of(context).Notifications),
               SizedBox(
                 height: 20.h,
               ),

@@ -22,6 +22,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
         decoration: const BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
+            opacity: 0.5,
             image: AssetImage(
               "assets/images/screen.jpg",
             ),
@@ -58,10 +59,11 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
                 SizedBox(
                   height: size.height / 6,
                   child: Image.asset(
-                      "assets/images/WhatsApp_Image_2024-04-22_at_9.43.05_AM-removebg-preview.webp"),
+                    "assets/images/logo.png",
+                  ),
                 ),
                 Text(
-                  S.of(context).FindTheRightLegalConsultation,
+                  S.of(context).FindYourLawyer,
                   style: TextStyle(
                     fontSize: 30.sp,
                     color: Colors.black,
@@ -83,96 +85,3 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 }
- // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //   children: [
-            //     Column(
-            //       children: [
-            //         Black16text(text: S.of(context).Lawyers),
-            //         GestureDetector(
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: (context) => const Lawyerspage()),
-            //             );
-            //           },
-            //           child: Container(
-            //             width: size.width / 2.2,
-            //             height: size.height / 6,
-            //             decoration: BoxDecoration(
-            //               image: const DecorationImage(
-            //                 fit: BoxFit.fill,
-            //                 image: AssetImage(
-            //                   "assets/images/lawyer.jpeg",
-            //                 ),
-            //               ),
-            //               borderRadius: BorderRadius.circular(20.r),
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //     Column(
-            //       children: [
-            //         Black16text(text: S.of(context).LegalConsultant),
-            //         GestureDetector(
-            //           onTap: () {
-            //             Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: (context) => const LegalConsultantpage()),
-            //             );
-            //           },
-            //           child: Container(
-            //             width: size.width / 2.2,
-            //             height: size.height / 6,
-            //             decoration: BoxDecoration(
-            //               image: const DecorationImage(
-            //                 fit: BoxFit.fill,
-            //                 image: AssetImage(
-            //                   "assets/images/LEGAL CONSULTANT.jpeg",
-            //                 ),
-            //               ),
-            //               borderRadius: BorderRadius.circular(20.r),
-            //             ),
-            //           ),
-            //         )
-            //       ],
-            //     )
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: 10.h,
-            // ),
-            // Column(
-            //   crossAxisAlignment: CrossAxisAlignment.start,
-            //   children: [
-            //     Black16text(text: S.of(context).typingCenter),
-            //     GestureDetector(
-            //       onTap: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const TypingCenterpage()),
-            //         );
-            //       },
-            //       child: Container(
-            //         width: size.width / 1.1,
-            //         height: size.height / 6,
-            //         decoration: BoxDecoration(
-            //           image: const DecorationImage(
-            //             fit: BoxFit.fill,
-            //             image: AssetImage(
-            //               "assets/images/Typing Center.jpg",
-            //             ),
-            //           ),
-            //           borderRadius: BorderRadius.circular(20.r),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: 10.h,
-            // ),

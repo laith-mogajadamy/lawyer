@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/chat/chatpage.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
-import 'package:lawyer/screens/widgets/black12text.dart';
+import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/black22text.dart';
+import 'package:lawyer/screens/widgets/graydivider.dart';
 
 class PersonMassege extends StatelessWidget {
   const PersonMassege({
@@ -24,7 +26,9 @@ class PersonMassege extends StatelessWidget {
               height: 10.h,
             ),
             (state.user.receiverMessage!.isEmpty)
-                ? Container()
+                ? Container(
+                    child: Black22text(text: "You dont have messages"),
+                  )
                 : Expanded(
                     child: SizedBox(
                       child: ListView.builder(
@@ -35,41 +39,51 @@ class PersonMassege extends StatelessWidget {
                           return Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 0.w, vertical: 5.h),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ChatPage(
-                                      otheruser: state
-                                          .user.receiverMessage![index].sender,
-                                      token: state.token,
-                                      myself: state.user,
-                                    ),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                          otheruser: state.user
+                                              .receiverMessage![index].sender,
+                                          token: state.token,
+                                          myself: state.user,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading: (state.user.receiverMessage![index]
+                                          .sender!.image.isEmpty)
+                                      ? Icon(
+                                          Icons.person,
+                                          size: 50.r,
+                                          color: AppColor.apporange,
+                                        )
+                                      : CircleAvatar(
+                                          radius: 50.r,
+                                          backgroundImage: NetworkImage(state
+                                              .user
+                                              .receiverMessage![index]
+                                              .sender!
+                                              .image),
+                                        ),
+                                  title: Black18text(
+                                      text: state.user.receiverMessage![index]
+                                          .sender!.name),
+                                  trailing: CircleAvatar(
+                                    radius: 12.r,
+                                    backgroundColor: AppColor.apporange,
+                                    child: const Black16text(text: "1"),
                                   ),
-                                );
-                              },
-                              leading: (state.user.receiverMessage![index]
-                                      .sender!.image.isEmpty)
-                                  ? Icon(
-                                      Icons.person,
-                                      size: 50.r,
-                                      color: AppColor.apporange,
-                                    )
-                                  : CircleAvatar(
-                                      radius: 50.r,
-                                      backgroundImage: NetworkImage(state
-                                          .user
-                                          .receiverMessage![index]
-                                          .sender!
-                                          .image),
-                                    ),
-                              title: Black18text(
-                                  text: state.user.receiverMessage![index]
-                                      .sender!.name),
-                              subtitle: Black11text(
-                                  text: state
-                                      .user.receiverMessage![index].message),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                                  child: const Graydivider(),
+                                ),
+                              ],
                             ),
                           );
                         },

@@ -44,6 +44,7 @@ class _LoginState extends State<Login> {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
+                opacity: 0.5,
                 image: AssetImage(
                   "assets/images/screen.jpg",
                 ),
@@ -105,10 +106,12 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                 );
-                                Navigator.pushReplacement(
+                                Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const MyPages()),
+                                    builder: (context) => const MyPages(),
+                                  ),
+                                  (route) => false,
                                 );
                               } else if (state.formStatus is SubmissionFailed) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -141,7 +144,7 @@ class _LoginState extends State<Login> {
                                 print("=============");
                                 print(state.name);
                                 print("=============");
-                                print(state.number);
+                                print(state.phone);
                                 print("=============");
                                 print(state.password);
                                 print("=============");
@@ -152,8 +155,7 @@ class _LoginState extends State<Login> {
                               style: ElevatedButton.styleFrom(
                                 fixedSize:
                                     Size(size.width / 1.2, size.height / 18),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 68, 68, 68),
+                                backgroundColor: AppColor.offblack,
                                 shape: const BeveledRectangleBorder(),
                               ),
                               child: (state.formStatus is FormSubmitting)

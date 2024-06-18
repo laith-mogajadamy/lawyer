@@ -72,7 +72,7 @@ class ConsultationBloc extends Bloc<ConsultationEvent, ConsultationState> {
       }
     });
     on<SendInvoice>((event, emit) async {
-      print("Addconsultation");
+      print("SendInvoice");
       String? ptoken = Preferences.getToken();
       if (ptoken!.isNotEmpty) {
         emit(state.copyWith(token: ptoken, invoicestate: RequestState.loading));

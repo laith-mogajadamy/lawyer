@@ -14,7 +14,13 @@ class Lawyer extends Equatable {
   final dynamic phone;
   final dynamic consultationPrice;
   final dynamic isactive;
-  final dynamic location;
+  final dynamic role;
+  final dynamic country;
+  final dynamic city;
+  final dynamic emiratesId;
+  final dynamic frontEmiratesId;
+  final dynamic backEmiratesId;
+  final dynamic occupation;
   final dynamic yearsOfPractice;
   final dynamic numOfConsultation;
   final dynamic closedConsultation;
@@ -38,7 +44,13 @@ class Lawyer extends Equatable {
     required this.phone,
     required this.consultationPrice,
     required this.isactive,
-    required this.location,
+    required this.role,
+    required this.country,
+    required this.city,
+    required this.emiratesId,
+    required this.frontEmiratesId,
+    required this.backEmiratesId,
+    required this.occupation,
     required this.yearsOfPractice,
     required this.numOfConsultation,
     required this.closedConsultation,
@@ -63,7 +75,7 @@ class Lawyer extends Equatable {
         phone,
         consultationPrice,
         isactive,
-        location,
+        country,
         yearsOfPractice,
         numOfConsultation,
         closedConsultation,

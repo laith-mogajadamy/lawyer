@@ -4,6 +4,7 @@ import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/search/controller/search_bloc.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/white18text.dart';
 
 class SearchFilter extends StatefulWidget {
   const SearchFilter({
@@ -38,7 +39,7 @@ class _SearchFilterState extends State<SearchFilter> {
                     backgroundColor: const Color.fromARGB(255, 68, 68, 68),
                     shape: const BeveledRectangleBorder(),
                   ),
-                  child: Black18text(text: S.of(context).location),
+                  child: White18text(text: S.of(context).location),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -50,7 +51,7 @@ class _SearchFilterState extends State<SearchFilter> {
                     backgroundColor: const Color.fromARGB(255, 68, 68, 68),
                     shape: const BeveledRectangleBorder(),
                   ),
-                  child: Black18text(text: S.of(context).Practice),
+                  child: White18text(text: S.of(context).Practice),
                 ),
               ],
             ),
@@ -110,6 +111,27 @@ class _SearchFilterState extends State<SearchFilter> {
                           );
                   },
                 ),
+              );
+            },
+          ),
+          BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              return ElevatedButton(
+                onPressed: () {
+                  bool bottom = !state.bottom;
+                  print("bottom$bottom");
+                  context.read<SearchBloc>().add(
+                        Bottomshow(bottom: bottom),
+                      );
+                  context.read<SearchBloc>().add(
+                        Searchlawyers(),
+                      );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 68, 68, 68),
+                  shape: const BeveledRectangleBorder(),
+                ),
+                child: White18text(text: S.of(context).search),
               );
             },
           ),

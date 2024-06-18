@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
@@ -22,34 +23,36 @@ class MyApp extends StatelessWidget {
       child: BlocBuilder<EnterBloc, EnterState>(
         builder: (context, state) {
           return ScreenUtilInit(
-              designSize: const Size(393, 786),
-              minTextAdapt: true,
-              splitScreenMode: true,
-              builder: (BuildContext context, Widget? child) {
-                return MaterialApp(
-                  locale: Locale(state.language),
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: S.delegate.supportedLocales,
-                  debugShowCheckedModeBanner: false,
-                  title: 'BRIEfCASE',
-                  theme: ThemeData(
-                    cardColor: Colors.white,
-                    cardTheme: CardTheme(color: Colors.white),
-                    canvasColor: Colors.transparent,
-                    colorScheme: ColorScheme.fromSeed(
-                      seedColor: Colors.black,
-                      primary: Colors.black,
-                    ),
-                    useMaterial3: true,
+            designSize: const Size(393, 786),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (BuildContext context, Widget? child) {
+              return MaterialApp(
+                locale: Locale(state.language),
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
+                debugShowCheckedModeBanner: false,
+                title: 'BRIEFCASE',
+                theme: ThemeData(
+                  cardColor: Colors.white,
+                  scaffoldBackgroundColor: AppColor.whiteColor,
+                  cardTheme: const CardTheme(color: Colors.white),
+                  canvasColor: Colors.transparent,
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: Colors.black,
+                    primary: Colors.black,
                   ),
-                  home: const Splash(),
-                );
-              });
+                  useMaterial3: true,
+                ),
+                home: const Splash(),
+              );
+            },
+          );
         },
       ),
     );

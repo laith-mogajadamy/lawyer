@@ -46,6 +46,24 @@ class AddCertification extends EnterEvent {
   List<Object?> get props => [certifications];
 }
 
+class AddExpertise extends EnterEvent {
+  final String? expertise;
+
+  AddExpertise({this.expertise});
+
+  @override
+  List<Object?> get props => [expertise];
+}
+
+class CheckAvailable extends EnterEvent {
+  final bool? available;
+
+  CheckAvailable({this.available});
+
+  @override
+  List<Object?> get props => [available];
+}
+
 class Profiledit extends EnterEvent {
   final File? fimage;
   final String? name;
@@ -239,7 +257,12 @@ class Logout extends EnterEvent {
   List<Object?> get props => [token];
 }
 
-class RegisterSubmitted extends EnterEvent {
+class ClientRegisterSubmitted extends EnterEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class LawyerRegisterSubmitted extends EnterEvent {
   @override
   List<Object?> get props => [];
 }

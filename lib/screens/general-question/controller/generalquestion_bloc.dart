@@ -8,7 +8,6 @@ import 'package:lawyer/models/general_question.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/screens/general-question/data/general_question_reqwest.dart';
-import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 
 part 'generalquestion_event.dart';
 part 'generalquestion_state.dart';
@@ -116,6 +115,45 @@ class GeneralquestionBloc
         emit(state.copyWith(
           generalquestionsState: RequestState.error,
           generalquestionreplyMessage: "Unauthenticated",
+        ));
+      }
+    });
+    on<GetFrequentlyQuestions>((event, emit) async {
+      print("GetFrequentlyQuestions");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response response =
+            await FrequentlyQuestionReqwest.getfrequentlyquestion(state.token);
+        var responsemap = await jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+            frequentlyquestions: List<GeneralquestionModel>.from(
+              (responsemap[0] as List).map(
+                (e) => GeneralquestionModel.fromJson(e),
+              ),
+            ),
+            frequentlyquestionsState: RequestState.loaded,
+          ));
+          print("state.frequentlyquestions=");
+          print(state.frequentlyquestions);
+        } else {
+          emit(state.copyWith(
+            frequentlyquestionsState: RequestState.error,
+            frequentlyquestionMessage: responsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.error,
+          frequentlyquestionMessage: "Unauthenticated",
         ));
       }
     });

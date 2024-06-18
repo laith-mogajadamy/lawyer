@@ -1,29 +1,170 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
+
 import 'package:lawyer/core/network/global.dart';
 
 class Auth {
-  static Future<http.Response> register(
+  static Future clientregister(
+    String type,
     String name,
     String email,
     String password,
-    String password2,
-    String role,
+    String password_confirmation,
+    String gender,
     String phone,
+    String birth,
+    String country,
+    String city,
+    String emirates_id,
+    File? front_emirates_id,
+    File? back_emirates_id,
+    String occupation,
   ) async {
-    Map data = {
-      "name": name,
-      "email": email,
-      "password": password,
-      "password_confirmation": password2,
-      "role": role,
-      "phone": phone,
-    };
-    var body = jsonEncode(data);
-    var url = Uri.parse("${Global.url}register");
-    http.Response response =
-        await http.post(url, headers: Global.headers, body: body);
+    FormData formdata = FormData.fromMap(
+      {
+        "type": type,
+        "name": name,
+        "email": email,
+        "password": password,
+        "password_confirmation": password_confirmation,
+        "gender": gender,
+        "phone": phone,
+        "birth": birth,
+        "country": country,
+        "city": city,
+        "emirates_id": emirates_id,
+        "front_emirates_id": await MultipartFile.fromFile(
+          front_emirates_id!.path,
+          filename: front_emirates_id.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
+        "back_emirates_id": await MultipartFile.fromFile(
+          back_emirates_id!.path,
+          filename: back_emirates_id.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
+        "occupation": occupation,
+      },
+    );
+    Response response = await Dio().post(
+      "${Global.url}register",
+      data: formdata,
+      options: Options(method: "POST"),
+      onSendProgress: (count, total) {
+        print("count=$count");
+        print("total=$total");
+      },
+    );
+    print(response.statusCode);
+
+    print(response.data);
+    return response;
+  }
+
+  static Future lawyerregister(
+    String type,
+    String name,
+    String email,
+    String password,
+    String password_confirmation,
+    String gender,
+    String phone,
+    String birth,
+    String country,
+    String city,
+    String emirates_id,
+    File? front_emirates_id,
+    File? back_emirates_id,
+    String land_line,
+    String consultation_price,
+    String bio,
+    String location,
+    String years_of_practice,
+    String available,
+    List<File>? certifications,
+    List<File>? licenses,
+    List<String> practices,
+    List<String> languages,
+  ) async {
+    List certificationlist = [];
+    for (var i = 0; i < certifications!.length; i++) {
+      certificationlist.add(
+        await MultipartFile.fromFile(
+          certifications[i].path,
+          filename: certifications[i].path.split('/').last,
+          contentType: MediaType('image', 'png'),
+        ),
+      );
+    }
+    List licenseslist = [];
+    for (var i = 0; i < licenses!.length; i++) {
+      licenseslist.add(
+        await MultipartFile.fromFile(
+          licenses[i].path,
+          filename: licenses[i].path.split('/').last,
+          contentType: MediaType('image', 'png'),
+        ),
+      );
+    }
+    List practiceslist = [];
+    for (var i = 0; i < practices.length; i++) {
+      practiceslist.add(practices[i]);
+    }
+    List languageslist = [];
+    for (var i = 0; i < languages.length; i++) {
+      languageslist.add(languages[i]);
+    }
+    FormData formdata = FormData.fromMap(
+      {
+        "type": type,
+        "name": name,
+        "email": email,
+        "password": password,
+        "password_confirmation": password_confirmation,
+        "gender": gender,
+        "phone": phone,
+        "birth": birth,
+        "country": country,
+        "city": city,
+        "emirates_id": emirates_id,
+        "front_emirates_id": await MultipartFile.fromFile(
+          front_emirates_id!.path,
+          filename: front_emirates_id.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
+        "back_emirates_id": await MultipartFile.fromFile(
+          back_emirates_id!.path,
+          filename: back_emirates_id.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
+        "land_line": land_line,
+        "consultation_price": consultation_price,
+        "bio": bio,
+        "location": location,
+        "years_of_practice": years_of_practice,
+        "available": available,
+        "certifications[]": certificationlist,
+        "licenses[]": licenseslist,
+        "practices[]": practiceslist,
+        "languages[]": languageslist,
+      },
+    );
+    Response response = await Dio().post(
+      "${Global.url}register",
+      data: formdata,
+      options: Options(method: "POST"),
+      onSendProgress: (count, total) {
+        print("count=$count");
+        print("total=$total");
+      },
+    );
+    print(response.statusCode);
+
+    print(response.data);
     return response;
   }
 

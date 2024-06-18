@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/screens/chat/chatpage.dart';
+import 'package:lawyer/screens/chat/add_group.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/screens/chat/group_chat_page.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/black22text.dart';
 
 class GroupMassege extends StatelessWidget {
   const GroupMassege({
@@ -21,7 +22,14 @@ class GroupMassege extends StatelessWidget {
         return Scaffold(
           floatingActionButton: FloatingActionButton(
             backgroundColor: AppColor.appgray,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddGroup(),
+                ),
+              );
+            },
             child: Icon(
               Icons.group_add,
               size: 25.r,
@@ -33,7 +41,9 @@ class GroupMassege extends StatelessWidget {
                 height: 10.h,
               ),
               (state.user.groups!.isEmpty)
-                  ? Container()
+                  ? Container(
+                      child: Black22text(text: "You dont have groups"),
+                    )
                   : Expanded(
                       child: SizedBox(
                         child: ListView.builder(

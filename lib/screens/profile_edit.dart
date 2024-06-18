@@ -61,7 +61,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     email.text = _enterBloc.state.user.email;
     number.text = _enterBloc.state.user.phone;
     birth.text = _enterBloc.state.user.birth.toString();
-    location.text = _enterBloc.state.user.location.toString();
+    location.text = _enterBloc.state.user.country.toString();
     gender.text = _enterBloc.state.user.gender.toString();
     consultationprice.text = _enterBloc.state.user.consultationPrice.toString();
 

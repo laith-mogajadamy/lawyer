@@ -350,11 +350,31 @@ class S {
     );
   }
 
+  /// `Registeration`
+  String get registeration {
+    return Intl.message(
+      'Registeration',
+      name: 'registeration',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Expertise :`
   String get Expertise {
     return Intl.message(
       'Expertise :',
       name: 'Expertise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `AddExpertise`
+  String get AddExpertise {
+    return Intl.message(
+      'AddExpertise',
+      name: 'AddExpertise',
       desc: '',
       args: [],
     );
@@ -385,6 +405,16 @@ class S {
     return Intl.message(
       'Biography:',
       name: 'Biography',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available 24/7`
+  String get Available {
+    return Intl.message(
+      'Available 24/7',
+      name: 'Available',
       desc: '',
       args: [],
     );
@@ -492,6 +522,16 @@ class S {
     );
   }
 
+  /// `General Chat`
+  String get generalchat {
+    return Intl.message(
+      'General Chat',
+      name: 'generalchat',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `search`
   String get search {
     return Intl.message(
@@ -512,11 +552,71 @@ class S {
     );
   }
 
-  /// `    Find The Right\n Legal Consultation`
-  String get FindTheRightLegalConsultation {
+  /// `Find Your Lawyer`
+  String get FindYourLawyer {
     return Intl.message(
-      '    Find The Right\n Legal Consultation',
-      name: 'FindTheRightLegalConsultation',
+      'Find Your Lawyer',
+      name: 'FindYourLawyer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NEWS`
+  String get News {
+    return Intl.message(
+      'NEWS',
+      name: 'News',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LAW PRACTIONERS`
+  String get LAWPRACTIONERS {
+    return Intl.message(
+      'LAW PRACTIONERS',
+      name: 'LAWPRACTIONERS',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The forum`
+  String get Theforum {
+    return Intl.message(
+      'The forum',
+      name: 'Theforum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Frequently Asked \n     Questions`
+  String get frequentlyaskedquestions {
+    return Intl.message(
+      'Frequently Asked \n     Questions',
+      name: 'frequentlyaskedquestions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translation\nCompany`
+  String get translationcompany {
+    return Intl.message(
+      'Translation\nCompany',
+      name: 'translationcompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lawyers Available 24/7`
+  String get lawyersAvailable {
+    return Intl.message(
+      'Lawyers Available 24/7',
+      name: 'lawyersAvailable',
       desc: '',
       args: [],
     );
@@ -926,10 +1026,10 @@ class S {
     );
   }
 
-  /// `consultation price`
+  /// `consultation price:`
   String get consultationprice {
     return Intl.message(
-      'consultation price',
+      'consultation price:',
       name: 'consultationprice',
       desc: '',
       args: [],

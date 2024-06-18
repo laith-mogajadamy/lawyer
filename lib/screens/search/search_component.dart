@@ -35,57 +35,55 @@ class Searchcomponent extends StatelessWidget {
                   )),
             );
           case RequestState.loaded:
-            return Container(
-              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 10.h),
-              margin: EdgeInsets.symmetric(vertical: 10.h),
-              decoration: BoxDecoration(
-                color: AppColor.appgray.withOpacity(0.8),
-                borderRadius: BorderRadius.circular(20.r),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: size.width / 8,
-                        child: IconButton(
-                          onPressed: () {
-                            bottom = !state.bottom;
-                            print("bottom$bottom");
-                            context.read<SearchBloc>().add(
-                                  Bottomshow(bottom: bottom),
-                                );
-                          },
-                          icon: Icon(
-                            FontAwesomeIcons.sliders,
-                            size: 30.r,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  (state.bottom)
-                      ? const SearchFilter()
-                      : Expanded(
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 0.h),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+                margin: EdgeInsets.symmetric(vertical: 10.h),
+                decoration: BoxDecoration(
+                  color: AppColor.appgray.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 5.h),
                           child: SizedBox(
-                            child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 1.5,
-                                crossAxisCount: 2,
-                              ),
-                              itemCount: state.lawyers.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Lawyerscard(
-                                  lawyer: state.lawyers[index],
-                                );
+                            width: size.width / 8,
+                            child: GestureDetector(
+                              onTap: () {
+                                bottom = !state.bottom;
+                                print("bottom$bottom");
+                                context.read<SearchBloc>().add(
+                                      Bottomshow(bottom: bottom),
+                                    );
                               },
+                              child: Image.asset("assets/images/sliders.png"),
                             ),
                           ),
-                        )
-                ],
+                        ),
+                      ],
+                    ),
+                    (state.bottom)
+                        ? const SearchFilter()
+                        : Expanded(
+                            child: SizedBox(
+                              child: ListView.builder(
+                                itemCount: state.lawyers.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Lawyerscard(
+                                    lawyer: state.lawyers[index],
+                                  );
+                                },
+                              ),
+                            ),
+                          )
+                  ],
+                ),
               ),
             );
           case RequestState.error:

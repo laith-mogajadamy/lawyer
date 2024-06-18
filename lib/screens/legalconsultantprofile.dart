@@ -53,7 +53,7 @@ class Legalconsultantprofile extends StatelessWidget {
                     size: 10.r,
                   ),
                   Text(
-                    " ${S.of(context).location} ${lawyer.location}",
+                    " ${S.of(context).location} ${lawyer.country}",
                     style: TextStyle(
                       color: AppColor.apporange,
                       fontSize: 14.sp,

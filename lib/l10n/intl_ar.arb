@@ -31,10 +31,13 @@
     "LandLine":"الخط الارضي",
     "Occupation":"التخصص",
     "Next":"التالي",
+    "registeration":"انشاء الحساب",
     "Expertise":"الاختصاصات:",
+    "AddExpertise":"اضف اختاصاص",
     "Certifications":"الشهادات:",  
     "License":"الرخصة:",
     "Biography":"السيرة الذاتية:",
+    "Available":"متاح 24/7",
 
 
     "":"",
@@ -52,9 +55,17 @@
 
     "masseges":"رسائل",
     "Groups":"مجموعات",
+    "generalchat":"المحادثة العامة",
     "search":"بحث",
     "WhoareyoulookingforTaxLawyer":"على من تبحث؟ محامي الضرائب؟",
-    "FindTheRightLegalConsultation":"    جد الاستشارة    \n القانونية المناسبة",
+    "FindYourLawyer":" جد المحامي الخاص بك",
+    "News":"الاخبار",
+    "LAWPRACTIONERS":"ممارسي القانون",
+    "Theforum":"المجتمع",
+    "frequentlyaskedquestions":"الاسئلة المتكررة",
+    "translationcompany":"شركات الترجمة",
+    "lawyersAvailable":"المحاميون المتاحون 24/7",
+
     "Persons":"الأشخاص",
     "Location":"المكان",
     "Practice":"المهنة",
@@ -107,7 +118,7 @@
     "Camera":"الكاميرا",
 
     "birth":"تاريخ الميلاد",
-    "consultationprice":"سعر الاستشارة",
+    "consultationprice":":سعر الاستشارة",
     "addcertification":"إضافة شهادة",
     "save":"حفظ",
 

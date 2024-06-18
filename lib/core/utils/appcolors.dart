@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:from_css_color/from_css_color.dart';
 
 class AppColor {
-  static const apporange = Color(0xffd6811d);
-  static const splashorange = Color.fromARGB(255, 213, 81, 17);
+  static final apporange = fromCssColor('#bd7521');
 
-  static const appburnet = Color(0xff9d3d02);
+  static final appburnet = fromCssColor('#9d3d02');
 
-  static const whiteColor = Color(0xffffffff);
+  static final whiteColor = fromCssColor('#efeeee');
 
-  static const offblack = const Color.fromARGB(255, 68, 68, 68);
+  static final offblack = fromCssColor('#50504f');
 
-  static const appgray = Color(0xffbfbdba);
+  static final appgray = fromCssColor('#797977');
 }

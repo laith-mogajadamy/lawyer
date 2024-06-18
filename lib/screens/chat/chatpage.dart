@@ -131,26 +131,26 @@ class _ChatPageState extends State<ChatPage> {
         messages.insert(0, message);
       } else {}
     });
-    await senderchannel.bind('chatMessage', (event) async {
-      if (event!.data != null) {
-        var jsonData = jsonDecode(event.data!);
-        print(event.data);
-        Message message = Message(
-          isMe: (jsonData['sender_id'] == widget.myself!.id) ? true : false,
-          message: jsonData['message'],
-          type: "",
-          file: File(""),
-          attachment: jsonData['attachment'],
-          sender: null,
-          receiver: LawyerModel.fromJson(
-            jsonData['receiver'] ?? {},
-          ),
-        );
+    // await senderchannel.bind('chatMessage', (event) async {
+    //   if (event!.data != null) {
+    //     var jsonData = jsonDecode(event.data!);
+    //     print(event.data);
+    //     Message message = Message(
+    //       isMe: (jsonData['sender_id'] == widget.myself!.id) ? true : false,
+    //       message: jsonData['message'],
+    //       type: "",
+    //       file: File(""),
+    //       attachment: jsonData['attachment'],
+    //       sender: null,
+    //       receiver: LawyerModel.fromJson(
+    //         jsonData['receiver'] ?? {},
+    //       ),
+    //     );
 
-        messagesstream.sink.add(message);
-        messages.insert(0, message);
-      } else {}
-    });
+    //     messagesstream.sink.add(message);
+    //     messages.insert(0, message);
+    //   } else {}
+    // });
   }
 
   disactive() async {
@@ -178,245 +178,251 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => ChatBloc(),
-      child: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
-          sendattachment() {
-            if (pfile != null) {
-              print(pfile);
+    return BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) {
+        sendattachment() {
+          if (pfile != null) {
+            print(pfile);
 
-              context.read<ChatBloc>().add(SendMessageInChatEvent(
-                  attachment: pfile, message: null, id: widget.otheruser!.id));
-            }
-            print("************************");
-            print(bottom);
-            bottom = !bottom;
-            context.read<ChatBloc>().add(
-                  Bottomshow(
-                    bottom: bottom,
-                  ),
-                );
-            pfile = null;
+            context.read<ChatBloc>().add(SendMessageInChatEvent(
+                attachment: pfile, message: null, id: widget.otheruser!.id));
           }
+          print("************************");
+          print(bottom);
+          bottom = !bottom;
+          context.read<ChatBloc>().add(
+                Bottomshow(
+                  bottom: bottom,
+                ),
+              );
+          Message message = Message(
+              isMe: true,
+              message: null,
+              type: pfile!.path.split(".").last,
+              file: pfile,
+              attachment: null,
+              sender: null,
+              receiver: null);
+          messages.insert(0, message);
+          messagesstream.sink.add(message);
+          pfile = null;
+        }
 
-          return Scaffold(
-            appBar: AppBar(
-              leadingWidth: size.width / 4,
-              backgroundColor: AppColor.appgray,
-              title: Black18text(text: widget.otheruser!.name),
-              leading: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      size: 30.r,
-                    ),
+        return Scaffold(
+          appBar: AppBar(
+            leadingWidth: size.width / 4,
+            backgroundColor: AppColor.appgray,
+            title: Black18text(text: widget.otheruser!.name),
+            leading: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 30.r,
                   ),
-                  CircleAvatar(
-                    radius: 25.r,
-                    backgroundImage: NetworkImage(widget.otheruser!.image),
-                  ),
-                ],
-              ),
+                ),
+                CircleAvatar(
+                  radius: 25.r,
+                  backgroundImage: NetworkImage(widget.otheruser!.image),
+                ),
+              ],
             ),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Text(
-                    "BREIFCASE",
-                    style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
-                        decorationColor: AppColor.apporange),
-                  ),
-                  Expanded(
-                    child: StreamBuilder(
-                      stream: messagesstream.stream,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Message> asyncSnapshot) {
-                        if (asyncSnapshot.hasError) {
-                          return const Text("Error");
-                        }
-                        if (asyncSnapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: LottieBuilder.asset(
-                              "assets/lottie/waiting.json",
-                              height: size.height / 3,
-                              fit: BoxFit.cover,
+          ),
+          body: SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: StreamBuilder(
+                    stream: messagesstream.stream,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Message> asyncSnapshot) {
+                      if (asyncSnapshot.hasError) {
+                        return const Text("Error");
+                      }
+                      if (asyncSnapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(
+                          child: LottieBuilder.asset(
+                            "assets/lottie/waiting.json",
+                            height: size.height / 3,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      }
+
+                      print(messages);
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: messages.length,
+                        shrinkWrap: true,
+                        dragStartBehavior: DragStartBehavior.down,
+                        itemBuilder: (BuildContext context, int index) {
+                          Message message = messages[index];
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: ChatBubble(
+                              isMe: (message.sender != null)
+                                  ? (message.sender!.id == widget.myself!.id)
+                                      ? true
+                                      : false
+                                  : message.isMe!,
+                              message: message,
                             ),
                           );
-                        }
-
-                        print(messages);
-                        return ListView.builder(
-                          reverse: true,
-                          itemCount: messages.length,
-                          shrinkWrap: true,
-                          dragStartBehavior: DragStartBehavior.down,
-                          itemBuilder: (BuildContext context, int index) {
-                            Message message = messages[index];
-                            return Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              child: ChatBubble(
-                                isMe: (message.sender != null)
-                                    ? (message.sender!.id == widget.myself!.id)
-                                        ? true
-                                        : false
-                                    : message.isMe!,
-                                message: message,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                        },
+                      );
+                    },
                   ),
-                  Column(
-                    children: [
-                      (state.bottom)
-                          ? Container(
-                              height: size.height / 10,
-                              width: size.width,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: AppColor.appgray,
-                                      blurRadius: 3.r,
-                                      spreadRadius: 3.r)
-                                ],
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.r)),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await pickimage(ImageSource.gallery);
-                                      sendattachment();
-                                    },
-                                    child: SizedBox(
-                                      height: size.height / 15,
-                                      width: size.width / 8,
-                                      child: SvgPicture.asset(
-                                        "assets/svg/gallery.svg",
-                                        fit: BoxFit.cover,
-                                      ),
+                ),
+                Column(
+                  children: [
+                    (state.bottom)
+                        ? Container(
+                            height: size.height / 10,
+                            width: size.width,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: AppColor.appgray,
+                                    blurRadius: 3.r,
+                                    spreadRadius: 3.r)
+                              ],
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.r)),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    await pickimage(ImageSource.gallery);
+                                    sendattachment();
+                                  },
+                                  child: SizedBox(
+                                    height: size.height / 15,
+                                    width: size.width / 8,
+                                    child: SvgPicture.asset(
+                                      "assets/svg/gallery.svg",
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  // GestureDetector(
-                                  //   onTap: () {},
-                                  //   child: SizedBox(
-                                  //     height: size.height / 15,
-                                  //     width: size.width / 8,
-                                  //     child: Image.asset(
-                                  //       "assets/images/word.png",
-                                  //       fit: BoxFit.cover,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      await pickpdf();
-                                      sendattachment();
-                                    },
-                                    child: SizedBox(
-                                      height: size.height / 15,
-                                      width: size.width / 8,
-                                      child: Image.asset(
-                                        "assets/images/icons8-acrobat-67.png",
-                                        fit: BoxFit.cover,
-                                      ),
+                                ),
+                                // GestureDetector(
+                                //   onTap: () {},
+                                //   child: SizedBox(
+                                //     height: size.height / 15,
+                                //     width: size.width / 8,
+                                //     child: Image.asset(
+                                //       "assets/images/word.png",
+                                //       fit: BoxFit.cover,
+                                //     ),
+                                //   ),
+                                // ),
+                                GestureDetector(
+                                  onTap: () async {
+                                    await pickpdf();
+                                    sendattachment();
+                                  },
+                                  child: SizedBox(
+                                    height: size.height / 15,
+                                    width: size.width / 8,
+                                    child: Image.asset(
+                                      "assets/images/icons8-acrobat-67.png",
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox.shrink(),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 5.w, vertical: 10.h),
-                        height: size.height / 14,
-                        width: size.width / 1,
-                        child: TextFormField(
-                          autofocus: true,
-                          onChanged: (string) {},
-                          controller: messageController,
-                          enabled: true,
-                          style:
-                              TextStyle(color: Colors.black, fontSize: 18.sp),
-                          decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 2.h, color: Colors.black),
-                              borderRadius: BorderRadius.circular(20.r),
+                                ),
+                              ],
                             ),
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 2.h, color: Colors.black),
-                              borderRadius: BorderRadius.circular(20.r),
-                            ),
-                            hintStyle: const TextStyle(color: Colors.grey),
-                            filled: true,
-                            fillColor: AppColor.appgray,
-                            suffix: InkWell(
-                              onTap: () {
-                                String messageText =
-                                    messageController.text.trim();
-                                if (messageText.isNotEmpty) {
-                                  context.read<ChatBloc>().add(
-                                        SendMessageInChatEvent(
-                                            attachment: null,
-                                            message: messageText,
-                                            id: widget.otheruser!.id),
-                                      );
-                                  messageController.clear();
-                                  // You can add logic here to send the message to the other user or store it.
-                                }
-                              },
-                              child: Icon(
-                                Icons.send,
-                                size: 25.r,
-                              ),
-                            ),
-                            prefix: InkWell(
-                              onTap: () {
-                                // SystemChannels.textInput
-                                //     .invokeMethod('TextInput.hide');
-                                bottom = !bottom;
+                          )
+                        : const SizedBox.shrink(),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+                      height: size.height / 14,
+                      width: size.width / 1,
+                      child: TextFormField(
+                        autofocus: true,
+                        onChanged: (string) {},
+                        controller: messageController,
+                        enabled: true,
+                        style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2.h, color: Colors.black),
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 2.h, color: Colors.black),
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          filled: true,
+                          fillColor: AppColor.appgray,
+                          suffix: InkWell(
+                            onTap: () {
+                              String messageText =
+                                  messageController.text.trim();
+                              if (messageText.isNotEmpty) {
                                 context.read<ChatBloc>().add(
-                                      Bottomshow(
-                                        bottom: bottom,
-                                      ),
+                                      SendMessageInChatEvent(
+                                          attachment: null,
+                                          message: messageText,
+                                          id: widget.otheruser!.id),
                                     );
-                              },
-                              child: Icon(
-                                Icons.attachment,
-                                size: 25.r,
-                              ),
+                                Message message = Message(
+                                    isMe: true,
+                                    message: messageText,
+                                    type: null,
+                                    file: null,
+                                    attachment: null,
+                                    sender: null,
+                                    receiver: null);
+                                messages.insert(0, message);
+                                messagesstream.sink.add(message);
+                                messageController.clear();
+                                // You can add logic here to send the message to the other user or store it.
+                              }
+                            },
+                            child: Icon(
+                              Icons.send,
+                              size: 25.r,
+                            ),
+                          ),
+                          prefix: InkWell(
+                            onTap: () {
+                              // SystemChannels.textInput
+                              //     .invokeMethod('TextInput.hide');
+                              bottom = !bottom;
+                              context.read<ChatBloc>().add(
+                                    Bottomshow(
+                                      bottom: bottom,
+                                    ),
+                                  );
+                            },
+                            child: Icon(
+                              Icons.attachment,
+                              size: 25.r,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

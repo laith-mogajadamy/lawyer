@@ -67,7 +67,7 @@ class _MyPagesState extends State<MyPages> {
                   label: S.of(context).Home,
                 ),
                 BottomNavigationBarItem(
-                  icon: const Icon(Icons.file_open),
+                  icon: const Icon(Icons.file_copy),
                   label: S.of(context).Consultations,
                 ),
                 BottomNavigationBarItem(

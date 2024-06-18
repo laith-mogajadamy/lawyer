@@ -8,7 +8,11 @@ class GeneralquestionState extends Equatable {
   final String generalquestionMessage;
   //
   final String generalquestionreplyMessage;
-
+  //
+  final List<Generalquestion> frequentlyquestions;
+  final RequestState frequentlyquestionsState;
+  final String frequentlyquestionMessage;
+  //
   const GeneralquestionState({
     this.token = '',
     //
@@ -17,6 +21,10 @@ class GeneralquestionState extends Equatable {
     this.generalquestionMessage = '',
     //
     this.generalquestionreplyMessage = '',
+    //
+    this.frequentlyquestions = const [],
+    this.frequentlyquestionsState = RequestState.loading,
+    this.frequentlyquestionMessage = '',
   });
 
   GeneralquestionState copyWith({
@@ -27,6 +35,10 @@ class GeneralquestionState extends Equatable {
     String? generalquestionMessage,
     //
     String? generalquestionreplyMessage,
+    //
+    List<Generalquestion>? frequentlyquestions,
+    RequestState? frequentlyquestionsState,
+    String? frequentlyquestionMessage,
   }) {
     return GeneralquestionState(
       token: token ?? this.token,
@@ -40,6 +52,12 @@ class GeneralquestionState extends Equatable {
       //
       generalquestionreplyMessage:
           generalquestionreplyMessage ?? this.generalquestionreplyMessage,
+      //
+      frequentlyquestions: frequentlyquestions ?? this.frequentlyquestions,
+      frequentlyquestionsState:
+          frequentlyquestionsState ?? this.frequentlyquestionsState,
+      frequentlyquestionMessage:
+          frequentlyquestionMessage ?? this.frequentlyquestionMessage,
     );
   }
 
@@ -51,6 +69,10 @@ class GeneralquestionState extends Equatable {
         generalquestionsState,
         generalquestionMessage,
         //
-        generalquestionreplyMessage
+        generalquestionreplyMessage,
+        //
+        frequentlyquestions,
+        frequentlyquestionsState,
+        frequentlyquestionMessage,
       ];
 }

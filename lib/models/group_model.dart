@@ -6,9 +6,11 @@ class GroupsModel extends Groups {
     required super.name,
     required super.isadmin,
     required super.messeges,
+    required super.id,
   });
 
   factory GroupsModel.fromJson(Map<String, dynamic> json) => GroupsModel(
+        id: json['id'] ?? '',
         name: json['name'] ?? '',
         isadmin: json['is_admin'] ?? 0,
         messeges: List<MessageModel>.from(

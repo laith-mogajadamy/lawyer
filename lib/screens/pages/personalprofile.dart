@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
-import 'package:lawyer/screens/addgeneralquestion.dart';
+import 'package:lawyer/screens/general-question/addgeneralquestion.dart';
 import 'package:lawyer/screens/general-question/user_general_question.dart';
 import 'package:lawyer/screens/language_change.dart';
 import 'package:lawyer/screens/profile_edit.dart';
@@ -82,8 +82,8 @@ class PersonalProfile extends StatelessWidget {
                         size: 10.r,
                       ),
                       Text(
-                        (state.user.location != 0)
-                            ? state.user.location.toString()
+                        (state.user.country != 0)
+                            ? state.user.country.toString()
                             : S.of(context).location,
                         style: TextStyle(
                           color: AppColor.apporange,
@@ -93,64 +93,6 @@ class PersonalProfile extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // Row(
-                  //   children: [
-                  //     Text(
-                  //       S.of(context).CERTIFICATIONS,
-                  //       style: TextStyle(
-                  //         fontSize: 18.sp,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-                  // (state.user.certification!.isEmpty)
-                  //     ? const SizedBox.shrink()
-                  //     : SizedBox(
-                  //         height: size.height / 3,
-                  //         child: ListView.builder(
-                  //           itemCount: state.user.certification!.length,
-                  //           padding: const EdgeInsets.all(8),
-                  //           shrinkWrap: true,
-                  //           physics: const BouncingScrollPhysics(),
-                  //           scrollDirection: Axis.horizontal,
-                  //           itemBuilder: (context, index) {
-                  //             return FutureBuilder<File>(
-                  //                 future: DefaultCacheManager().getSingleFile(
-                  //                     state.user.certification![index]),
-                  //                 builder: (context, snapshot) {
-                  //                   print("snapshot=$snapshot");
-                  //                   return (snapshot.hasData)
-                  //                       ? GestureDetector(
-                  //                           onTap: () {
-                  //                             PDFApi().openPDF(
-                  //                                 context, snapshot.data!);
-                  //                           },
-                  //                           child: Padding(
-                  //                             padding: EdgeInsets.symmetric(
-                  //                                 horizontal: 5.w),
-                  //                             child: Material(
-                  //                               elevation: 5,
-                  //                               child: Container(
-                  //                                 width: size.width / 2,
-                  //                                 decoration:
-                  //                                     const BoxDecoration(
-                  //                                   color: AppColor.appgray,
-                  //                                 ),
-                  //                                 child: PdfDocumentLoader
-                  //                                     .openFile(
-                  //                                   pageNumber: 1,
-                  //                                   snapshot.data!.path,
-                  //                                 ),
-                  //                               ),
-                  //                             ),
-                  //                           ),
-                  //                         )
-                  //                       : const SizedBox.shrink();
-                  //                 });
-                  //           },
-                  //         ),
-                  //       ),
                   const Graydivider(),
                   ProfileRow(
                     text: S.of(context).GeneralQuestions,

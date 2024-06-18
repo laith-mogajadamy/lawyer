@@ -27,3 +27,10 @@ class AddGeneralquestion extends GeneralquestionEvent {
   @override
   List<Object?> get props => [question];
 }
+
+class GetFrequentlyQuestions extends GeneralquestionEvent {
+  GetFrequentlyQuestions();
+
+  @override
+  List<Object?> get props => [];
+}

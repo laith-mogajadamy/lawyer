@@ -19,145 +19,187 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    if (message.attachment!.isNotEmpty) {
-      if (message.attachment!.split(".").last == "pdf") {
-        return Column(
-          crossAxisAlignment:
-              isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [
-            FutureBuilder<File>(
-                future:
-                    DefaultCacheManager().getSingleFile(message.attachment!),
-                builder: (context, snapshot) {
-                  print("snapshot=$snapshot");
-                  return (snapshot.hasData)
-                      ? Padding(
-                          padding: EdgeInsets.only(
-                              top: 10.h,
-                              bottom: 10.h,
-                              left: (isMe!) ? 100.w : 5.w,
-                              right: (isMe!) ? 5.w : 100.w),
-                          child: GestureDetector(
-                            onTap: () {
-                              PDFApi().openPDF(context, snapshot.data!);
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w),
-                              child: Material(
-                                elevation: 5,
-                                child: Container(
-                                  width: size.width / 2,
-                                  decoration: const BoxDecoration(
-                                    color: AppColor.appgray,
-                                  ),
-                                  child: PdfDocumentLoader.openFile(
-                                    pageNumber: 1,
-                                    snapshot.data!.path,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : const SizedBox.shrink();
-                }),
-          ],
-        );
-      } else {
-        return Column(
-          crossAxisAlignment:
-              isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 10.h,
-                  bottom: 10.h,
-                  left: (isMe!) ? 100.w : 5.w,
-                  right: (isMe!) ? 5.w : 100.w),
+    if (message.type!.isNotEmpty) {
+      if (message.type == "pdf") {
+        return Padding(
+          padding: EdgeInsets.only(
+              top: 10.h,
+              bottom: 10.h,
+              left: (isMe!) ? 100.w : 5.w,
+              right: (isMe!) ? 5.w : 100.w),
+          child: GestureDetector(
+            onTap: () {
+              PDFApi().openPDF(context, message.file!);
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: Material(
                 elevation: 5,
                 child: Container(
-                  // width: size.width / 2.5,
-                  // height: size.height / 4,
-                  decoration: const BoxDecoration(
-                      // color: AppColor.appgray,
-                      ),
-                  child: Image.network(
-                    message.attachment!,
-                    // fit: BoxFit.cover,
+                  width: size.width / 2,
+                  decoration: BoxDecoration(
+                    color: AppColor.appgray,
+                  ),
+                  child: PdfDocumentLoader.openFile(
+                    pageNumber: 1,
+                    message.file!.path,
                   ),
                 ),
               ),
             ),
-          ],
+          ),
+        );
+      } else {
+        return Padding(
+          padding: EdgeInsets.only(
+              top: 10.h,
+              bottom: 10.h,
+              left: (isMe!) ? 100.w : 5.w,
+              right: (isMe!) ? 5.w : 100.w),
+          child: Image.file(message.file!),
         );
       }
     } else {
-      return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-        padding:
-            isMe! ? EdgeInsets.only(left: 40.w) : EdgeInsets.only(right: 40.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              mainAxisAlignment:
-                  isMe! ? MainAxisAlignment.end : MainAxisAlignment.start,
-              crossAxisAlignment:
-                  isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-                  decoration: BoxDecoration(
-                    gradient: isMe!
-                        ? const LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            stops: [0.1, 1],
-                            colors: [Color(0xFFF6D365), Color(0xFFFDA085)])
-                        : const LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            stops: [0.1, 1],
-                            colors: [Color(0xFFEBF5FC), Color(0xFFEBF5FC)]),
-                    borderRadius: isMe!
-                        ? BorderRadius.only(
-                            topRight: Radius.circular(15.r),
-                            topLeft: Radius.circular(15.r),
-                            bottomRight: Radius.circular(0.r),
-                            bottomLeft: Radius.circular(15.r),
+      if (message.attachment!.isNotEmpty) {
+        if (message.attachment!.split(".").last == "pdf") {
+          return Column(
+            crossAxisAlignment:
+                isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              FutureBuilder<File>(
+                  future:
+                      DefaultCacheManager().getSingleFile(message.attachment!),
+                  builder: (context, snapshot) {
+                    return (snapshot.hasData)
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                                top: 10.h,
+                                bottom: 10.h,
+                                left: (isMe!) ? 100.w : 5.w,
+                                right: (isMe!) ? 5.w : 100.w),
+                            child: GestureDetector(
+                              onTap: () {
+                                PDFApi().openPDF(context, snapshot.data!);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5.w),
+                                child: Material(
+                                  elevation: 5,
+                                  child: Container(
+                                    width: size.width / 2,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.appgray,
+                                    ),
+                                    child: PdfDocumentLoader.openFile(
+                                      pageNumber: 1,
+                                      snapshot.data!.path,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           )
-                        : BorderRadius.only(
-                            topRight: Radius.circular(15.r),
-                            topLeft: Radius.circular(15.r),
-                            bottomRight: Radius.circular(15.r),
-                            bottomLeft: Radius.circular(0.r),
-                          ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: isMe!
-                        ? CrossAxisAlignment.end
-                        : CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        message.message!,
-                        textAlign: isMe! ? TextAlign.end : TextAlign.start,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          decorationThickness: 2,
-                          decorationColor: AppColor.apporange,
-                          color: isMe! ? Colors.white : AppColor.offblack,
+                        : const SizedBox.shrink();
+                  }),
+            ],
+          );
+        } else {
+          return Column(
+            crossAxisAlignment:
+                isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    top: 10.h,
+                    bottom: 10.h,
+                    left: (isMe!) ? 100.w : 5.w,
+                    right: (isMe!) ? 5.w : 100.w),
+                child: Material(
+                  elevation: 5,
+                  child: Container(
+                    // width: size.width / 2.5,
+                    // height: size.height / 4,
+                    decoration: const BoxDecoration(
+                        // color: AppColor.appgray,
                         ),
-                      )
-                    ],
+                    child: Image.network(
+                      message.attachment!,
+                      // fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ],
-            )
-          ],
-        ),
-      );
+              ),
+            ],
+          );
+        }
+      } else {
+        return Container(
+          margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+          padding: isMe!
+              ? EdgeInsets.only(left: 40.w)
+              : EdgeInsets.only(right: 40.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Column(
+                mainAxisAlignment:
+                    isMe! ? MainAxisAlignment.end : MainAxisAlignment.start,
+                crossAxisAlignment:
+                    isMe! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      gradient: isMe!
+                          ? const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              stops: [0.1, 1],
+                              colors: [Color(0xFFF6D365), Color(0xFFFDA085)])
+                          : const LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              stops: [0.1, 1],
+                              colors: [Color(0xFFEBF5FC), Color(0xFFEBF5FC)]),
+                      borderRadius: isMe!
+                          ? BorderRadius.only(
+                              topRight: Radius.circular(15.r),
+                              topLeft: Radius.circular(15.r),
+                              bottomRight: Radius.circular(0.r),
+                              bottomLeft: Radius.circular(15.r),
+                            )
+                          : BorderRadius.only(
+                              topRight: Radius.circular(15.r),
+                              topLeft: Radius.circular(15.r),
+                              bottomRight: Radius.circular(15.r),
+                              bottomLeft: Radius.circular(0.r),
+                            ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: isMe!
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          message.message!,
+                          textAlign: isMe! ? TextAlign.end : TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            decorationThickness: 2,
+                            decorationColor: AppColor.apporange,
+                            color: isMe! ? Colors.white : AppColor.offblack,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      }
     }
   }
 }

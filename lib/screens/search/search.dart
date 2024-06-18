@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
+import 'package:lawyer/screens/general-question/frequently-questions.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/lawyersavilable.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/lawyerspage.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/translation_company.dart';
+import 'package:lawyer/screens/news/news.dart';
 import 'package:lawyer/screens/search/controller/search_bloc.dart';
 import 'package:lawyer/screens/search/search_component.dart';
-import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/general-question/general_question.dart';
+import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
+import 'package:lawyer/screens/widgets/home_container.dart';
+import 'package:lawyer/screens/widgets/lawyers_home_container.dart';
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -50,7 +58,7 @@ class _SearchState extends State<Search> {
                                       );
                                   if (filter) {
                                     context.read<SearchBloc>().add(
-                                          Searchlawyers(query: ''),
+                                          Searchlawyers(),
                                         );
                                   } else {
                                     controller.clear();
@@ -58,7 +66,7 @@ class _SearchState extends State<Search> {
                                 },
                                 onChanged: (string) {
                                   context.read<SearchBloc>().add(
-                                        Searchlawyers(query: string),
+                                        ChangeSearchField(searchfield: string),
                                       );
                                 },
                                 controller: controller,
@@ -75,12 +83,11 @@ class _SearchState extends State<Search> {
                                       .WhoareyoulookingforTaxLawyer,
                                   hintStyle: const TextStyle(
                                       color: Colors.black, fontSize: 14),
-                                  prefixIcon: InkWell(
+                                  suffixIcon: InkWell(
                                     onTap: () {
-                                      // bloc.add(GetSearchProductsEvent(
-                                      //     pageNum: 1,
-                                      //     search: controller.text,
-                                      //     perPage: 100));
+                                      context.read<SearchBloc>().add(
+                                            Searchlawyers(),
+                                          );
                                     },
                                     child: Icon(
                                       Icons.search,
@@ -122,34 +129,126 @@ class _SearchState extends State<Search> {
                       : Padding(
                           padding: EdgeInsets.only(bottom: size.height / 50),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Black16text(text: S.of(context).GeneralQuestions),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Generalquestion()),
-                                  );
-                                },
-                                child: Container(
-                                  width: size.width / 1.2,
-                                  height: size.height / 6,
-                                  decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: AssetImage(
-                                        "assets/images/general question.jpg",
-                                      ),
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.r),
-                                  ),
-                                ),
-                              ),
+                              const News(),
                               SizedBox(
                                 height: 10.h,
+                              ),
+                              LawyerHomeContainer(
+                                  ontap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Lawyerspage()),
+                                    );
+                                  },
+                                  image:
+                                      "assets/images/frequently asked questions.png",
+                                  text: S.of(context).LAWPRACTIONERS),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    HomeContainer(
+                                      ontap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Generalquestion()),
+                                        );
+                                      },
+                                      image:
+                                          "assets/images/generalquestion.png",
+                                      text: S.of(context).GeneralQuestions,
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    BlocBuilder<EnterBloc, EnterState>(
+                                      builder: (context, state) {
+                                        return (state.user.role == "client")
+                                            ? HomeContainer(
+                                                ontap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const TranslationCompanys()),
+                                                  );
+                                                },
+                                                image:
+                                                    "assets/images/translationcompany.png",
+                                                text: S
+                                                    .of(context)
+                                                    .translationcompany,
+                                              )
+                                            : HomeContainer(
+                                                ontap: () {
+                                                  // Navigator.push(
+                                                  //   context,
+                                                  //   MaterialPageRoute(
+                                                  //       builder: (context) =>
+                                                  //           const Generalquestion()),
+                                                  // );
+                                                },
+                                                image: "assets/images/chat.png",
+                                                text: S.of(context).Theforum,
+                                              );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    HomeContainer(
+                                      ontap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const FrequentlyQuestions()),
+                                        );
+                                      },
+                                      image:
+                                          "assets/images/frequently asked questions.png",
+                                      text: S
+                                          .of(context)
+                                          .frequentlyaskedquestions,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 35.w, top: 10.h),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LawyersAvailable()),
+                                        );
+                                      },
+                                      child: Text(
+                                        S.of(context).lawyersAvailable,
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -163,67 +262,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
- // : Builder(builder: (context) {
-                  //     switch (state.searchProductsState) {
-                  //       case RequestState.loading:
-                  //         return Center(
-                  //           child: Container(
-                  //             alignment: Alignment.center,
-                  //             child: Center(
-                  //               child: Lottie.asset(
-                  //                 'assets/lottie/searching.json',
-                  //                 fit: BoxFit.cover,
-                  //                 height: 250.h,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //         );
-                  //       case RequestState.loaded:
-                  //         return Expanded(
-                  //           child: GridView.builder(
-                  //             gridDelegate:
-                  //                 SliverGridDelegateWithFixedCrossAxisCount(
-                  //                     crossAxisCount: 2,
-                  //                     childAspectRatio: 0.62),
-                  //             itemCount: state.searchProducts.length,
-                  //             itemBuilder:
-                  //                 (BuildContext context, int index) {
-                  //               return Padding(
-                  //                 padding: EdgeInsets.symmetric(
-                  //                     horizontal: 3.w, vertical: 3.h),
-                  //                 child: InkWell(
-                  //                   onTap: () {
-                  //                     Navigator.push(
-                  //                         context,
-                  //                         MaterialPageRoute(
-                  //                             builder: (context) =>
-                  //                                 ProductScreen(
-                  //                                   product: state
-                  //                                           .searchProducts[
-                  //                                       index],
-                  //                                   products: state
-                  //                                       .searchProducts,
-                  //                                 )));
-                  //                   },
-                  //                   child: ProductCard(
-                  //                     productname: state
-                  //                         .searchProducts[index].name,
-                  //                     price: state
-                  //                         .searchProducts[index].price,
-                  //                     orginalprice: state
-                  //                         .searchProducts[index]
-                  //                         .regularPrice,
-                  //                     image: state.searchProducts[index]
-                  //                             .images.isNotEmpty
-                  //                         ? state.searchProducts[index]
-                  //                             .images[0].src
-                  //                         : '',
-                  //                   ),
-                  //                 ),
-                  //               );
-                  //             },
-                  //           ),
-                  //         );
-                  //     }
-                  //   }
-                  //   ),

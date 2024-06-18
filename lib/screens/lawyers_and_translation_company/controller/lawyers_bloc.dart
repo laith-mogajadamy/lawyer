@@ -8,7 +8,7 @@ import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
-import 'package:lawyer/screens/lawyers/data/lawyerrqwest.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/data/lawyerrqwest.dart';
 
 part 'lawyers_event.dart';
 part 'lawyers_state.dart';

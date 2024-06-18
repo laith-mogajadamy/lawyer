@@ -6,14 +6,15 @@ import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
-import 'package:lawyer/screens/lawyers/data/lawyerrqwest.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/data/lawyerrqwest.dart';
+import 'package:lawyer/screens/search/data/searchrequest.dart';
 part 'search_event.dart';
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(const SearchState()) {
     on<Searchlawyers>((event, emit) async {
-      print("Getlawyers");
+      print("Searchlawyers");
       String? ptoken = Preferences.getToken();
       if (ptoken!.isNotEmpty) {
         emit(state.copyWith(
@@ -24,7 +25,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         print(state.token);
         // http.Response response =
         //     await Searchrequest.search(event.query, state.token);
-        http.Response response = await Lawyersreqwest.getlawyers(state.token);
+        http.Response response = await Searchrequest.search(
+            state.searchfield,
+            (state.location.isNotEmpty) ? state.location[0] : "",
+            (state.practice.isNotEmpty) ? state.practice[0] : "",
+            state.token);
         var responsemap = jsonDecode(response.body);
         print("responsemap=");
         print(responsemap);

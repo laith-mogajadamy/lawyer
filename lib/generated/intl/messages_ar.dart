@@ -23,9 +23,11 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "ABOUTUS": MessageLookupByLibrary.simpleMessage("معلوماتنا"),
+        "AddExpertise": MessageLookupByLibrary.simpleMessage("اضف اختاصاص"),
         "Alreadyhaveanaccount":
             MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
         "Answer": MessageLookupByLibrary.simpleMessage("الإجابة"),
+        "Available": MessageLookupByLibrary.simpleMessage("متاح 24/7"),
         "Back": MessageLookupByLibrary.simpleMessage("الخلف"),
         "Biography": MessageLookupByLibrary.simpleMessage("السيرة الذاتية:"),
         "CERTIFICATIONS": MessageLookupByLibrary.simpleMessage("الشهادات"),
@@ -42,8 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("الخبرة"),
         "Emailaddress": MessageLookupByLibrary.simpleMessage("عنوان الايميل "),
         "Expertise": MessageLookupByLibrary.simpleMessage("الاختصاصات:"),
-        "FindTheRightLegalConsultation": MessageLookupByLibrary.simpleMessage(
-            "    جد الاستشارة    \n القانونية المناسبة"),
+        "FindYourLawyer":
+            MessageLookupByLibrary.simpleMessage(" جد المحامي الخاص بك"),
         "Front": MessageLookupByLibrary.simpleMessage("الأمام"),
         "GUEST": MessageLookupByLibrary.simpleMessage("ضيف"),
         "Gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
@@ -55,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT":
             MessageLookupByLibrary.simpleMessage(
                 "إذا لم يتم الرد خلال 48 ساعة، سيتم إرجاع أموالك إلى حسابك"),
+        "LAWPRACTIONERS":
+            MessageLookupByLibrary.simpleMessage("ممارسي القانون"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
         "LandLine": MessageLookupByLibrary.simpleMessage("الخط الارضي"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("المحامون"),
@@ -69,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أسئلتي العامة"),
         "Myconsultations": MessageLookupByLibrary.simpleMessage("استشاراتي"),
         "Name": MessageLookupByLibrary.simpleMessage("الاسم/الشركة"),
+        "News": MessageLookupByLibrary.simpleMessage("الاخبار"),
         "Next": MessageLookupByLibrary.simpleMessage("التالي"),
         "Notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "Occupation": MessageLookupByLibrary.simpleMessage("التخصص"),
@@ -89,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "سيتم تكلفة الإجابة التفصيلية استنادًا إلى سعر أو تكلفة محامي التخصص الخاصة بهذه الاستشارة"),
         "TYPEYOURreplay": MessageLookupByLibrary.simpleMessage("اكتب ردك"),
+        "Theforum": MessageLookupByLibrary.simpleMessage("المجتمع"),
         "TypeyourGeneralquestionhere":
             MessageLookupByLibrary.simpleMessage("اكتب سؤالك العام هنا"),
         "Typeyouranswerwithdetails":
@@ -114,12 +120,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "closedConsultation":
             MessageLookupByLibrary.simpleMessage("الاستشارات المغلقة"),
         "consultationprice":
-            MessageLookupByLibrary.simpleMessage("سعر الاستشارة"),
+            MessageLookupByLibrary.simpleMessage(":سعر الاستشارة"),
         "donthaveanaccount":
             MessageLookupByLibrary.simpleMessage("لا تمتلك حساب؟"),
         "email": MessageLookupByLibrary.simpleMessage("الايميل"),
         "emailvalidate":
             MessageLookupByLibrary.simpleMessage("الايميل قصير جدا"),
+        "frequentlyaskedquestions":
+            MessageLookupByLibrary.simpleMessage("الاسئلة المتكررة"),
+        "generalchat": MessageLookupByLibrary.simpleMessage("المحادثة العامة"),
+        "lawyersAvailable":
+            MessageLookupByLibrary.simpleMessage("المحاميون المتاحون 24/7"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل دخول"),
         "masseges": MessageLookupByLibrary.simpleMessage("رسائل"),
@@ -132,6 +143,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة السر قصيرة جدا"),
         "paysend": MessageLookupByLibrary.simpleMessage("ادفع وأرسل"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
+        "registeration": MessageLookupByLibrary.simpleMessage("انشاء الحساب"),
         "replayes": MessageLookupByLibrary.simpleMessage("الردود"),
         "results": MessageLookupByLibrary.simpleMessage("النتائج:"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
@@ -139,6 +151,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "select": MessageLookupByLibrary.simpleMessage("اختر"),
         "sendaquestion": MessageLookupByLibrary.simpleMessage("إرسال سؤال"),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),
+        "translationcompany":
+            MessageLookupByLibrary.simpleMessage("شركات الترجمة"),
         "typeorselecttosearch":
             MessageLookupByLibrary.simpleMessage("اكتب أو حدد للبحث"),
         "typingCenter": MessageLookupByLibrary.simpleMessage("مركز الطباعة"),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/general_question.dart';
-import 'package:lawyer/screens/generalquestionpage.dart';
+import 'package:lawyer/screens/general-question/generalquestionpage.dart';
 
 class Generalquestioncard extends StatelessWidget {
   final Generalquestion genralqsttion;

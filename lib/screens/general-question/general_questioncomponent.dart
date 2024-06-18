@@ -10,12 +10,11 @@ class Generalquestioncomponent extends StatefulWidget {
   const Generalquestioncomponent({super.key});
 
   @override
-  State<Generalquestioncomponent> createState() => _FilesPageState();
+  State<Generalquestioncomponent> createState() =>
+      _GeneralquestioncomponentState();
 }
 
-class _FilesPageState extends State<Generalquestioncomponent> {
-  TextEditingController controller = TextEditingController();
-
+class _GeneralquestioncomponentState extends State<Generalquestioncomponent> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

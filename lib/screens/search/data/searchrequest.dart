@@ -1,11 +1,11 @@
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/network/global.dart';
 
 class Searchrequest {
   static Future<http.Response> search(
-    String query,
+    String name,
+    String location,
+    String practice,
     String token,
   ) async {
     Map<String, String> headers = {
@@ -13,13 +13,13 @@ class Searchrequest {
       "Accept": "application/json",
       "Authorization": "Bearer $token"
     };
-    Map data = {
-      // "title": title,
-      // "description": description,
-    };
-    var body = jsonEncode(data);
-    var url = Uri.parse("${Global.url}user?$query");
-    http.Response response = await http.post(url, headers: headers, body: body);
+
+    var url = Uri.parse(
+        "${Global.url}user?filter=[name]=$name&filter=[location]=$location&filter=[practice]=$practice");
+    http.Response response = await http.get(
+      url,
+      headers: headers,
+    );
 
     return response;
   }

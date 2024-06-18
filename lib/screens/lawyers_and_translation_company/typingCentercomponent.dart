@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/enums.dart';
-import 'package:lawyer/screens/lawyers/controller/lawyers_bloc.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/controller/lawyers_bloc.dart';
 import 'package:lawyer/screens/widgets/lawyercard.dart';
 import 'package:lottie/lottie.dart';
 
-class Legalconsultantcomponent extends StatelessWidget {
-  const Legalconsultantcomponent({super.key});
+class TypingCentercomponent extends StatelessWidget {
+  const TypingCentercomponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
-      create: (context) => LawyersBloc()..add(GetlegalConsultant()),
+      create: (context) => LawyersBloc()..add(GettypingCenter()),
       child: BlocBuilder<LawyersBloc, LawyersState>(
         builder: (context, state) {
           switch (state.lawyersState) {
@@ -34,10 +34,10 @@ class Legalconsultantcomponent extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       child: ListView.builder(
-                        itemCount: state.legalconsultant.length,
+                        itemCount: state.typingCenters.length,
                         itemBuilder: (context, index) {
                           return Lawyerscard(
-                            lawyer: state.legalconsultant[index],
+                            lawyer: state.typingCenters[index],
                           );
                         },
                       ),

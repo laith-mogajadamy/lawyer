@@ -23,9 +23,11 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "ABOUTUS": MessageLookupByLibrary.simpleMessage("ABOUT US"),
+        "AddExpertise": MessageLookupByLibrary.simpleMessage("AddExpertise"),
         "Alreadyhaveanaccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "Answer": MessageLookupByLibrary.simpleMessage("Answer"),
+        "Available": MessageLookupByLibrary.simpleMessage("Available 24/7"),
         "Back": MessageLookupByLibrary.simpleMessage("Back"),
         "Biography": MessageLookupByLibrary.simpleMessage("Biography:"),
         "CERTIFICATIONS":
@@ -45,8 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("Expertise"),
         "Emailaddress": MessageLookupByLibrary.simpleMessage("Email address"),
         "Expertise": MessageLookupByLibrary.simpleMessage("Expertise :"),
-        "FindTheRightLegalConsultation": MessageLookupByLibrary.simpleMessage(
-            "    Find The Right\n Legal Consultation"),
+        "FindYourLawyer":
+            MessageLookupByLibrary.simpleMessage("Find Your Lawyer"),
         "Front": MessageLookupByLibrary.simpleMessage("Front"),
         "GUEST": MessageLookupByLibrary.simpleMessage("GUEST"),
         "Gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
@@ -60,6 +62,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT":
             MessageLookupByLibrary.simpleMessage(
                 "IF NOT ANSWERED IN 48 HOURS YOUR MONEY WILL BE SENT BACK TO YOUR ACCOUNT"),
+        "LAWPRACTIONERS":
+            MessageLookupByLibrary.simpleMessage("LAW PRACTIONERS"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("Log Out"),
         "LandLine": MessageLookupByLibrary.simpleMessage("Land Line"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("Lawyers"),
@@ -74,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Myconsultations":
             MessageLookupByLibrary.simpleMessage(" My consultations"),
         "Name": MessageLookupByLibrary.simpleMessage("Name/Company"),
+        "News": MessageLookupByLibrary.simpleMessage("NEWS"),
         "Next": MessageLookupByLibrary.simpleMessage("Next"),
         "Notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "Occupation": MessageLookupByLibrary.simpleMessage("Occupation"),
@@ -94,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "THE DETAIL ANSWER WILL COST BASED ON THE LAW PRACTITIONER\'S RATE OR SET PRICE OF THIS CONSULTAION"),
         "TYPEYOURreplay":
             MessageLookupByLibrary.simpleMessage("Type your replay"),
+        "Theforum": MessageLookupByLibrary.simpleMessage("The forum"),
         "TypeyourGeneralquestionhere": MessageLookupByLibrary.simpleMessage(
             "Type your General question here"),
         "Typeyouranswerwithdetails": MessageLookupByLibrary.simpleMessage(
@@ -120,12 +126,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "closedConsultation":
             MessageLookupByLibrary.simpleMessage("ClosedConsultation"),
         "consultationprice":
-            MessageLookupByLibrary.simpleMessage("consultation price"),
+            MessageLookupByLibrary.simpleMessage("consultation price:"),
         "donthaveanaccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
         "emailvalidate": MessageLookupByLibrary.simpleMessage(
             "Email or Username is too short"),
+        "frequentlyaskedquestions": MessageLookupByLibrary.simpleMessage(
+            "Frequently Asked \n     Questions"),
+        "generalchat": MessageLookupByLibrary.simpleMessage("General Chat"),
+        "lawyersAvailable":
+            MessageLookupByLibrary.simpleMessage("Lawyers Available 24/7"),
         "location": MessageLookupByLibrary.simpleMessage("location"),
         "login": MessageLookupByLibrary.simpleMessage("login"),
         "masseges": MessageLookupByLibrary.simpleMessage("Masseges"),
@@ -139,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password is too short"),
         "paysend": MessageLookupByLibrary.simpleMessage("pay & send"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
+        "registeration": MessageLookupByLibrary.simpleMessage("Registeration"),
         "replayes": MessageLookupByLibrary.simpleMessage("Replayes"),
         "results": MessageLookupByLibrary.simpleMessage("results :"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -147,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendaquestion":
             MessageLookupByLibrary.simpleMessage("send a question"),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),
+        "translationcompany":
+            MessageLookupByLibrary.simpleMessage("Translation\nCompany"),
         "typeorselecttosearch":
             MessageLookupByLibrary.simpleMessage("type or select to search"),
         "typingCenter": MessageLookupByLibrary.simpleMessage("typing Center"),

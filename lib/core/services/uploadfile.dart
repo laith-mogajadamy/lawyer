@@ -49,17 +49,6 @@ class Uploadfile {
       },
     );
 
-    // Map data = {
-    //   "name": name,
-    //   "email": email,
-    //   "phone": number,
-    //   "birth": birth,
-    //   "location": location,
-    //   "gender": gender,
-    //   "consultation_price": consultationprice,
-    //   "profileUser": fimage,
-    //   "certification": certification
-    // };
     Map<String, String> headers = {
       "Accept": "application/json",
       "Content-type": "multipart/form-data",

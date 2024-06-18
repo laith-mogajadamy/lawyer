@@ -23,9 +23,7 @@ class ImageWidget extends StatelessWidget {
           child: Container(
               width: size.width / 2.5,
               height: size.height / 3.8,
-              decoration: const BoxDecoration(
-                  // color: AppColor.appgray,
-                  ),
+              decoration: const BoxDecoration(),
               child: Image.file(
                 file,
                 fit: BoxFit.cover,

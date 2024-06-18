@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:lawyer/core/services/auth.dart';
 import 'package:lawyer/core/services/uploadfile.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
@@ -47,14 +48,24 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           ),
         );
         Preferences.savetoken(responsemap["access_token"]);
-        print("token:${responsemap["access_token"]}");
-        print("userid:${state.user.id}");
+
         print("senderMessage:${state.user.senderMessage}");
         print("receiverMessage:${state.user.receiverMessage}");
 
-        print("user:${state.user}");
-        print("user consultations:${state.user.consultations}");
-        print("user generalquestions:${state.user.generalquestions}");
+        Set<Lawyer> contact1 = {};
+        for (var i = 0; i < state.user.receiverMessage!.length; i++) {
+          contact1.add(state.user.receiverMessage![i].sender!);
+        }
+        for (var i = 0; i < state.user.senderMessage!.length; i++) {
+          contact1.add(state.user.senderMessage![i].receiver!);
+        }
+        emit(
+          state.copyWith(
+            contacts: contact1,
+          ),
+        );
+        print("contacts =========");
+        print(state.contacts);
       } else {
         emit(
           state.copyWith(
@@ -63,8 +74,6 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               islogedin: "false"),
         );
       }
-
-      print(state.islogedin);
     });
     //
     on<LanguageChanged>((event, emit) async {
@@ -167,6 +176,17 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       );
       print("Certifications=${state.certifications}");
     });
+    on<AddExpertise>((event, emit) async {
+      print(" AddCertification");
+      List<String>? newexpertise;
+
+      newexpertise = List.of(state.expertise!)..add(event.expertise!);
+
+      emit(
+        state.copyWith(expertise: newexpertise),
+      );
+      print("newexpertise=${state.expertise}");
+    });
     on<Bottomshow>((event, emit) async {
       emit(
         state.copyWith(
@@ -175,6 +195,16 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         ),
       );
     });
+    //
+    on<CheckAvailable>((event, emit) async {
+      print(" CheckAvailable");
+
+      emit(
+        state.copyWith(available: event.available),
+      );
+      print("available=${state.available}");
+    });
+
     //
     on<LoginEmailChanged>((event, emit) async {
       emit(state.copyWith(
@@ -203,7 +233,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     on<LoginNumberChanged>((event, emit) async {
       emit(state.copyWith(
         formStatus: const InitialFormStatus(),
-        number: event.number,
+        phone: event.number,
       ));
     });
     on<GenderChanged>((event, emit) async {
@@ -261,6 +291,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       ));
     });
     on<BiographyChanged>((event, emit) async {
+      print(" BiographyChanged");
+
       emit(state.copyWith(
         formStatus: const InitialFormStatus(),
         biography: event.biography,
@@ -273,6 +305,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         type: event.type,
       ));
     });
+    //
     on<LoginSubmitted>((event, emit) async {
       emit(state.copyWith(
           formStatus: FormSubmitting(),
@@ -317,41 +350,93 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         print(state.formStatus);
       }
     });
-    on<RegisterSubmitted>((event, emit) async {
+    on<ClientRegisterSubmitted>((event, emit) async {
       emit(state.copyWith(
-          formStatus: const InitialFormStatus(),
-          email: state.email,
-          name: state.name,
-          number: state.number,
-          type: state.type,
-          password: state.password));
-      http.Response response = await Auth.register(state.name, state.email,
-          state.password, state.password, state.type, state.number);
-      Map responsemap = await jsonDecode(response.body);
-      emit(state.copyWith(message: responsemap["message"]));
+        formStatus: const InitialFormStatus(),
+      ));
+      Response response = await Auth.clientregister(
+        state.type,
+        state.name,
+        state.email,
+        state.password,
+        state.retypePassword,
+        state.gender,
+        state.phone,
+        state.birth,
+        state.country,
+        state.city,
+        state.eidnumber,
+        state.feid,
+        state.beid,
+        state.occupation,
+      );
       print("message==${state.message}");
       print("*********");
-      print(responsemap);
       print("statusCode==${response.statusCode}");
       print("*********");
       if (response.statusCode == 201) {
         add(
           LoginSubmitted(),
         );
-        // emit(
-        //   state.copyWith(
-        //     email: state.email,
-        //     password: state.password,
-        //     message: " log in successed",
-        //     formStatus: SubmissionSuccess(),
-        //     islogedin: "true",
-        //   ),
-        // );
-        Preferences.savetoken(responsemap["accessToken"]);
+        Preferences.savetoken(response.data["accessToken"]);
         Preferences.saveemail(state.email);
         Preferences.savepassword(state.password);
         print("++++++++++++++");
-        print("token:${responsemap["accessToken"]}");
+        print("token:${response.data["accessToken"]}");
+        print("++++++++++++++");
+        print(state.formStatus);
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: SubmissionFailed(state.message),
+          ),
+        );
+        print(state.formStatus);
+      }
+    });
+    //
+    on<LawyerRegisterSubmitted>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+      ));
+      Response response = await Auth.lawyerregister(
+        state.type,
+        state.name,
+        state.email,
+        state.password,
+        state.retypePassword,
+        state.gender,
+        state.phone,
+        state.birth,
+        state.country,
+        state.city,
+        state.eidnumber,
+        state.feid,
+        state.beid,
+        state.landline,
+        state.consultationprice,
+        state.biography,
+        state.location,
+        state.yearsofpractice,
+        (state.available) ? "1" : "0",
+        state.certifications,
+        state.license,
+        state.practices,
+        state.languages,
+      );
+      print("message==${state.message}");
+      print("*********");
+      print("statusCode==${response.statusCode}");
+      print("*********");
+      if (response.statusCode == 201) {
+        add(
+          LoginSubmitted(),
+        );
+        Preferences.savetoken(response.data["accessToken"]);
+        Preferences.saveemail(state.email);
+        Preferences.savepassword(state.password);
+        print("++++++++++++++");
+        print("token:${response.data["accessToken"]}");
         print("++++++++++++++");
         print(state.formStatus);
       } else {
@@ -384,13 +469,19 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               user: const Lawyer(
                 id: 0,
                 name: "",
-                email: '',
+                email: "",
                 birth: "",
                 gender: 0,
                 phone: "",
                 consultationPrice: 0,
                 isactive: 0,
-                location: 0,
+                role: 0,
+                country: "",
+                city: "",
+                emiratesId: 0,
+                frontEmiratesId: "",
+                backEmiratesId: "",
+                occupation: "",
                 yearsOfPractice: "",
                 numOfConsultation: 0,
                 closedConsultation: 0,
