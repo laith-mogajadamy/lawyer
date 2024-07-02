@@ -16,48 +16,51 @@ class News extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: size.width / 1.2,
-        height: size.height / 5,
-        decoration: BoxDecoration(
-          color: AppColor.appgray.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(20.r),
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(
-                    height: size.height / 25,
-                    width: size.width / 10,
-                    child: Image.asset("assets/images/news.png"),
-                  ),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  Black18text(text: S.of(context).News),
-                ],
+    return BlocProvider(
+      create: (context) => NewsBloc(),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: size.width / 1.2,
+          height: size.height / 5,
+          decoration: BoxDecoration(
+            color: AppColor.appgray.withOpacity(0.4),
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: size.height / 25,
+                      width: size.width / 10,
+                      child: Image.asset("assets/images/news.png"),
+                    ),
+                    SizedBox(
+                      width: 2.w,
+                    ),
+                    Black18text(text: S.of(context).News),
+                  ],
+                ),
               ),
-            ),
-            BlocBuilder<NewsBloc, NewsState>(
-              builder: (context, state) {
-                return Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: state.news.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Black12text(text: state.news[index]);
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+              BlocBuilder<NewsBloc, NewsState>(
+                builder: (context, state) {
+                  return Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.news.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Black12text(text: state.news[index]);
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

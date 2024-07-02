@@ -16,10 +16,12 @@ class SearchState extends Equatable {
   final bool bottom;
   final String searchfield;
 
-  final List location;
-  final List practice;
+  final List selectedlocations;
+  final List selectedpractices;
   final List locations;
   final List practices;
+  final List selectedlanguages;
+  final List languages;
 
   const SearchState({
     this.token = '',
@@ -35,10 +37,12 @@ class SearchState extends Equatable {
     this.bottom = false,
     this.filter = false,
     this.searchfield = 'location',
-    this.location = const [],
-    this.practice = const [],
+    this.selectedlocations = const [],
+    this.selectedpractices = const [],
     this.locations = const [],
     this.practices = const [],
+    this.selectedlanguages = const [],
+    this.languages = const [],
   });
 
   SearchState copyWith({
@@ -55,10 +59,12 @@ class SearchState extends Equatable {
     bool? bottom,
     bool? filter,
     String? searchfield,
-    List? location,
-    List? practice,
+    List? selectedlocations,
+    List? selectedpractices,
     List? locations,
     List? practices,
+    List? selectedlanguages,
+    List? languages,
   }) {
     return SearchState(
       token: token ?? this.token,
@@ -76,10 +82,12 @@ class SearchState extends Equatable {
 
       bottom: bottom ?? this.bottom,
       searchfield: searchfield ?? this.searchfield,
-      location: location ?? this.location,
-      practice: practice ?? this.practice,
+      selectedlocations: selectedlocations ?? this.selectedlocations,
+      selectedpractices: selectedpractices ?? this.selectedpractices,
       locations: locations ?? this.locations,
       practices: practices ?? this.practices,
+      selectedlanguages: selectedlanguages ?? this.selectedlanguages,
+      languages: languages ?? this.languages,
     );
   }
 
@@ -98,9 +106,11 @@ class SearchState extends Equatable {
         bottom,
         filter,
         searchfield,
-        location,
-        practice,
+        selectedlocations,
+        selectedpractices,
         locations,
         practices,
+        selectedlanguages,
+        languages,
       ];
 }

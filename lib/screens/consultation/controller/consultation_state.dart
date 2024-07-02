@@ -9,6 +9,7 @@ class ConsultationState extends Equatable {
   final String consultationreplyMessage;
   final RequestState invoicestate;
   final String invoiceMessage;
+  final List paymentmethods;
 
   const ConsultationState({
     this.token = '',
@@ -20,6 +21,7 @@ class ConsultationState extends Equatable {
     //
     this.invoicestate = RequestState.loading,
     this.invoiceMessage = '',
+    this.paymentmethods = const [],
   });
 
   ConsultationState copyWith({
@@ -32,6 +34,7 @@ class ConsultationState extends Equatable {
     //
     RequestState? invoicestate,
     String? invoiceMessage,
+    List? paymentmethods,
   }) {
     return ConsultationState(
       token: token ?? this.token,
@@ -45,6 +48,7 @@ class ConsultationState extends Equatable {
       //
       invoicestate: invoicestate ?? this.invoicestate,
       invoiceMessage: invoiceMessage ?? this.invoiceMessage,
+      paymentmethods: paymentmethods ?? this.paymentmethods,
     );
   }
 
@@ -59,5 +63,6 @@ class ConsultationState extends Equatable {
         //
         invoicestate,
         invoiceMessage,
+        paymentmethods,
       ];
 }

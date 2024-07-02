@@ -18,7 +18,7 @@ class ConsultationsModel extends Consultation {
         id: json['id'] ?? 0,
         title: json['title'] ?? '',
         description: json['description'] ?? '',
-        status: json['status'] ?? 0,
+        status: json['status'] ?? '',
         answer: json['answer'] ?? '',
         createdOn: json['createdOn'] ?? '',
         sender: LawyerModel.fromJson(json['sender']),

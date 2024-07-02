@@ -2,8 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:lawyer/models/consultation.dart';
 import 'package:lawyer/models/general_question.dart';
 import 'package:lawyer/models/group.dart';
+import 'package:lawyer/models/language.dart';
 import 'package:lawyer/models/message.dart';
 import 'package:lawyer/models/notifications.dart';
+import 'package:lawyer/models/practice.dart';
 
 class Lawyer extends Equatable {
   final int id;
@@ -24,16 +26,20 @@ class Lawyer extends Equatable {
   final dynamic yearsOfPractice;
   final dynamic numOfConsultation;
   final dynamic closedConsultation;
-  final String image;
-  final List<Consultation>? consultations;
+  final String profile;
+  final List<Consultation>? consultationsReceiver;
+  final List<Consultation>? consultationsSender;
   final List<Generalquestion>? generalquestions;
   final List<Message>? senderMessage;
   final List<Message>? receiverMessage;
 
-  final List? certification;
-  final List? practices;
+  final List<String>? certification;
+  final List<Practice>? practices;
+  final List<Language>? languages;
+
   final List<Notifications>? unreadNotifications;
   final List<Groups>? groups;
+  final List<Groups>? generalChats;
 
   const Lawyer({
     required this.id,
@@ -54,15 +60,18 @@ class Lawyer extends Equatable {
     required this.yearsOfPractice,
     required this.numOfConsultation,
     required this.closedConsultation,
-    required this.image,
+    required this.profile,
     required this.certification,
     required this.practices,
-    required this.consultations,
+    required this.languages,
+    required this.consultationsReceiver,
+    required this.consultationsSender,
     required this.generalquestions,
     required this.senderMessage,
     required this.receiverMessage,
     required this.unreadNotifications,
     required this.groups,
+    required this.generalChats,
   });
 
   @override
@@ -75,18 +84,27 @@ class Lawyer extends Equatable {
         phone,
         consultationPrice,
         isactive,
+        role,
         country,
+        city,
+        emiratesId,
+        frontEmiratesId,
+        backEmiratesId,
+        occupation,
         yearsOfPractice,
         numOfConsultation,
         closedConsultation,
-        image,
+        profile,
         certification,
         practices,
-        consultations,
+        languages,
+        consultationsReceiver,
+        consultationsSender,
         generalquestions,
         senderMessage,
         receiverMessage,
         unreadNotifications,
         groups,
+        generalChats,
       ];
 }

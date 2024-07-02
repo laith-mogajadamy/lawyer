@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpertiseInput extends StatelessWidget {
   final TextEditingController expertise;
-  final String hint;
+  final String? hint;
   final Function() oncomplete;
   const ExpertiseInput({
     super.key,

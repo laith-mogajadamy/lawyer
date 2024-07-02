@@ -27,8 +27,12 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         //     await Searchrequest.search(event.query, state.token);
         http.Response response = await Searchrequest.search(
             state.searchfield,
-            (state.location.isNotEmpty) ? state.location[0] : "",
-            (state.practice.isNotEmpty) ? state.practice[0] : "",
+            (state.selectedlocations.isNotEmpty)
+                ? state.selectedlocations[0]
+                : "",
+            (state.selectedpractices.isNotEmpty)
+                ? state.selectedpractices[0]
+                : "",
             state.token);
         var responsemap = jsonDecode(response.body);
         print("responsemap=");
@@ -70,28 +74,34 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         state.copyWith(
           bottom: event.bottom,
           locations: [
-            ["Abu Dhab", false],
-            ["Dubai", false],
-            ["Ajman", false],
-            ["Al Ain", false],
-            ["Fujairah", false],
-            ["Ras Al Khaima", false],
-            ["Sharjah", false],
-            ["Um Al Quwain", false],
+            "Abu Dhab",
+            "Dubai",
+            "Ajman",
+            "Al Ain",
+            "Fujairah",
+            "Ras Al Khaima",
+            "Sharjah",
+            "Um Al Quwain",
           ],
           practices: [
-            ["Tax", false],
-            ["Business \n(corporate)", false],
-            ["Family", false],
-            ["Estate Planning", false],
-            ["Emoplyment \n& Labot", false],
-            ["Personal Injury", false],
-            ["Intellectual \nProperty", false],
-            ["Immigration", false],
-            ["Constitutional", false],
-            ["Criminal Defense", false],
-            ["Bankruptcy", false],
-            ["Entertainment", false],
+            "Tax",
+            "Business \n(corporate)",
+            "Family",
+            "Estate Planning",
+            "Emoplyment \n& Labot",
+            "Personal Injury",
+            "Intellectual \nProperty",
+            "Immigration",
+            "Constitutional",
+            "Criminal Defense",
+            "Bankruptcy",
+            "Entertainment",
+          ],
+          languages: [
+            "ar",
+            "en",
+            "ko",
+            "fr",
           ],
         ),
       );
@@ -105,56 +115,56 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     });
     on<Check>((event, emit) async {
       if (state.searchfield == "location") {
-        List newlist = List.from(state.locations);
-        List slected = List.from(state.location);
+        List slected = List.from(state.selectedlocations);
 
-        print("before");
-
-        print(newlist);
-        newlist[event.index!][1] = event.check;
-        print("after");
-
-        print(newlist);
         if (event.check!) {
-          slected.add(state.locations[event.index!][0]);
+          slected.add(event.slelected);
         } else {
-          slected.remove(state.locations[event.index!][0]);
+          slected.remove(event.slelected);
         }
         emit(
           state.copyWith(
-            locations: newlist,
-            location: slected,
+            selectedlocations: slected,
             // searchfield:
             //     (state.searchfield == "location") ? "Practice" : "location",
           ),
         );
         print("slected");
-        print(state.location);
+        print(state.selectedlocations);
+      } else if ((state.searchfield == "Practice")) {
+        List slected = List.from(state.selectedpractices);
+
+        if (event.check!) {
+          slected.add(event.slelected);
+        } else {
+          slected.remove(event.slelected);
+        }
+        emit(
+          state.copyWith(
+            selectedpractices: slected,
+            // searchfield:
+            //     (state.searchfield == "location") ? "Practice" : "location",
+          ),
+        );
+        print("slected");
+        print(state.selectedpractices);
       } else {
-        List newlist = List.from(state.practices);
-        List slected = List.from(state.practice);
-        print("before");
+        List slected = List.from(state.selectedlanguages);
 
-        print(newlist);
-        newlist[event.index!][1] = event.check;
-        print("after");
-
-        print(newlist);
         if (event.check!) {
-          slected.add(state.practices[event.index!][0]);
+          slected.add(event.slelected);
         } else {
-          slected.remove(state.practices[event.index!][0]);
+          slected.remove(event.slelected);
         }
         emit(
           state.copyWith(
-            practices: newlist,
-            practice: slected,
+            selectedlanguages: slected,
             // searchfield:
             //     (state.searchfield == "location") ? "Practice" : "location",
           ),
         );
         print("slected");
-        print(state.practice);
+        print(state.selectedlanguages);
       }
     });
   }

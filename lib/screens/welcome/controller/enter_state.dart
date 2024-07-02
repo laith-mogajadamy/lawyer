@@ -3,6 +3,8 @@ part of 'enter_bloc.dart';
 class EnterState extends Equatable {
   final String islogedin;
   final bool bottom;
+  final bool registerbottom;
+
   final File? fimage;
   final File? feid;
   final File? beid;
@@ -51,15 +53,16 @@ class EnterState extends Equatable {
 //
   final String yearsofpractice;
   final List<String> practices;
-  final List<String> languages;
+  final List<String>? languages;
 
-  final Set<Lawyer> contacts;
+  final List<Lawyer> contacts;
 
   const EnterState({
     // this.user = const User(
     //     token: "", email: "", name: "", number: "", type: "", password: ""),
     this.islogedin = '',
     this.bottom = false,
+    this.registerbottom = false,
     this.fimage,
     this.feid,
     this.beid,
@@ -91,15 +94,18 @@ class EnterState extends Equatable {
       yearsOfPractice: "",
       numOfConsultation: 0,
       closedConsultation: 0,
-      image: "",
+      profile: "",
       certification: [],
       practices: [],
-      consultations: [],
+      languages: [],
+      consultationsReceiver: [],
+      consultationsSender: [],
       generalquestions: [],
       senderMessage: [],
       receiverMessage: [],
       unreadNotifications: [],
       groups: [],
+      generalChats: [],
     ),
     this.token = '',
     this.id = 0,
@@ -128,12 +134,13 @@ class EnterState extends Equatable {
     this.yearsofpractice = '',
     this.practices = const [],
     this.languages = const [],
-    this.contacts = const {},
+    this.contacts = const [],
   });
 
   EnterState copyWith({
     String? islogedin,
     bool? bottom,
+    bool? registerbottom,
     File? fimage,
     File? feid,
     File? beid,
@@ -178,11 +185,12 @@ class EnterState extends Equatable {
     String? yearsofpractice,
     List<String>? practices,
     List<String>? languages,
-    Set<Lawyer>? contacts,
+    List<Lawyer>? contacts,
   }) {
     return EnterState(
       islogedin: islogedin ?? this.islogedin,
       bottom: bottom ?? this.bottom,
+      registerbottom: registerbottom ?? this.registerbottom,
       fimage: fimage ?? this.fimage,
       feid: feid ?? this.feid,
       beid: beid ?? this.beid,
@@ -237,6 +245,7 @@ class EnterState extends Equatable {
   List<Object?> get props => [
         islogedin,
         bottom,
+        registerbottom,
         fimage,
         feid,
         beid,

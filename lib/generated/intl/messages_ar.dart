@@ -38,7 +38,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "City": MessageLookupByLibrary.simpleMessage("المدينة"),
         "Consultations": MessageLookupByLibrary.simpleMessage("الاستشارات"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+        "Contacts": MessageLookupByLibrary.simpleMessage("الاشخاص"),
         "Country": MessageLookupByLibrary.simpleMessage("الدولة"),
+        "Create": MessageLookupByLibrary.simpleMessage("انشاء"),
         "EIDNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهوية الاماراتية"),
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("الخبرة"),
@@ -61,6 +63,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ممارسي القانون"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("تسجيل خروج"),
         "LandLine": MessageLookupByLibrary.simpleMessage("الخط الارضي"),
+        "Language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "Languages": MessageLookupByLibrary.simpleMessage("اللغات :"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("المحامون"),
         "LegalConsultant":
             MessageLookupByLibrary.simpleMessage("مستشار قانوني"),
@@ -82,6 +86,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "Persons": MessageLookupByLibrary.simpleMessage("الأشخاص"),
         "Practice": MessageLookupByLibrary.simpleMessage("المهنة"),
+        "PricePerPage": MessageLookupByLibrary.simpleMessage(" السعر للصفحة:"),
         "Profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "ProfileEdit":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
@@ -95,6 +100,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "سيتم تكلفة الإجابة التفصيلية استنادًا إلى سعر أو تكلفة محامي التخصص الخاصة بهذه الاستشارة"),
         "TYPEYOURreplay": MessageLookupByLibrary.simpleMessage("اكتب ردك"),
         "Theforum": MessageLookupByLibrary.simpleMessage("المجتمع"),
+        "Translationcompany":
+            MessageLookupByLibrary.simpleMessage("شركة ترجمة"),
         "TypeyourGeneralquestionhere":
             MessageLookupByLibrary.simpleMessage("اكتب سؤالك العام هنا"),
         "Typeyouranswerwithdetails":
@@ -117,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "من خلال الإجابة على المزيد من الأسئلة العامة، ستحصل على فرص أعلى للظهور في أعلى نتائج البحث"),
         "chat": MessageLookupByLibrary.simpleMessage("دردشة"),
+        "client": MessageLookupByLibrary.simpleMessage("عميل"),
         "closedConsultation":
             MessageLookupByLibrary.simpleMessage("الاستشارات المغلقة"),
         "consultationprice":
@@ -129,6 +137,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "frequentlyaskedquestions":
             MessageLookupByLibrary.simpleMessage("الاسئلة المتكررة"),
         "generalchat": MessageLookupByLibrary.simpleMessage("المحادثة العامة"),
+        "groupname": MessageLookupByLibrary.simpleMessage("اسم المجموعة"),
+        "lawyer": MessageLookupByLibrary.simpleMessage("محامي"),
         "lawyersAvailable":
             MessageLookupByLibrary.simpleMessage("المحاميون المتاحون 24/7"),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),

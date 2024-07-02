@@ -42,7 +42,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "City": MessageLookupByLibrary.simpleMessage("City"),
         "Consultations": MessageLookupByLibrary.simpleMessage("Consultations"),
         "Contactnumber": MessageLookupByLibrary.simpleMessage("Contact number"),
+        "Contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
         "Country": MessageLookupByLibrary.simpleMessage("Country"),
+        "Create": MessageLookupByLibrary.simpleMessage("Create"),
         "EIDNumber": MessageLookupByLibrary.simpleMessage("EID Number"),
         "EXPERTISE": MessageLookupByLibrary.simpleMessage("Expertise"),
         "Emailaddress": MessageLookupByLibrary.simpleMessage("Email address"),
@@ -66,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("LAW PRACTIONERS"),
         "LOGOUT": MessageLookupByLibrary.simpleMessage("Log Out"),
         "LandLine": MessageLookupByLibrary.simpleMessage("Land Line"),
+        "Language": MessageLookupByLibrary.simpleMessage("Language"),
+        "Languages": MessageLookupByLibrary.simpleMessage("Languages :"),
         "Lawyers": MessageLookupByLibrary.simpleMessage("Lawyers"),
         "LegalConsultant":
             MessageLookupByLibrary.simpleMessage("Legal Consultant"),
@@ -87,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Password": MessageLookupByLibrary.simpleMessage("Password"),
         "Persons": MessageLookupByLibrary.simpleMessage("Persons"),
         "Practice": MessageLookupByLibrary.simpleMessage("Practice"),
+        "PricePerPage": MessageLookupByLibrary.simpleMessage("Price Per Page:"),
         "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "ProfileEdit": MessageLookupByLibrary.simpleMessage("Profile Edit"),
         "REGISTER": MessageLookupByLibrary.simpleMessage("REGISTER"),
@@ -100,6 +105,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "TYPEYOURreplay":
             MessageLookupByLibrary.simpleMessage("Type your replay"),
         "Theforum": MessageLookupByLibrary.simpleMessage("The forum"),
+        "Translationcompany":
+            MessageLookupByLibrary.simpleMessage("Translation Company"),
         "TypeyourGeneralquestionhere": MessageLookupByLibrary.simpleMessage(
             "Type your General question here"),
         "Typeyouranswerwithdetails": MessageLookupByLibrary.simpleMessage(
@@ -123,6 +130,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "by answering more general question you will get higher chances to be at the top of the search result"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
+        "client": MessageLookupByLibrary.simpleMessage("Client"),
         "closedConsultation":
             MessageLookupByLibrary.simpleMessage("ClosedConsultation"),
         "consultationprice":
@@ -135,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "frequentlyaskedquestions": MessageLookupByLibrary.simpleMessage(
             "Frequently Asked \n     Questions"),
         "generalchat": MessageLookupByLibrary.simpleMessage("General Chat"),
+        "groupname": MessageLookupByLibrary.simpleMessage("Group name"),
+        "lawyer": MessageLookupByLibrary.simpleMessage("Lawyer"),
         "lawyersAvailable":
             MessageLookupByLibrary.simpleMessage("Lawyers Available 24/7"),
         "location": MessageLookupByLibrary.simpleMessage("location"),

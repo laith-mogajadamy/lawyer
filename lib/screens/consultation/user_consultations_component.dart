@@ -20,12 +20,12 @@ class _FilesPageState extends State<UserConsultationscomponent> {
     // Size size = MediaQuery.of(context).size;
     return BlocBuilder<EnterBloc, EnterState>(
       builder: (context, state) {
-        if (state.user.consultations!.isNotEmpty) {
+        if (state.user.consultationsReceiver!.isNotEmpty) {
           return ListView.builder(
-            itemCount: state.user.consultations!.length,
+            itemCount: state.user.consultationsReceiver!.length,
             itemBuilder: (context, index) {
               return ConsultationCard(
-                  consultation: state.user.consultations![index]);
+                  consultation: state.user.consultationsReceiver![index]);
             },
           );
         } else {

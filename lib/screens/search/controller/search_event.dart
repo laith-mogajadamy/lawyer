@@ -43,18 +43,18 @@ class ChangeSearchField extends SearchEvent {
 }
 
 class Check extends SearchEvent {
-  final int? index;
+  final String? slelected;
 
   final bool? check;
 
   Check({
     this.check,
-    this.index,
+    this.slelected,
   });
 
   @override
   List<Object?> get props => [
         check,
-        index,
+        slelected,
       ];
 }

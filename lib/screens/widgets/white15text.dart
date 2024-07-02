@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class White18text extends StatelessWidget {
+class White15text extends StatelessWidget {
   final String text;
-  const White18text({
+  const White15text({
     super.key,
     required this.text,
   });
@@ -13,7 +13,7 @@ class White18text extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.bold),
+          fontSize: 15.sp, color: Colors.white, fontWeight: FontWeight.bold),
     );
   }
 }

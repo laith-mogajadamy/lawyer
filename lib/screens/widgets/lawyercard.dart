@@ -35,7 +35,7 @@ class Lawyerscard extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
             child: SizedBox(
-              height: size.height / 10,
+              height: size.height / 9,
               width: size.width / 1.5,
               child: Row(
                 children: [
@@ -43,7 +43,7 @@ class Lawyerscard extends StatelessWidget {
                     height: size.height / 12,
                     width: size.width / 6,
                     child: Image.network(
-                      lawyer.image,
+                      lawyer.profile,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -87,7 +87,7 @@ class Lawyerscard extends StatelessWidget {
                               itemCount: lawyer.practices!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Black12text(
-                                    text: "${lawyer.practices![index]} ");
+                                    text: "${lawyer.practices![index].name} ");
                               },
                             ),
                           ),

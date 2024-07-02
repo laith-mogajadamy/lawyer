@@ -19,7 +19,7 @@ class Replaycard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 30.r,
-              backgroundImage: NetworkImage(replie.userResponse.image),
+              backgroundImage: NetworkImage(replie.userResponse.profile),
             ),
             SizedBox(
               width: 15.w,

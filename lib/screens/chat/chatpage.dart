@@ -228,7 +228,7 @@ class _ChatPageState extends State<ChatPage> {
                 ),
                 CircleAvatar(
                   radius: 25.r,
-                  backgroundImage: NetworkImage(widget.otheruser!.image),
+                  backgroundImage: NetworkImage(widget.otheruser!.profile),
                 ),
               ],
             ),

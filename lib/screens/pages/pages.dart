@@ -4,6 +4,7 @@ import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/consultation/user_consultations.dart';
 import 'package:lawyer/screens/pages/home.dart';
 import 'package:lawyer/screens/pages/massegespage.dart';
+import 'package:lawyer/screens/pages/person_massege.dart';
 import 'package:lawyer/screens/pages/personalprofile.dart';
 
 class MyPages extends StatefulWidget {
@@ -48,7 +49,7 @@ class _MyPagesState extends State<MyPages> {
           children: const [
             Home(),
             UserConsultations(),
-            MassegesPage(),
+            PersonMassege(),
             PersonalProfile(),
           ],
         ),

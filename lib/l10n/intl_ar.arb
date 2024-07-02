@@ -2,6 +2,9 @@
     "title":"BRIEfCASE",
     "login":"تسجيل دخول",
     "REGISTER":"انشاء حساب",
+    "lawyer":"محامي",
+    "Translationcompany":"شركة ترجمة",
+    "client":"عميل",
     "GUEST":"ضيف",
     "ABOUTUS":"معلوماتنا",
     
@@ -33,10 +36,12 @@
     "Next":"التالي",
     "registeration":"انشاء الحساب",
     "Expertise":"الاختصاصات:",
+    "Languages":"اللغات :",
     "AddExpertise":"اضف اختاصاص",
     "Certifications":"الشهادات:",  
     "License":"الرخصة:",
     "Biography":"السيرة الذاتية:",
+    "PricePerPage":" السعر للصفحة:",
     "Available":"متاح 24/7",
 
 
@@ -55,7 +60,10 @@
 
     "masseges":"رسائل",
     "Groups":"مجموعات",
-    "generalchat":"المحادثة العامة",
+    "generalchat":"المحادثة العامة",  
+    "Contacts":"الاشخاص",
+    "Create":"انشاء",
+    "groupname":"اسم المجموعة",
     "search":"بحث",
     "WhoareyoulookingforTaxLawyer":"على من تبحث؟ محامي الضرائب؟",
     "FindYourLawyer":" جد المحامي الخاص بك",
@@ -69,7 +77,7 @@
     "Persons":"الأشخاص",
     "Location":"المكان",
     "Practice":"المهنة",
-
+    "Language":"اللغة",
     "Home":"الرئيسية",
     "Consultations":"الاستشارات",
     "Profile": "الملف الشخصي",

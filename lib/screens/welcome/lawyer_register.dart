@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/core/utils/appcolors.dart';
-import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
-import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/lawyer_register_2.dart';
 import 'package:lawyer/screens/welcome/login.dart';
+import 'package:lawyer/screens/widgets/backe_id_change.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
+import 'package:lawyer/screens/widgets/fronte_id_change.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
+import 'package:lawyer/screens/widgets/profile_image_change.dart';
 
 class LawyerRegister extends StatefulWidget {
   const LawyerRegister({super.key});
@@ -21,8 +21,6 @@ class LawyerRegister extends StatefulWidget {
 }
 
 class _LawyerRegisterState extends State<LawyerRegister> {
-  String dropvalue = "select ";
-  bool bottom = false;
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController number = TextEditingController();
@@ -79,53 +77,7 @@ class _LawyerRegisterState extends State<LawyerRegister> {
                       key: formKey,
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              bottom = !bottom;
-                              context.read<EnterBloc>().add(Bottomshow(
-                                  bottom: bottom, destenation: "profileImage"));
-                            },
-                            child: Stack(
-                              alignment: AlignmentDirectional.bottomEnd,
-                              children: [
-                                (state.fimage != null)
-                                    ? Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.green, width: 3.w),
-                                          borderRadius:
-                                              BorderRadius.circular(100.r),
-                                        ),
-                                        child: CircleAvatar(
-                                          radius: 75.r,
-                                          backgroundImage:
-                                              FileImage(state.fimage!),
-                                        ),
-                                      )
-                                    : Container(
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.green, width: 3.w),
-                                          borderRadius:
-                                              BorderRadius.circular(100.r),
-                                        ),
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.white,
-                                          radius: 60.r,
-                                          child: Icon(
-                                            Icons.person,
-                                            size: 75.r,
-                                            color: AppColor.appgray,
-                                          ),
-                                        ),
-                                      ),
-                                Icon(
-                                  Icons.edit,
-                                  size: 30.r,
-                                ),
-                              ],
-                            ),
-                          ),
+                          const ProfileImageChange(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -299,64 +251,11 @@ class _LawyerRegisterState extends State<LawyerRegister> {
                             height: 20.h,
                           ),
                           Black18text(text: S.of(context).UploadEID),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  bottom = !bottom;
-                                  context.read<EnterBloc>().add(
-                                        Bottomshow(
-                                            bottom: bottom,
-                                            destenation: "fronteid"),
-                                      );
-                                },
-                                child: (state.feid != null)
-                                    ? SizedBox(
-                                        height: size.height / 7,
-                                        width: size.width / 2.5,
-                                        child: Image.file(
-                                          state.feid!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          Icon(
-                                            Icons.upload_file_sharp,
-                                            size: 70.r,
-                                            color: AppColor.offblack,
-                                          ),
-                                          Black18text(text: S.of(context).Front)
-                                        ],
-                                      ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  bottom = !bottom;
-                                  context.read<EnterBloc>().add(Bottomshow(
-                                      bottom: bottom, destenation: "backeid"));
-                                },
-                                child: (state.beid != null)
-                                    ? SizedBox(
-                                        height: size.height / 7,
-                                        width: size.width / 2.5,
-                                        child: Image.file(
-                                          state.beid!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          Icon(
-                                            Icons.upload_file_sharp,
-                                            size: 70.r,
-                                            color: AppColor.offblack,
-                                          ),
-                                          Black18text(text: S.of(context).Back)
-                                        ],
-                                      ),
-                              ),
+                              FronteIdChange(),
+                              BackeIdChange(),
                             ],
                           ),
                           SizedBox(

@@ -1,9 +1,11 @@
 import 'package:lawyer/models/consultationmodel.dart';
 import 'package:lawyer/models/generalquestionmodel.dart';
 import 'package:lawyer/models/group_model.dart';
+import 'package:lawyer/models/language_model.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/models/notifications_model.dart';
+import 'package:lawyer/models/practice_model.dart';
 
 class LawyerModel extends Lawyer {
   const LawyerModel({
@@ -19,10 +21,12 @@ class LawyerModel extends Lawyer {
     required super.yearsOfPractice,
     required super.numOfConsultation,
     required super.closedConsultation,
-    required super.image,
+    required super.profile,
     required super.certification,
     required super.practices,
-    required super.consultations,
+    required super.languages,
+    required super.consultationsReceiver,
+    required super.consultationsSender,
     required super.generalquestions,
     required super.senderMessage,
     required super.receiverMessage,
@@ -34,6 +38,7 @@ class LawyerModel extends Lawyer {
     required super.frontEmiratesId,
     required super.backEmiratesId,
     required super.occupation,
+    required super.generalChats,
   });
 
   factory LawyerModel.fromJson(Map<String, dynamic> json) => LawyerModel(
@@ -51,15 +56,30 @@ class LawyerModel extends Lawyer {
         emiratesId: json['emiratesId'] ?? 0,
         frontEmiratesId: json['emiratesId'] ?? '',
         backEmiratesId: json['emiratesId'] ?? '',
-        occupation: json['client']['occupation'] ?? '',
+        occupation: json['client']?['occupation'] ?? '',
         yearsOfPractice: json['yearsOfPractice'] ?? '',
         numOfConsultation: json['numOfConsultation'] ?? 1,
         closedConsultation: json['closedConsultation'] ?? 0,
-        image: json['image'] ?? '',
-        certification: json['certification'] ?? [],
-        practices: json['practices'] ?? [],
-        consultations: List<ConsultationsModel>.from(
-          ((json['consultations'] ?? []) as List).map(
+        profile: json['profile'] ?? '',
+        certification:
+            List<String>.from(((json['certification'] ?? []) as List)),
+        practices: List<PracticeModel>.from(
+          ((json['practices'] ?? []) as List).map(
+            (e) => PracticeModel.fromJson(e),
+          ),
+        ),
+        languages: List<LanguageModel>.from(
+          ((json['languages'] ?? []) as List).map(
+            (e) => LanguageModel.fromJson(e),
+          ),
+        ),
+        consultationsReceiver: List<ConsultationsModel>.from(
+          ((json['consultationsReceiver'] ?? []) as List).map(
+            (e) => ConsultationsModel.fromJson(e),
+          ),
+        ),
+        consultationsSender: List<ConsultationsModel>.from(
+          ((json['consultationsSender'] ?? []) as List).map(
             (e) => ConsultationsModel.fromJson(e),
           ),
         ),
@@ -85,6 +105,11 @@ class LawyerModel extends Lawyer {
         ),
         groups: List<GroupsModel>.from(
           ((json['groups'] ?? []) as List).map(
+            (e) => GroupsModel.fromJson(e),
+          ),
+        ),
+        generalChats: List<GroupsModel>.from(
+          ((json['generalChats'] ?? []) as List).map(
             (e) => GroupsModel.fromJson(e),
           ),
         ),

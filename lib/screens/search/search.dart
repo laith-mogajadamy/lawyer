@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/frequently-questions.dart';
+import 'package:lawyer/screens/general-question/frequently-questions_component.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/lawyersavilable.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/lawyerspage.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/translation_company.dart';
@@ -11,6 +12,7 @@ import 'package:lawyer/screens/news/news.dart';
 import 'package:lawyer/screens/search/controller/search_bloc.dart';
 import 'package:lawyer/screens/search/search_component.dart';
 import 'package:lawyer/screens/general-question/general_question.dart';
+import 'package:lawyer/screens/the_form/form_pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/home_container.dart';
 import 'package:lawyer/screens/widgets/lawyers_home_container.dart';
@@ -192,12 +194,12 @@ class _SearchState extends State<Search> {
                                               )
                                             : HomeContainer(
                                                 ontap: () {
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   MaterialPageRoute(
-                                                  //       builder: (context) =>
-                                                  //           const Generalquestion()),
-                                                  // );
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const FormPages()),
+                                                  );
                                                 },
                                                 image: "assets/images/chat.png",
                                                 text: S.of(context).Theforum,
@@ -226,7 +228,11 @@ class _SearchState extends State<Search> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: 35.w, top: 10.h),
+                                padding: EdgeInsets.only(
+                                  left: 35.w,
+                                  top: 10.h,
+                                  right: 35.w,
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [

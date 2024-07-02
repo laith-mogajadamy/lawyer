@@ -80,6 +80,36 @@ class S {
     );
   }
 
+  /// `Lawyer`
+  String get lawyer {
+    return Intl.message(
+      'Lawyer',
+      name: 'lawyer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translation Company`
+  String get Translationcompany {
+    return Intl.message(
+      'Translation Company',
+      name: 'Translationcompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client`
+  String get client {
+    return Intl.message(
+      'Client',
+      name: 'client',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `GUEST`
   String get GUEST {
     return Intl.message(
@@ -370,6 +400,16 @@ class S {
     );
   }
 
+  /// `Languages :`
+  String get Languages {
+    return Intl.message(
+      'Languages :',
+      name: 'Languages',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `AddExpertise`
   String get AddExpertise {
     return Intl.message(
@@ -405,6 +445,16 @@ class S {
     return Intl.message(
       'Biography:',
       name: 'Biography',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price Per Page:`
+  String get PricePerPage {
+    return Intl.message(
+      'Price Per Page:',
+      name: 'PricePerPage',
       desc: '',
       args: [],
     );
@@ -532,6 +582,36 @@ class S {
     );
   }
 
+  /// `Contacts`
+  String get Contacts {
+    return Intl.message(
+      'Contacts',
+      name: 'Contacts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create`
+  String get Create {
+    return Intl.message(
+      'Create',
+      name: 'Create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Group name`
+  String get groupname {
+    return Intl.message(
+      'Group name',
+      name: 'groupname',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `search`
   String get search {
     return Intl.message(
@@ -647,6 +727,16 @@ class S {
     return Intl.message(
       'Practice',
       name: 'Practice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get Language {
+    return Intl.message(
+      'Language',
+      name: 'Language',
       desc: '',
       args: [],
     );

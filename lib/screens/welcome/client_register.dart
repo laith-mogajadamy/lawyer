@@ -7,8 +7,10 @@ import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/login.dart';
+import 'package:lawyer/screens/widgets/backe_id_change.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
+import 'package:lawyer/screens/widgets/fronte_id_change.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 
@@ -20,7 +22,6 @@ class ClientRegister extends StatefulWidget {
 }
 
 class _ClientRegisterState extends State<ClientRegister> {
-  String dropvalue = "select ";
   bool bottom = false;
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -30,6 +31,7 @@ class _ClientRegisterState extends State<ClientRegister> {
   TextEditingController country = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController eidnumber = TextEditingController();
+  TextEditingController occupation = TextEditingController();
 
   TextEditingController password = TextEditingController();
   TextEditingController retypePassword = TextEditingController();
@@ -219,62 +221,24 @@ class _ClientRegisterState extends State<ClientRegister> {
                           SizedBox(
                             height: 20.h,
                           ),
+                          InfoInput(
+                              name: S.of(context).Occupation,
+                              hint: "student",
+                              validator: null,
+                              onchange: (value) =>
+                                  context.read<EnterBloc>().add(
+                                        OccupationChanged(occupation: value),
+                                      ),
+                              controller: occupation),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Black18text(text: S.of(context).UploadEID),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  bottom = !bottom;
-                                  context.read<EnterBloc>().add(Bottomshow(
-                                      bottom: bottom, destenation: "fronteid"));
-                                },
-                                child: (state.feid != null)
-                                    ? SizedBox(
-                                        height: size.height / 7,
-                                        width: size.width / 2.5,
-                                        child: Image.file(
-                                          state.feid!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          Icon(
-                                            Icons.upload_file_sharp,
-                                            size: 70.r,
-                                            color: AppColor.offblack,
-                                          ),
-                                          Black18text(text: S.of(context).Front)
-                                        ],
-                                      ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  bottom = !bottom;
-                                  context.read<EnterBloc>().add(Bottomshow(
-                                      bottom: bottom, destenation: "backeid"));
-                                },
-                                child: (state.beid != null)
-                                    ? SizedBox(
-                                        height: size.height / 7,
-                                        width: size.width / 2.5,
-                                        child: Image.file(
-                                          state.beid!,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          Icon(
-                                            Icons.upload_file_sharp,
-                                            size: 70.r,
-                                            color: AppColor.offblack,
-                                          ),
-                                          Black18text(text: S.of(context).Back)
-                                        ],
-                                      ),
-                              ),
+                              FronteIdChange(),
+                              BackeIdChange(),
                             ],
                           ),
                           SizedBox(

@@ -15,7 +15,7 @@ class Searchrequest {
     };
 
     var url = Uri.parse(
-        "${Global.url}user?filter=[name]=$name&filter=[location]=$location&filter=[practice]=$practice");
+        "${Global.url}lawyer?filter=[name]=$name&filter=[location]=$location&filter=[practice]=$practice");
     http.Response response = await http.get(
       url,
       headers: headers,

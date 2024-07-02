@@ -31,8 +31,9 @@ class Legalconsultantprofile extends StatelessWidget {
           child: Column(
             children: [
               CircleAvatar(
+                backgroundColor: AppColor.whiteColor,
                 radius: 75.r,
-                backgroundImage: NetworkImage(lawyer.image),
+                backgroundImage: NetworkImage(lawyer.profile),
               ),
               Text(
                 lawyer.name,

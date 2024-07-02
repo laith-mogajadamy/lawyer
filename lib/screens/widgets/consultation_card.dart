@@ -51,7 +51,7 @@ class ConsultationCard extends StatelessWidget {
                     child: ListTile(
                       leading: SizedBox(
                           width: size.width / 6,
-                          child: Image.network(consultation.sender.image)),
+                          child: Image.network(consultation.sender.profile)),
                       title: Text(
                         consultation.sender.name,
                         style: TextStyle(
@@ -71,14 +71,14 @@ class ConsultationCard extends StatelessWidget {
                       trailing: SizedBox(
                         width: size.width / 7,
                         height: size.height / 20,
-                        child: (consultation.status == 1)
+                        child: (consultation.status == "pending")
                             ? Container(
                                 decoration: BoxDecoration(
                                   color: Colors.green,
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: Center(
-                                  child: Text("Ongoing",
+                                  child: Text(consultation.status,
                                       style: TextStyle(fontSize: 12.sp)),
                                 ),
                               )
@@ -89,7 +89,7 @@ class ConsultationCard extends StatelessWidget {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  "Closed",
+                                  consultation.status,
                                   style: TextStyle(fontSize: 12.sp),
                                 )),
                               ),

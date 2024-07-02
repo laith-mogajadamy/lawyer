@@ -4,10 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
+import 'package:lawyer/screens/client_profile_edit.dart';
 import 'package:lawyer/screens/general-question/addgeneralquestion.dart';
 import 'package:lawyer/screens/general-question/user_general_question.dart';
 import 'package:lawyer/screens/language_change.dart';
-import 'package:lawyer/screens/profile_edit.dart';
+import 'package:lawyer/screens/lawyer_profile_edit.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/enter.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -28,15 +29,19 @@ class PersonalProfile extends StatelessWidget {
               padding: EdgeInsets.only(right: 10.w, left: 10.w, top: 10.h),
               child: ListView(
                 children: [
-                  (state.user.image.isEmpty)
+                  (state.user.profile.isEmpty)
                       ? Icon(
                           size: 100.r,
                           Icons.person,
                           color: AppColor.apporange,
                         )
                       : CircleAvatar(
+                          backgroundColor: AppColor.whiteColor,
                           radius: 75.r,
-                          backgroundImage: NetworkImage(state.user.image),
+                          child: Image.network(
+                            fit: BoxFit.cover,
+                            state.user.profile,
+                          ),
                         ),
                   Center(
                     child: Text(
@@ -123,11 +128,19 @@ class PersonalProfile extends StatelessWidget {
                     text: S.of(context).ProfileEdit,
                     icon: Icons.edit_note_rounded,
                     ontap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ProfileEdit()),
-                      );
+                      (state.user.role == "client")
+                          ? Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ClientProfileEdit(),
+                              ),
+                            )
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LawyerProfileEdit(),
+                              ),
+                            );
                     },
                   ),
                   const Graydivider(),

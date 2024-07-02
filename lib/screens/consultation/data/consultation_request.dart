@@ -63,7 +63,7 @@ class ConsultationRequest {
       "invoiceId": invoiceId,
       "sender_id": senderid,
       "receiver_id": receiverid,
-      "consultation_id": consultationid,
+      "document_id": consultationid,
       "invoice_value": invoicevalue,
     };
     var body = jsonEncode(data);

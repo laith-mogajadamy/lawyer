@@ -37,6 +37,19 @@ class Bottomshow extends EnterEvent {
   List<Object?> get props => [bottom, destenation];
 }
 
+class RegisterBottomshow extends EnterEvent {
+  final bool? bottom;
+
+  RegisterBottomshow({
+    this.bottom,
+  });
+
+  @override
+  List<Object?> get props => [
+        bottom,
+      ];
+}
+
 class AddCertification extends EnterEvent {
   final List<File>? certifications;
 
@@ -55,6 +68,15 @@ class AddExpertise extends EnterEvent {
   List<Object?> get props => [expertise];
 }
 
+class AddLanguage extends EnterEvent {
+  final String? language;
+
+  AddLanguage({this.language});
+
+  @override
+  List<Object?> get props => [language];
+}
+
 class CheckAvailable extends EnterEvent {
   final bool? available;
 
@@ -64,17 +86,32 @@ class CheckAvailable extends EnterEvent {
   List<Object?> get props => [available];
 }
 
-class Profiledit extends EnterEvent {
+class LawyerProfiledit extends EnterEvent {
   final File? fimage;
   final String? name;
   final String? email;
+  final String? password;
+  final String? passwordconfirmation;
+  final String? gender;
   final String? number;
   final String? birth;
-  final int? location;
-  final int? gender;
+  final String? country;
+  final String? city;
+  final String? emiratesid;
+  final File? frontemiratesid;
+  final File? backemiratesid;
+  final String? landline;
+  final String? bio;
+  final String? location;
+  final String? yearsofpractice;
   final int? consultationPrice;
+  final bool? available;
   final List<File>? certification;
-  Profiledit({
+  final List<File>? licenses;
+  final List<String>? practices;
+  final List<String>? languages;
+
+  LawyerProfiledit({
     this.fimage,
     this.name,
     this.email,
@@ -84,6 +121,20 @@ class Profiledit extends EnterEvent {
     this.gender,
     this.consultationPrice,
     this.certification,
+    this.password,
+    this.passwordconfirmation,
+    this.country,
+    this.city,
+    this.emiratesid,
+    this.frontemiratesid,
+    this.backemiratesid,
+    this.landline,
+    this.bio,
+    this.yearsofpractice,
+    this.available,
+    this.licenses,
+    this.practices,
+    this.languages,
   });
 
   @override
@@ -97,6 +148,71 @@ class Profiledit extends EnterEvent {
         gender,
         consultationPrice,
         certification,
+        password,
+        passwordconfirmation,
+        country,
+        city,
+        frontemiratesid,
+        backemiratesid,
+        landline,
+        bio,
+        yearsofpractice,
+        available,
+        emiratesid,
+        licenses,
+        practices,
+      ];
+}
+
+class ClientProfiledit extends EnterEvent {
+  final File? fimage;
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? passwordconfirmation;
+  final String? gender;
+  final String? number;
+  final String? birth;
+  final String? country;
+  final String? city;
+  final String? emiratesid;
+  final File? frontemiratesid;
+  final File? backemiratesid;
+  final String? occupation;
+
+  ClientProfiledit({
+    this.fimage,
+    this.name,
+    this.email,
+    this.number,
+    this.birth,
+    this.gender,
+    this.password,
+    this.passwordconfirmation,
+    this.country,
+    this.city,
+    this.emiratesid,
+    this.frontemiratesid,
+    this.backemiratesid,
+    this.occupation,
+  });
+
+  @override
+  List<Object?> get props => [
+        fimage,
+        name,
+        email,
+        number,
+        birth,
+        gender,
+        password,
+        passwordconfirmation,
+        country,
+        city,
+        frontemiratesid,
+        backemiratesid,
+        emiratesid,
+        occupation,
       ];
 }
 

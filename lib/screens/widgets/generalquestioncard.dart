@@ -53,7 +53,7 @@ class Generalquestioncard extends StatelessWidget {
                         height: size.height / 10,
                         child: ListTile(
                           leading:
-                              Image.network(genralqsttion.userRequest.image),
+                              Image.network(genralqsttion.userRequest.profile),
                           title: Text(
                             genralqsttion.userRequest.name,
                             style: TextStyle(

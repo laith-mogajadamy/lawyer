@@ -136,7 +136,7 @@ class GeneralquestionBloc
         if (response.statusCode == 200) {
           emit(state.copyWith(
             frequentlyquestions: List<GeneralquestionModel>.from(
-              (responsemap[0] as List).map(
+              (responsemap as List).map(
                 (e) => GeneralquestionModel.fromJson(e),
               ),
             ),

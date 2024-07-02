@@ -5,7 +5,7 @@ class Consultation extends Equatable {
   final int id;
   final String title;
   final String description;
-  final int status;
+  final String status;
   final String answer;
   final String createdOn;
   final LawyerModel sender;

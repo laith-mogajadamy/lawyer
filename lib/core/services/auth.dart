@@ -24,9 +24,13 @@ class Auth {
     File? back_emirates_id,
     String occupation,
   ) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+    };
     FormData formdata = FormData.fromMap(
       {
-        "type": type,
+        "type": "4",
         "name": name,
         "email": email,
         "password": password,
@@ -50,16 +54,26 @@ class Auth {
         "occupation": occupation,
       },
     );
-    Response response = await Dio().post(
-      "${Global.url}register",
-      data: formdata,
-      options: Options(method: "POST"),
-      onSendProgress: (count, total) {
-        print("count=$count");
-        print("total=$total");
-      },
-    );
-    print(response.statusCode);
+    print("formdata--------------");
+    print(formdata.fields);
+    print(formdata.files);
+    Response? response;
+    try {
+      response = await Dio().post(
+        "${Global.url}register",
+        data: formdata,
+        options: Options(method: "POST", headers: headers),
+        onSendProgress: (count, total) {
+          print("count=$count");
+          print("total=$total");
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+    print("4444444444444444");
+
+    print(response!.statusCode);
 
     print(response.data);
     return response;
@@ -120,7 +134,7 @@ class Auth {
     }
     FormData formdata = FormData.fromMap(
       {
-        "type": type,
+        "type": "2",
         "name": name,
         "email": email,
         "password": password,

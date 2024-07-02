@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
-import 'package:lawyer/screens/lawyers_and_translation_company/lawyerscomponent.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/translation_company_component.dart';
 
 class TranslationCompanys extends StatelessWidget {
   const TranslationCompanys({super.key});
@@ -62,7 +62,7 @@ class TranslationCompanys extends StatelessWidget {
                       ),
                     ),
                     const Expanded(
-                      child: Lawyerscomponent(),
+                      child: TranslationCompanysComponent(),
                     ),
                   ],
                 ),
