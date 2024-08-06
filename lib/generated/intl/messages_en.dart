@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "CERTIFICATIONS":
             MessageLookupByLibrary.simpleMessage("Certifications"),
         "Camera": MessageLookupByLibrary.simpleMessage("Camera"),
+        "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "Certifications":
             MessageLookupByLibrary.simpleMessage("Certifications:"),
         "Changethelanguage":
@@ -95,6 +96,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "Profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "ProfileEdit": MessageLookupByLibrary.simpleMessage("Profile Edit"),
         "REGISTER": MessageLookupByLibrary.simpleMessage("REGISTER"),
+        "RateTheService":
+            MessageLookupByLibrary.simpleMessage("Rate The Service"),
         "RetypePassword":
             MessageLookupByLibrary.simpleMessage("Re-type Password "),
         "Send": MessageLookupByLibrary.simpleMessage("Send"),
@@ -166,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("search"),
         "select": MessageLookupByLibrary.simpleMessage("select"),
+        "selectPaymentMethod":
+            MessageLookupByLibrary.simpleMessage("Select Payment Method"),
         "sendaquestion":
             MessageLookupByLibrary.simpleMessage("send a question"),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),

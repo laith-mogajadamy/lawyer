@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:lawyer/core/network/global.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:lawyer/models/language.dart';
+import 'package:lawyer/models/practice.dart';
 
 class Uploadfile {
   static Future lawyerprofileedit(
@@ -28,8 +30,8 @@ class Uploadfile {
     final int? available,
     final List<File>? certification,
     final List<File>? licenses,
-    final List<String>? practices,
-    final List<String>? languages,
+    final List<Practice> practices,
+    final List<Language> languages,
   ) async {
     print("Uploadfile");
     print(certification);
@@ -54,6 +56,14 @@ class Uploadfile {
           contentType: MediaType('file', 'pdf'),
         ),
       );
+    }
+    List practiceslist = [];
+    for (var i = 0; i < practices.length; i++) {
+      practiceslist.add(practices[i].id);
+    }
+    List languageslist = [];
+    for (var i = 0; i < languages.length; i++) {
+      languageslist.add(languages[i].id);
     }
     FormData formdata = FormData.fromMap(
       {
@@ -85,8 +95,8 @@ class Uploadfile {
         "available": available,
         "certification[]": certificationlist,
         "licenses[]": licensesllist,
-        "practices[]": practices,
-        "languages[]": languages,
+        "practices[]": practiceslist,
+        "languages[]": languageslist,
         "profile": await MultipartFile.fromFile(
           fimage!.path,
           filename: fimage.path.split("/").last,

@@ -35,17 +35,12 @@ class FormPagesView extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-          ),
-          child: const TabBarView(
-            children: [
-              GroupMassege(),
-              GeneralChatPage(),
-              Contacts(),
-            ],
-          ),
+        body: const TabBarView(
+          children: [
+            GroupMassege(),
+            GeneralChatPage(),
+            Contacts(),
+          ],
         ),
       ),
     );

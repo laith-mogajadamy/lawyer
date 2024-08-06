@@ -108,8 +108,8 @@ class LawyerProfiledit extends EnterEvent {
   final bool? available;
   final List<File>? certification;
   final List<File>? licenses;
-  final List<String>? practices;
-  final List<String>? languages;
+  final List<Practice>? practices;
+  final List<Language>? languages;
 
   LawyerProfiledit({
     this.fimage,
@@ -262,7 +262,7 @@ class LoginNumberChanged extends EnterEvent {
 }
 
 class GenderChanged extends EnterEvent {
-  final String? gender;
+  final City? gender;
 
   GenderChanged({this.gender});
 
@@ -280,7 +280,7 @@ class BirthChanged extends EnterEvent {
 }
 
 class CountryChanged extends EnterEvent {
-  final String? country;
+  final City? country;
 
   CountryChanged({this.country});
 
@@ -289,7 +289,7 @@ class CountryChanged extends EnterEvent {
 }
 
 class CityChanged extends EnterEvent {
-  final String? city;
+  final City? city;
 
   CityChanged({this.city});
 
@@ -342,6 +342,15 @@ class ConsultationPriceChanged extends EnterEvent {
   List<Object?> get props => [consultationprice];
 }
 
+class YearsOfPracticeChanged extends EnterEvent {
+  final String? yearsofpractice;
+
+  YearsOfPracticeChanged({this.yearsofpractice});
+
+  @override
+  List<Object?> get props => [yearsofpractice];
+}
+
 class BiographyChanged extends EnterEvent {
   final String? biography;
 
@@ -379,6 +388,55 @@ class ClientRegisterSubmitted extends EnterEvent {
 }
 
 class LawyerRegisterSubmitted extends EnterEvent {
+  final String? type;
+  LawyerRegisterSubmitted({
+    this.type,
+  });
+
+  @override
+  List<Object?> get props => [
+        type,
+      ];
+}
+
+class GetPusherToken extends EnterEvent {
   @override
   List<Object?> get props => [];
+}
+
+class GetLanguageAndPractice extends EnterEvent {
+  GetLanguageAndPractice();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class CheckLanguage extends EnterEvent {
+  final Language? slelected;
+  final bool? check;
+  CheckLanguage({
+    this.check,
+    this.slelected,
+  });
+
+  @override
+  List<Object?> get props => [
+        check,
+        slelected,
+      ];
+}
+
+class CheckPractice extends EnterEvent {
+  final Practice? slelected;
+  final bool? check;
+  CheckPractice({
+    this.check,
+    this.slelected,
+  });
+
+  @override
+  List<Object?> get props => [
+        check,
+        slelected,
+      ];
 }

@@ -7,15 +7,13 @@ import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/bio_input.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/certification_field.dart';
 import 'package:lawyer/screens/widgets/check_available.dart';
-import 'package:lawyer/screens/widgets/expertise_flield.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
-import 'package:lawyer/screens/widgets/language_field.dart';
 import 'package:lawyer/screens/widgets/license_flield.dart';
+import 'package:lawyer/screens/widgets/select_language.dart';
 
 class TranslationCompanyRegister2 extends StatefulWidget {
   const TranslationCompanyRegister2({super.key});
@@ -55,8 +53,12 @@ class _TranslationCompanyRegister2State
                     child: Center(
                         child: Black22text(text: S.of(context).registeration)),
                   ),
-                  LanguageFlield(
-                    language: language,
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const SelectLanguage(),
+                  SizedBox(
+                    height: 20.h,
                   ),
                   SizedBox(
                     height: 20.h,
@@ -134,7 +136,7 @@ class _TranslationCompanyRegister2State
                           } else {
                             context
                                 .read<EnterBloc>()
-                                .add(LawyerRegisterSubmitted());
+                                .add(LawyerRegisterSubmitted(type: "3"));
                           }
                           // print(state.email);
                           // print("=============");

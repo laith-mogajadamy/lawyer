@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
@@ -56,7 +57,13 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Image.asset("assets/images/logo.png"),
+                  SizedBox(
+                    width: size.width / 2,
+                    height: size.height / 4,
+                    child: SvgPicture.asset(
+                      "assets/svg/logo.svg",
+                    ),
+                  ),
                   Form(
                     key: formKey,
                     child: Padding(

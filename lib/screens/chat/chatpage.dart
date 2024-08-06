@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -18,20 +20,24 @@ import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/chat_text_field.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pusher_client/pusher_client.dart';
 
 class ChatPage extends StatefulWidget {
-  final Lawyer? myself;
+  final Lawyer myself;
 
-  final Lawyer? otheruser;
+  final Lawyer otheruser;
   final String token;
+  final String pushertoken;
+
   const ChatPage({
     super.key,
     required this.myself,
     required this.otheruser,
     required this.token,
+    required this.pushertoken,
   });
 
   @override
@@ -54,10 +60,11 @@ class _ChatPageState extends State<ChatPage> {
     Response response;
 
     print(widget.token);
+    print(widget.otheruser.id);
 
     response = await GetMessagesInChat.getmessages(
         //we need an id for the group
-        widget.otheruser!.id,
+        widget.otheruser.id,
         widget.token);
     List<Message> hmessages = List<MessageModel>.from(
       (response.data['data'] as List).map(
@@ -72,11 +79,7 @@ class _ChatPageState extends State<ChatPage> {
   pusherinit() async {
     await addoldmessages();
 
-    Response response =
-        await GetPusherConfigrequest.getpusherconfig(widget.token);
-    String pushertoken =
-        response.data['options']['auth']['headers']['Authorization'];
-    print(pushertoken);
+    print(widget.pushertoken);
     try {
       pusher = PusherClient(
         "21c93d7ae9ded5a63591",
@@ -89,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
             headers: {
               "Accept": "application/json",
               "Content-type": "application/json",
-              "Authorization": pushertoken,
+              "Authorization": widget.pushertoken,
             },
           ),
         ),
@@ -105,9 +108,9 @@ class _ChatPageState extends State<ChatPage> {
     }
 
     receiverchannel =
-        pusher.subscribe("private-chat-channel-${widget.myself!.id}");
+        pusher.subscribe("private-chat-channel-${widget.myself.id}");
     senderchannel =
-        pusher.subscribe("private-chat-channel-${widget.otheruser!.id}");
+        pusher.subscribe("private-chat-channel-${widget.otheruser.id}");
     print(receiverchannel.name);
 
     // channel.trigger('chatMessage', jsonEncode({"message": "hi"}));
@@ -116,12 +119,14 @@ class _ChatPageState extends State<ChatPage> {
         var jsonData = jsonDecode(event.data!);
         print(event.data);
         Message message = Message(
-          isMe: (jsonData['sender_id'] == widget.myself!.id) ? true : false,
-          message: jsonData['message'],
+          isMe: (jsonData['sender_id'] == widget.myself.id) ? true : false,
+          message: jsonData['message'] ?? '',
           type: "",
           file: File(""),
-          attachment: jsonData['attachment'],
-          sender: null,
+          attachment: jsonData['attachment']["url"] ?? '',
+          sender: LawyerModel.fromJson(
+            jsonData['receiver'] ?? {},
+          ),
           receiver: LawyerModel.fromJson(
             jsonData['receiver'] ?? {},
           ),
@@ -129,7 +134,7 @@ class _ChatPageState extends State<ChatPage> {
 
         messagesstream.sink.add(message);
         messages.insert(0, message);
-      } else {}
+      }
     });
     // await senderchannel.bind('chatMessage', (event) async {
     //   if (event!.data != null) {
@@ -154,10 +159,10 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   disactive() async {
-    receiverchannel.unbind('chatMessage');
-    senderchannel.unbind('chatMessage');
-    await pusher.unsubscribe("chat-channel-${widget.otheruser!.id}");
-    await pusher.unsubscribe("chat-channel-${widget.myself!.id}");
+    await receiverchannel.unbind('chatMessage');
+    await senderchannel.unbind('chatMessage');
+    await pusher.unsubscribe("chat-channel-${widget.otheruser.id}");
+    await pusher.unsubscribe("chat-channel-${widget.myself.id}");
     pusher.disconnect();
     messagesstream.close();
     messageController.dispose();
@@ -178,251 +183,195 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocBuilder<ChatBloc, ChatState>(
-      builder: (context, state) {
-        sendattachment() {
-          if (pfile != null) {
-            print(pfile);
+    return BlocProvider(
+      create: (context) => ChatBloc(),
+      child: BlocBuilder<ChatBloc, ChatState>(
+        builder: (context, state) {
+          sendattachment() {
+            if (pfile != null) {
+              print(pfile);
 
-            context.read<ChatBloc>().add(SendMessageInChatEvent(
-                attachment: pfile, message: null, id: widget.otheruser!.id));
-          }
-          print("************************");
-          print(bottom);
-          bottom = !bottom;
-          context.read<ChatBloc>().add(
-                Bottomshow(
-                  bottom: bottom,
-                ),
-              );
-          Message message = Message(
-              isMe: true,
-              message: null,
-              type: pfile!.path.split(".").last,
-              file: pfile,
-              attachment: null,
-              sender: null,
-              receiver: null);
-          messages.insert(0, message);
-          messagesstream.sink.add(message);
-          pfile = null;
-        }
-
-        return Scaffold(
-          appBar: AppBar(
-            leadingWidth: size.width / 4,
-            backgroundColor: AppColor.appgray,
-            title: Black18text(text: widget.otheruser!.name),
-            leading: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 30.r,
+              context.read<ChatBloc>().add(SendMessageInChatEvent(
+                  attachment: pfile, message: null, id: widget.otheruser.id));
+            }
+            print("************************");
+            print(bottom);
+            bottom = !bottom;
+            context.read<ChatBloc>().add(
+                  Bottomshow(
+                    bottom: bottom,
                   ),
-                ),
-                CircleAvatar(
-                  radius: 25.r,
-                  backgroundImage: NetworkImage(widget.otheruser!.profile),
-                ),
-              ],
-            ),
-          ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: StreamBuilder(
-                    stream: messagesstream.stream,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Message> asyncSnapshot) {
-                      if (asyncSnapshot.hasError) {
-                        return const Text("Error");
-                      }
-                      if (asyncSnapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return Center(
-                          child: LottieBuilder.asset(
-                            "assets/lottie/waiting.json",
-                            height: size.height / 3,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      }
+                );
+            Message message = Message(
+                isMe: true,
+                message: null,
+                type: pfile!.path.split(".").last,
+                file: pfile,
+                attachment: null,
+                sender: null,
+                receiver: null);
+            messages.insert(0, message);
+            messagesstream.sink.add(message);
+            pfile = null;
+          }
 
-                      print(messages);
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: messages.length,
-                        shrinkWrap: true,
-                        dragStartBehavior: DragStartBehavior.down,
-                        itemBuilder: (BuildContext context, int index) {
-                          Message message = messages[index];
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: ChatBubble(
-                              isMe: (message.sender != null)
-                                  ? (message.sender!.id == widget.myself!.id)
-                                      ? true
-                                      : false
-                                  : message.isMe!,
-                              message: message,
+          print("111111111111");
+          print(
+            widget.otheruser.profile,
+          );
+          return Scaffold(
+            appBar: AppBar(
+              leadingWidth: size.width / 4,
+              backgroundColor: AppColor.appgray,
+              title: Black18text(text: widget.otheruser.name),
+              leading: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(
+                      Icons.arrow_back,
+                      size: 30.r,
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundColor: AppColor.whiteColor,
+                    radius: 25.r,
+                    child: Image.network(
+                      widget.otheruser.profile,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: StreamBuilder(
+                      stream: messagesstream.stream,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<Message> asyncSnapshot) {
+                        if (asyncSnapshot.hasError) {
+                          return const Text("Error");
+                        }
+                        if (asyncSnapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: LottieBuilder.asset(
+                              "assets/lottie/waiting.json",
+                              height: size.height / 3,
+                              fit: BoxFit.cover,
                             ),
                           );
-                        },
-                      );
-                    },
-                  ),
-                ),
-                Column(
-                  children: [
-                    (state.bottom)
-                        ? Container(
-                            height: size.height / 10,
-                            width: size.width,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AppColor.appgray,
-                                    blurRadius: 3.r,
-                                    spreadRadius: 3.r)
-                              ],
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.r)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    await pickimage(ImageSource.gallery);
-                                    sendattachment();
-                                  },
-                                  child: SizedBox(
-                                    height: size.height / 15,
-                                    width: size.width / 8,
-                                    child: SvgPicture.asset(
-                                      "assets/svg/gallery.svg",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                // GestureDetector(
-                                //   onTap: () {},
-                                //   child: SizedBox(
-                                //     height: size.height / 15,
-                                //     width: size.width / 8,
-                                //     child: Image.asset(
-                                //       "assets/images/word.png",
-                                //       fit: BoxFit.cover,
-                                //     ),
-                                //   ),
-                                // ),
-                                GestureDetector(
-                                  onTap: () async {
-                                    await pickpdf();
-                                    sendattachment();
-                                  },
-                                  child: SizedBox(
-                                    height: size.height / 15,
-                                    width: size.width / 8,
-                                    child: Image.asset(
-                                      "assets/images/icons8-acrobat-67.png",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
-                      height: size.height / 14,
-                      width: size.width / 1,
-                      child: TextFormField(
-                        autofocus: true,
-                        onChanged: (string) {},
-                        controller: messageController,
-                        enabled: true,
-                        style: TextStyle(color: Colors.black, fontSize: 18.sp),
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2.h, color: Colors.black),
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2.h, color: Colors.black),
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          filled: true,
-                          fillColor: AppColor.appgray,
-                          suffix: InkWell(
-                            onTap: () {
-                              String messageText =
-                                  messageController.text.trim();
-                              if (messageText.isNotEmpty) {
-                                context.read<ChatBloc>().add(
-                                      SendMessageInChatEvent(
-                                          attachment: null,
-                                          message: messageText,
-                                          id: widget.otheruser!.id),
-                                    );
-                                Message message = Message(
-                                    isMe: true,
-                                    message: messageText,
-                                    type: null,
-                                    file: null,
-                                    attachment: null,
-                                    sender: null,
-                                    receiver: null);
-                                messages.insert(0, message);
-                                messagesstream.sink.add(message);
-                                messageController.clear();
-                                // You can add logic here to send the message to the other user or store it.
-                              }
-                            },
-                            child: Icon(
-                              Icons.send,
-                              size: 25.r,
-                            ),
-                          ),
-                          prefix: InkWell(
-                            onTap: () {
-                              // SystemChannels.textInput
-                              //     .invokeMethod('TextInput.hide');
-                              bottom = !bottom;
-                              context.read<ChatBloc>().add(
-                                    Bottomshow(
-                                      bottom: bottom,
-                                    ),
-                                  );
-                            },
-                            child: Icon(
-                              Icons.attachment,
-                              size: 25.r,
-                            ),
-                          ),
-                        ),
-                      ),
+                        }
+
+                        print(messages);
+                        return ListView.builder(
+                          reverse: true,
+                          itemCount: messages.length,
+                          shrinkWrap: true,
+                          dragStartBehavior: DragStartBehavior.down,
+                          itemBuilder: (BuildContext context, int index) {
+                            Message message = messages[index];
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              child: ChatBubble(
+                                isMe: (message.sender != null)
+                                    ? (message.sender!.id == widget.myself.id)
+                                        ? true
+                                        : false
+                                    : message.isMe!,
+                                message: message,
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  Column(
+                    children: [
+                      (state.bottom)
+                          ? Container(
+                              height: size.height / 10,
+                              width: size.width,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AppColor.appgray,
+                                      blurRadius: 3.r,
+                                      spreadRadius: 3.r)
+                                ],
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.r)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await pickimage(ImageSource.gallery);
+                                      sendattachment();
+                                    },
+                                    child: SizedBox(
+                                      height: size.height / 15,
+                                      width: size.width / 8,
+                                      child: SvgPicture.asset(
+                                        "assets/svg/gallery.svg",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  // GestureDetector(
+                                  //   onTap: () {},
+                                  //   child: SizedBox(
+                                  //     height: size.height / 15,
+                                  //     width: size.width / 8,
+                                  //     child: Image.asset(
+                                  //       "assets/images/word.png",
+                                  //       fit: BoxFit.cover,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await pickpdf();
+                                      sendattachment();
+                                    },
+                                    child: SizedBox(
+                                      height: size.height / 15,
+                                      width: size.width / 8,
+                                      child: Image.asset(
+                                        "assets/images/icons8-acrobat-67.png",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      ChatTextField(
+                          myself: widget.myself,
+                          messageController: messageController,
+                          otheruser: widget.otheruser,
+                          messages: messages,
+                          messagesstream: messagesstream),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -448,12 +397,12 @@ class _ChatPageState extends State<ChatPage> {
 
   pickimage(ImageSource source) async {
     try {
-      final Image =
+      final image =
           await ImagePicker().pickImage(source: source, imageQuality: 100);
-      if (Image == null) {
+      if (image == null) {
         return null;
       }
-      File file = File(Image.path);
+      File file = File(image.path);
       print("file= $file");
       String filename = file.path.split("/").last;
       print("filename= $filename");

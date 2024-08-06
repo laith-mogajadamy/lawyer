@@ -4,9 +4,13 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
+import 'package:lawyer/models/city.dart';
+import 'package:lawyer/models/language.dart';
+import 'package:lawyer/models/language_model.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
-import 'package:lawyer/screens/lawyers_and_translation_company/data/lawyerrqwest.dart';
+import 'package:lawyer/models/practice.dart';
+import 'package:lawyer/models/practice_model.dart';
 import 'package:lawyer/screens/search/data/searchrequest.dart';
 part 'search_event.dart';
 part 'search_state.dart';
@@ -20,19 +24,19 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit(state.copyWith(
           searchState: RequestState.loading,
           token: ptoken,
+          bottom: false,
         ));
         print("state.token");
         print(state.token);
         // http.Response response =
         //     await Searchrequest.search(event.query, state.token);
+        print(state.searchfield);
+
         http.Response response = await Searchrequest.search(
             state.searchfield,
-            (state.selectedlocations.isNotEmpty)
-                ? state.selectedlocations[0]
-                : "",
-            (state.selectedpractices.isNotEmpty)
-                ? state.selectedpractices[0]
-                : "",
+            (state.selectedcitys.isNotEmpty) ? state.selectedcitys : [],
+            (state.selectedpractices.isNotEmpty) ? state.selectedpractices : [],
+            (state.selectedlanguages.isNotEmpty) ? state.selectedlanguages : [],
             state.token);
         var responsemap = jsonDecode(response.body);
         print("responsemap=");
@@ -62,47 +66,83 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         ));
       }
     });
+    //
+    on<GetSearchFilters>((event, emit) async {
+      print("GetSearchFilters");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          searchState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response practiseresponse =
+            await SearchFilterRequest.getpractice();
+        var practiseresponsemap = jsonDecode(practiseresponse.body);
+        print("practiseresponsemap=");
+        print(practiseresponsemap);
+        http.Response languageresponse =
+            await SearchFilterRequest.getlanguage();
+        var languageresponsemap = jsonDecode(languageresponse.body);
+        //get the locations
+        print("practiseresponsemap=");
+        print(practiseresponsemap);
+        print("languageresponsemap=");
+        print(languageresponsemap);
+
+        if (practiseresponse.statusCode == 200 &&
+            languageresponse.statusCode == 200) {
+          emit(state.copyWith(
+            locations: ["1", "2"],
+            practices: List<PracticeModel>.from(
+              (practiseresponsemap as List).map(
+                (e) => PracticeModel.fromJson(e),
+              ),
+            ),
+            languages: List<LanguageModel>.from(
+              (languageresponsemap as List).map(
+                (e) => LanguageModel.fromJson(e),
+              ),
+            ),
+            searchfiltersState: RequestState.loaded,
+          ));
+          print("state.practices=");
+          print(state.practices);
+          print("state.languages=");
+          print(state.languages);
+        } else {
+          emit(state.copyWith(
+            searchfiltersState: RequestState.error,
+            searchfiltersMessage: practiseresponsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          searchfiltersState: RequestState.error,
+          searchfiltersMessage: "Unauthenticated",
+        ));
+      }
+    });
+    //
     on<Filtershow>((event, emit) async {
+      print("Filtershow");
       emit(
         state.copyWith(
           filter: event.filter,
+          bottom: false,
         ),
       );
+      if (state.practices.isEmpty ||
+          state.languages.isEmpty ||
+          state.locations.isEmpty) {
+        add(GetSearchFilters());
+      } else {}
     });
     on<Bottomshow>((event, emit) async {
       emit(
         state.copyWith(
           bottom: event.bottom,
-          locations: [
-            "Abu Dhab",
-            "Dubai",
-            "Ajman",
-            "Al Ain",
-            "Fujairah",
-            "Ras Al Khaima",
-            "Sharjah",
-            "Um Al Quwain",
-          ],
-          practices: [
-            "Tax",
-            "Business \n(corporate)",
-            "Family",
-            "Estate Planning",
-            "Emoplyment \n& Labot",
-            "Personal Injury",
-            "Intellectual \nProperty",
-            "Immigration",
-            "Constitutional",
-            "Criminal Defense",
-            "Bankruptcy",
-            "Entertainment",
-          ],
-          languages: [
-            "ar",
-            "en",
-            "ko",
-            "fr",
-          ],
         ),
       );
     });
@@ -113,29 +153,54 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         ),
       );
     });
-    on<Check>((event, emit) async {
-      if (state.searchfield == "location") {
-        List slected = List.from(state.selectedlocations);
-
-        if (event.check!) {
-          slected.add(event.slelected);
-        } else {
-          slected.remove(event.slelected);
-        }
+    //
+    on<ChangeFilterType>((event, emit) async {
+      emit(
+        state.copyWith(
+          filtertype: event.filtertype,
+        ),
+      );
+    });
+    on<CountryCheck>((event, emit) async {
+      if (state.filtertype == "location") {
         emit(
           state.copyWith(
-            selectedlocations: slected,
+            selectedcountry: event.slelected,
             // searchfield:
             //     (state.searchfield == "location") ? "Practice" : "location",
           ),
         );
         print("slected");
-        print(state.selectedlocations);
-      } else if ((state.searchfield == "Practice")) {
-        List slected = List.from(state.selectedpractices);
+        print(state.selectedcountry);
+      }
+    });
+    on<CityCheck>((event, emit) async {
+      if (state.filtertype == "location") {
+        List<City> slected = List.from(state.selectedcitys);
 
         if (event.check!) {
-          slected.add(event.slelected);
+          slected.add(event.slelected!);
+        } else {
+          slected.remove(event.slelected);
+        }
+        emit(
+          state.copyWith(
+            selectedcitys: slected,
+            // searchfield:
+            //     (state.searchfield == "location") ? "Practice" : "location",
+          ),
+        );
+        print("slected");
+        print(state.selectedcountry);
+
+        print(state.selectedcitys);
+      }
+    });
+    on<CheckPractise>((event, emit) async {
+      if ((state.filtertype == "Practice")) {
+        List<Practice> slected = List.from(state.selectedpractices);
+        if (event.check!) {
+          slected.add(event.slelected!);
         } else {
           slected.remove(event.slelected);
         }
@@ -148,24 +213,25 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         );
         print("slected");
         print(state.selectedpractices);
-      } else {
-        List slected = List.from(state.selectedlanguages);
-
-        if (event.check!) {
-          slected.add(event.slelected);
-        } else {
-          slected.remove(event.slelected);
-        }
-        emit(
-          state.copyWith(
-            selectedlanguages: slected,
-            // searchfield:
-            //     (state.searchfield == "location") ? "Practice" : "location",
-          ),
-        );
-        print("slected");
-        print(state.selectedlanguages);
       }
+    });
+    on<CheckLanguage>((event, emit) async {
+      List<Language> slected = List.from(state.selectedlanguages);
+
+      if (event.check!) {
+        slected.add(event.slelected!);
+      } else {
+        slected.remove(event.slelected);
+      }
+      emit(
+        state.copyWith(
+          selectedlanguages: slected,
+          // searchfield:
+          //     (state.searchfield == "location") ? "Practice" : "location",
+        ),
+      );
+      print("slected");
+      print(state.selectedlanguages);
     });
   }
 }

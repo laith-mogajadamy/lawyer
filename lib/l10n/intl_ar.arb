@@ -131,7 +131,8 @@
     "save":"حفظ",
 
     "numOfConsultation":"عدد الاستشارات",
-    "yearsOfPractice":"سنوات الخبرة"
-
-
+    "yearsOfPractice":"سنوات الخبرة",
+    "RateTheService":"قيم الخدمة",
+    "selectPaymentMethod":"اختر طريقة الدفع",
+    "Cancel":"الغاء"
 }

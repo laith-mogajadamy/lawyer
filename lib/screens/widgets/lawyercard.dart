@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/models/lawyer.dart';
-import 'package:lawyer/screens/LegalConsultantProfile.dart';
+import 'package:lawyer/screens/lawyers_and_translation_company/legalconsultantprofile.dart';
 import 'package:lawyer/screens/widgets/black12text.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 

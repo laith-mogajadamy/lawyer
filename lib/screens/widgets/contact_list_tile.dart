@@ -3,21 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/chat/chatpage.dart';
-import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 
-class ContactListTile extends StatelessWidget {
+class ContactListTile extends StatefulWidget {
   final String token;
   final Lawyer myself;
   final Lawyer contact;
+  final String pushertoken;
 
   const ContactListTile({
     super.key,
     required this.token,
     required this.myself,
     required this.contact,
+    required this.pushertoken,
   });
 
+  @override
+  State<ContactListTile> createState() => _ContactListTileState();
+}
+
+class _ContactListTileState extends State<ContactListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -26,14 +32,15 @@ class ContactListTile extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => ChatPage(
-              otheruser: contact,
-              token: token,
-              myself: myself,
+              otheruser: widget.contact,
+              token: widget.token,
+              myself: widget.myself,
+              pushertoken: widget.pushertoken,
             ),
           ),
         );
       },
-      leading: (contact.profile.isEmpty)
+      leading: (widget.contact.profile.isEmpty)
           ? Icon(
               Icons.person,
               size: 50.r,
@@ -41,14 +48,13 @@ class ContactListTile extends StatelessWidget {
             )
           : CircleAvatar(
               radius: 50.r,
-              backgroundImage: NetworkImage(contact.profile),
+              backgroundColor: AppColor.whiteColor,
+              child: Image.network(
+                widget.contact.profile,
+                fit: BoxFit.cover,
+              ),
             ),
-      title: Black18text(text: contact.name),
-      trailing: CircleAvatar(
-        radius: 12.r,
-        backgroundColor: AppColor.appgray,
-        child: const Black16text(text: "1"),
-      ),
+      title: Black18text(text: widget.contact.name),
     );
   }
 }

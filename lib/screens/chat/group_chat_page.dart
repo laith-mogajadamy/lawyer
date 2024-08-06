@@ -391,7 +391,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
                                 Message message = Message(
                                     isMe: true,
                                     message: messageText,
-                                    type: null,
+                                    type: "text",
                                     file: null,
                                     attachment: null,
                                     sender: null,

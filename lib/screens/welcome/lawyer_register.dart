@@ -12,6 +12,9 @@ import 'package:lawyer/screens/widgets/fronte_id_change.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/profile_image_change.dart';
+import 'package:lawyer/screens/widgets/select_city.dart';
+import 'package:lawyer/screens/widgets/select_country.dart';
+import 'package:lawyer/screens/widgets/select_gender.dart';
 
 class LawyerRegister extends StatefulWidget {
   const LawyerRegister({super.key});
@@ -139,17 +142,7 @@ class _LawyerRegisterState extends State<LawyerRegister> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).Gender,
-                            hint: "Male",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    GenderChanged(gender: value),
-                                  );
-                            },
-                            controller: gender,
-                          ),
+                          const SelectGender(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -167,31 +160,11 @@ class _LawyerRegisterState extends State<LawyerRegister> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).Country,
-                            hint: "UAE",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    CountryChanged(country: value),
-                                  );
-                            },
-                            controller: country,
-                          ),
+                          const SelectCountry(),
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).City,
-                            hint: "Abu Dhabi",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    CityChanged(city: value),
-                                  );
-                            },
-                            controller: city,
-                          ),
+                          const SelectCity(),
                           SizedBox(
                             height: 20.h,
                           ),

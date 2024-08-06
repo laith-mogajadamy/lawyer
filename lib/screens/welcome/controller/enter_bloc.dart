@@ -9,10 +9,17 @@ import 'package:lawyer/core/services/uploadfile.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/utils/prefrences.dart';
+import 'package:lawyer/models/city.dart';
 import 'package:lawyer/models/consultation.dart';
 import 'package:lawyer/models/general_question.dart';
+import 'package:lawyer/models/language.dart';
+import 'package:lawyer/models/language_model.dart';
 import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/models/lawyermodel.dart';
+import 'package:lawyer/models/practice.dart';
+import 'package:lawyer/models/practice_model.dart';
+import 'package:lawyer/screens/chat/data/chatrequest.dart';
+import 'package:lawyer/screens/search/data/searchrequest.dart';
 
 part 'enter_event.dart';
 part 'enter_state.dart';
@@ -30,7 +37,9 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       emit(state.copyWith(
         formStatus: FormSubmitting(),
       ));
-
+      add(
+        GetLanguageAndPractice(),
+      );
       http.Response response = await Auth.login(useremail!, userpassword!);
       print(response);
 
@@ -53,6 +62,9 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           ),
         );
         Preferences.savetoken(responsemap["access_token"]);
+        add(
+          GetPusherToken(),
+        );
       } else {
         emit(
           state.copyWith(
@@ -61,6 +73,107 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               islogedin: "false"),
         );
       }
+    });
+    //
+    on<GetPusherToken>((event, emit) async {
+      Response response =
+          await GetPusherConfigrequest.getpusherconfig(state.token);
+      print(response);
+
+      String pushertoken =
+          response.data['options']['auth']['headers']['Authorization'];
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        emit(
+          state.copyWith(
+            pushertoken: pushertoken,
+          ),
+        );
+      } else {}
+    });
+    //
+    on<GetLanguageAndPractice>((event, emit) async {
+      print("GetLanguageAndPractice");
+
+      print("state.token");
+      print(state.token);
+      http.Response practiseresponse = await SearchFilterRequest.getpractice();
+      var practiseresponsemap = jsonDecode(practiseresponse.body);
+      print("practiseresponsemap=");
+      print(practiseresponsemap);
+      http.Response languageresponse = await SearchFilterRequest.getlanguage();
+      var languageresponsemap = jsonDecode(languageresponse.body);
+      //get the locations
+      print("practiseresponsemap=");
+      print(practiseresponsemap);
+      print("languageresponsemap=");
+      print(languageresponsemap);
+
+      if (practiseresponse.statusCode == 200 &&
+          languageresponse.statusCode == 200) {
+        emit(state.copyWith(
+          practices: List<PracticeModel>.from(
+            (practiseresponsemap as List).map(
+              (e) => PracticeModel.fromJson(e),
+            ),
+          ),
+          languages: List<LanguageModel>.from(
+            (languageresponsemap as List).map(
+              (e) => LanguageModel.fromJson(e),
+            ),
+          ),
+          // searchfiltersState: RequestState.loaded
+        ));
+        print("state.practices=");
+        print(state.practices);
+        print("state.languages=");
+        print(state.languages);
+      } else {
+        print("error11");
+
+        emit(state.copyWith(
+            // searchfiltersState: RequestState.error,
+            // searchfiltersMessage: practiseresponsemap["message"],
+            ));
+      }
+    });
+    //
+    on<CheckLanguage>((event, emit) async {
+      List<Language> slected = List.from(state.selectedlanguages);
+
+      if (event.check!) {
+        slected.add(event.slelected!);
+      } else {
+        slected.remove(event.slelected);
+      }
+      emit(
+        state.copyWith(
+          selectedlanguages: slected,
+          // searchfield:
+          //     (state.searchfield == "location") ? "Practice" : "location",
+        ),
+      );
+      print("slected");
+      print(state.selectedlanguages);
+    });
+    //
+    on<CheckPractice>((event, emit) async {
+      List<Practice> slected = List.from(state.selectedpractices);
+
+      if (event.check!) {
+        slected.add(event.slelected!);
+      } else {
+        slected.remove(event.slelected);
+      }
+      emit(
+        state.copyWith(
+          selectedpractices: slected,
+          // searchfield:
+          //     (state.searchfield == "location") ? "Practice" : "location",
+        ),
+      );
+      print("slected");
+      print(state.selectedpractices);
     });
     //
     on<LanguageChanged>((event, emit) async {
@@ -99,8 +212,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         event.available! ? 1 : 0,
         event.certification,
         event.licenses,
-        event.practices,
-        event.languages,
+        event.practices!,
+        event.languages!,
       );
       print(response.statusCode);
       print("data=${response.data}");
@@ -238,14 +351,14 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     });
     //
     on<AddLanguage>((event, emit) async {
-      print(" AddLanguage");
-      List<String>? newlanguage;
+      // print(" AddLanguage");
+      // List<String>? newlanguage;
 
-      newlanguage = List.of(state.languages!)..add(event.language!);
+      // newlanguage = List.of(state.languages!)..add(event.language!);
 
-      emit(
-        state.copyWith(languages: newlanguage),
-      );
+      // emit(
+      //   state.copyWith(languages: newlanguage),
+      // );
       print("newlanguage=${state.languages}");
     });
     //
@@ -276,7 +389,6 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       );
       print("available=${state.available}");
     });
-
     //
     on<LoginEmailChanged>((event, emit) async {
       emit(state.copyWith(
@@ -311,7 +423,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     on<GenderChanged>((event, emit) async {
       emit(state.copyWith(
         formStatus: const InitialFormStatus(),
-        gender: event.gender,
+        selectedgender: event.gender,
       ));
     });
     on<BirthChanged>((event, emit) async {
@@ -322,14 +434,12 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     });
     on<CountryChanged>((event, emit) async {
       emit(state.copyWith(
-        formStatus: const InitialFormStatus(),
-        country: event.country,
+        selectedcoutry: event.country,
       ));
     });
     on<CityChanged>((event, emit) async {
       emit(state.copyWith(
-        formStatus: const InitialFormStatus(),
-        city: event.city,
+        selectedcity: event.city,
       ));
     });
     on<EidNumberChanged>((event, emit) async {
@@ -362,6 +472,12 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         consultationprice: event.consultationprice,
       ));
     });
+    on<YearsOfPracticeChanged>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        yearsofpractice: event.yearsofpractice,
+      ));
+    });
     on<BiographyChanged>((event, emit) async {
       print(" BiographyChanged");
 
@@ -383,6 +499,9 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           formStatus: FormSubmitting(),
           email: state.email,
           password: state.password));
+      add(
+        GetLanguageAndPractice(),
+      );
       http.Response response = await Auth.login(state.email, state.password);
       Map responsemap = await jsonDecode(response.body);
       print("message==${state.message}");
@@ -412,6 +531,9 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         print("token:${responsemap["access_token"]}");
         print("++++++++++++++");
         print(state.formStatus);
+        add(
+          GetPusherToken(),
+        );
       } else {
         emit(
           state.copyWith(
@@ -424,7 +546,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     });
     on<ClientRegisterSubmitted>((event, emit) async {
       emit(state.copyWith(
-        formStatus: const InitialFormStatus(),
+        formStatus: FormSubmitting(),
       ));
       Response response = await Auth.clientregister(
         state.type,
@@ -432,11 +554,11 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         state.email,
         state.password,
         state.retypePassword,
-        state.gender,
+        state.selectedgender.id.toString(),
         state.phone,
         state.birth,
-        state.country,
-        state.city,
+        state.selectedcoutry.id.toString(),
+        state.selectedcity.id.toString(),
         state.eidnumber,
         state.feid,
         state.beid,
@@ -469,33 +591,33 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     //
     on<LawyerRegisterSubmitted>((event, emit) async {
       emit(state.copyWith(
-        formStatus: const InitialFormStatus(),
+        formStatus: FormSubmitting(),
       ));
       Response response = await Auth.lawyerregister(
-        state.type,
+        event.type!,
         state.name,
         state.email,
         state.password,
         state.retypePassword,
-        state.gender,
+        state.selectedgender.id.toString(),
         state.phone,
         state.birth,
-        state.country,
-        state.city,
+        state.selectedcoutry.id.toString(),
+        state.selectedcity.id.toString(),
         state.eidnumber,
         state.feid,
         state.beid,
         state.landline,
         state.consultationprice,
         state.biography,
-        state.location,
+        state.selectedcoutry.name.toString(),
         state.yearsofpractice,
         (state.available) ? "1" : "0",
         state.certifications,
         state.license,
         //check if its practise or expertise
-        state.expertise!,
-        state.languages!,
+        state.selectedpractices,
+        state.selectedlanguages,
       );
       print("message==${state.message}");
       print("*********");

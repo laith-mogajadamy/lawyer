@@ -6,6 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:lawyer/core/network/global.dart';
+import 'package:lawyer/models/language.dart';
+import 'package:lawyer/models/practice.dart';
 
 class Auth {
   static Future clientregister(
@@ -17,8 +19,8 @@ class Auth {
     String gender,
     String phone,
     String birth,
-    String country,
-    String city,
+    dynamic country,
+    dynamic city,
     String emirates_id,
     File? front_emirates_id,
     File? back_emirates_id,
@@ -57,23 +59,20 @@ class Auth {
     print("formdata--------------");
     print(formdata.fields);
     print(formdata.files);
-    Response? response;
-    try {
-      response = await Dio().post(
-        "${Global.url}register",
-        data: formdata,
-        options: Options(method: "POST", headers: headers),
-        onSendProgress: (count, total) {
-          print("count=$count");
-          print("total=$total");
-        },
-      );
-    } catch (e) {
-      print(e);
-    }
+
+    Response response = await Dio().post(
+      "${Global.url}register",
+      data: formdata,
+      options: Options(method: "POST", headers: headers),
+      onSendProgress: (count, total) {
+        print("count=$count");
+        print("total=$total");
+      },
+    );
+
     print("4444444444444444");
 
-    print(response!.statusCode);
+    print(response.statusCode);
 
     print(response.data);
     return response;
@@ -101,8 +100,8 @@ class Auth {
     String available,
     List<File>? certifications,
     List<File>? licenses,
-    List<String> practices,
-    List<String> languages,
+    List<Practice> practices,
+    List<Language> languages,
   ) async {
     List certificationlist = [];
     for (var i = 0; i < certifications!.length; i++) {
@@ -126,15 +125,15 @@ class Auth {
     }
     List practiceslist = [];
     for (var i = 0; i < practices.length; i++) {
-      practiceslist.add(practices[i]);
+      practiceslist.add(practices[i].id);
     }
     List languageslist = [];
     for (var i = 0; i < languages.length; i++) {
-      languageslist.add(languages[i]);
+      languageslist.add(languages[i].id);
     }
     FormData formdata = FormData.fromMap(
       {
-        "type": "2",
+        "type": type,
         "name": name,
         "email": email,
         "password": password,
@@ -167,19 +166,63 @@ class Auth {
         "languages[]": languageslist,
       },
     );
-    Response response = await Dio().post(
-      "${Global.url}register",
-      data: formdata,
-      options: Options(method: "POST"),
-      onSendProgress: (count, total) {
-        print("count=$count");
-        print("total=$total");
-      },
-    );
-    print(response.statusCode);
+    print(formdata.fields);
+    print(formdata.files);
+    Response response;
+    try {
+      response = await Dio().post(
+        "${Global.url}register",
+        data: formdata,
+        options: Options(method: "POST"),
+        onSendProgress: (count, total) {
+          print("count=$count");
+          print("total=$total");
+        },
+      );
+      print(response.statusCode);
 
-    print(response.data);
-    return response;
+      print(response.data);
+      print('Response data: ${response.data}');
+      return response;
+    } on DioException catch (e) {
+      void printError(DioException error) {
+        switch (error.type) {
+          case DioExceptionType.cancel:
+            print('Request to the server was cancelled.');
+            break;
+          case DioExceptionType.connectionTimeout:
+            print('Connection timeout with the server.');
+            break;
+          case DioExceptionType.receiveTimeout:
+            print('Receive timeout in connection with the server.');
+            break;
+          case DioExceptionType.badResponse:
+            print(
+                'Received invalid status code: ${error.response?.statusCode}');
+            print('Error data: ${error.response?.data}');
+            print('Error message: ${error.message}');
+            break;
+          case DioExceptionType.sendTimeout:
+            print('Send timeout in connection with the server.');
+            break;
+          case DioExceptionType.unknown:
+            print('Something went wrong: ${error.message}');
+            break;
+          case DioExceptionType.badCertificate:
+            print('Something went wrong: ${error.message}');
+          case DioExceptionType.connectionError:
+            print('Something went wrong: ${error.message}');
+        }
+      }
+
+      printError(e);
+
+      return e;
+    } catch (e) {
+      // Handle any other types of exceptions
+      print('Unexpected error: $e');
+      return e;
+    }
   }
 
   static Future<http.Response> login(
@@ -226,50 +269,32 @@ class Auth {
     return response;
   }
 
-  // static Future profileedit(
-  //   int id,
-  //   String token,
-  //   String? name,
-  //   String? email,
-  //   String? number,
-  //   String? birth,
-  //   int? location,
-  //   int? gender,
-  //   String? consultationprice,
-  //   File? fimage,
-  //   List<File>? certification,
-  // ) async {
-  //   var streem = http.ByteStream(certification![0].openRead());
-  //   streem.cast();
-  //   var length = await certification[0].length();
-  //   Map data = {
-  //     "name": name,
-  //     "email": email,
-  //     "phone": number,
-  //     "birth": birth,
-  //     "location": location,
-  //     "gender": gender,
-  //     "consultation_price": consultationprice,
-  //     "profileUser": fimage,
-  //     "certification": certification
-  //   };
-  //   Map<String, String> headers = {
-  //     "Content-type": "application/json",
-  //     "Accept": "application/json",
-  //     "Authorization": "Bearer $token",
-  //   };
-
-  //   // var body = jsonEncode(data);
-  //   var url = Uri.parse("${Global.url}user/$id");
-  //   // http.Response response = await http.post(url, headers: headers, body: body);
-  //   var request = http.MultipartRequest("POST", url);
-  //   request.fields["name"] = name!;
-  //   var files = http.MultipartFile("certification", streem, length);
-  //   request.files.add(files);
-  //   request.headers.addAll(headers);
-  //   var response = await request.send();
-  //   print(response.statusCode);
-  //   print(response.stream.toString());
-  //   return response;
-  // }
+  void printError(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.cancel:
+        print('Request to the server was cancelled.');
+        break;
+      case DioExceptionType.connectionTimeout:
+        print('Connection timeout with the server.');
+        break;
+      case DioExceptionType.receiveTimeout:
+        print('Receive timeout in connection with the server.');
+        break;
+      case DioExceptionType.badResponse:
+        print('Received invalid status code: ${error.response?.statusCode}');
+        print('Error data: ${error.response?.data}');
+        print('Error message: ${error.message}');
+        break;
+      case DioExceptionType.sendTimeout:
+        print('Send timeout in connection with the server.');
+        break;
+      case DioExceptionType.unknown:
+        print('Something went wrong: ${error.message}');
+        break;
+      case DioExceptionType.badCertificate:
+        print('Something went wrong: ${error.message}');
+      case DioExceptionType.connectionError:
+        print('Something went wrong: ${error.message}');
+    }
+  }
 }

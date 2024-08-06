@@ -79,7 +79,7 @@ class LanguageFlield extends StatelessWidget {
                               Padding(
                                 padding: EdgeInsets.only(bottom: 5.h),
                                 child: Black18text(
-                                  text: state.languages![index],
+                                  text: state.languages![index].name,
                                 ),
                               ),
                               (index == state.languages!.length - 1)

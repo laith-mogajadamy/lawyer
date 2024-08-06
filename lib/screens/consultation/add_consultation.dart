@@ -11,21 +11,19 @@ import 'package:lawyer/screens/widgets/consultation_decription_input.dart';
 import 'package:lawyer/screens/widgets/consultation_title_input.dart';
 import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
 
-class AddConsultation extends StatefulWidget {
+class AddConsultation extends StatelessWidget {
   final Lawyer lawyer;
 
-  const AddConsultation({super.key, required this.lawyer});
+  AddConsultation({super.key, required this.lawyer});
 
-  @override
-  State<AddConsultation> createState() => _AddConsultationState();
-}
-
-class _AddConsultationState extends State<AddConsultation> {
   TextEditingController title = TextEditingController();
 
   TextEditingController description = TextEditingController();
+
   final ConsultationBloc consultationBloc = ConsultationBloc();
+
   int paymentid = 0;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -71,7 +69,7 @@ class _AddConsultationState extends State<AddConsultation> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Black18text(text: widget.lawyer.name),
+                    Black18text(text: lawyer.name),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -126,7 +124,7 @@ class _AddConsultationState extends State<AddConsultation> {
                               Locale currentLocale =
                                   Localizations.localeOf(context);
                               print(currentLocale.languageCode);
-                              startPayment(currentLocale.languageCode);
+                              startPayment(currentLocale.languageCode, context);
                               // context.read<ConsultationBloc>().add(
                               //       StartPayment(
                               //         language: currentLocale.languageCode,
@@ -190,7 +188,7 @@ class _AddConsultationState extends State<AddConsultation> {
     );
   }
 
-  Future<void> startPayment(String language) async {
+  Future<void> startPayment(String language, BuildContext cntext) async {
     //             "rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL",
     MFSDK.init(
         "rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL",
@@ -198,21 +196,13 @@ class _AddConsultationState extends State<AddConsultation> {
         MFEnvironment.TEST);
     // Use the following lines if you want to set up the properties of AppBar.
     // Initiate Payment
-    await initiatePayment(language);
+    await initiatePayment(language, cntext);
     // await sendPayment();
     // await getPaymentStatus();
   }
 
 //   setUpActionBar() {
-//     print("setUpActionBar");
-//     MFSDK.setUpActionBar(
-//         toolBarTitle: 'BRIEFCASE Payment',
-//         toolBarTitleColor: '#FFEB3B',
-//         toolBarBackgroundColor: '#CA0404',
-//         isShowToolBar: false);
-//   }
-
-  initiatePayment(String language) async {
+  initiatePayment(String language, BuildContext ctext) async {
     print("initiatePayment");
 
     MFInitiatePaymentRequest request = MFInitiatePaymentRequest(
@@ -221,36 +211,12 @@ class _AddConsultationState extends State<AddConsultation> {
         .initiatePayment(request,
             (language == "en") ? MFLanguage.ENGLISH : MFLanguage.ARABIC)
         .then((value) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return ListView.builder(
-              itemCount: value.paymentMethods!.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    paymentid = value.paymentMethods![index].paymentMethodId!;
-                    executePayment(paymentid);
-                  },
-                  child: ListTile(
-                    title: Black18text(
-                        text: value.paymentMethods![index].paymentMethodEn!),
-                  ),
-                );
-              });
-        },
-      );
-      return debugPrint(
-        value.toString(),
-      );
+      return showMyDialog(ctext, value);
     }).catchError((error) => {debugPrint(error.message)});
   }
 
 // // executePayment
-
-// // The value "1" is the paymentMethodId of KNET payment method.
-// // You should call the "initiatePayment" API to can get this id and the ids of all other payment methods
-  executePayment(int id) async {
+  executePayment(int id, BuildContext cntext) async {
     print("executePayment");
 
     MFExecutePaymentRequest request = MFExecutePaymentRequest(
@@ -263,7 +229,7 @@ class _AddConsultationState extends State<AddConsultation> {
     }).then((value) {
       addConsultation(value.invoiceId!);
       if (value.invoiceStatus == "sucsses") {
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(cntext).showSnackBar(
           SnackBar(
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 3),
@@ -285,19 +251,57 @@ class _AddConsultationState extends State<AddConsultation> {
     print(invoiceId);
     consultationBloc.add(
       Addconsultation(
-        id: widget.lawyer.id,
+        id: lawyer.id,
         title: title.text.trim(),
         description: description.text.trim(),
         invoiceid: invoiceId.toString(),
-        receiverid: widget.lawyer.id.toString(),
-        invoicevalue: widget.lawyer.consultationPrice.toString(),
+        receiverid: lawyer.id.toString(),
+        invoicevalue: lawyer.consultationPrice.toString(),
       ),
     );
   }
+
+  void showMyDialog(BuildContext context, MFInitiatePaymentResponse value) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(S.of(context).selectPaymentMethod),
+          content: SizedBox(
+            height: 500.h,
+            width: 200.w,
+            child: ListView.builder(
+                itemCount: value.paymentMethods!.length,
+                itemBuilder: (ctext, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      paymentid = value.paymentMethods![index].paymentMethodId!;
+                      executePayment(paymentid, ctext);
+                    },
+                    child: ListTile(
+                      leading:
+                          Image.network(value.paymentMethods![index].imageUrl!),
+                      title: Black18text(
+                          text: value.paymentMethods![index].paymentMethodEn!),
+                    ),
+                  );
+                }),
+          ),
+          actions: [
+            Center(
+              child: TextButton(
+                child: Black18text(text: S.of(context).Cancel),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
-
-
-
 
 // sendPayment() async {
 //   print("sendPayment");

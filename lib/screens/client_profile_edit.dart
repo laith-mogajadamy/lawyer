@@ -10,6 +10,9 @@ import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 import 'package:lawyer/screens/widgets/profile_image_change.dart';
+import 'package:lawyer/screens/widgets/select_city.dart';
+import 'package:lawyer/screens/widgets/select_country.dart';
+import 'package:lawyer/screens/widgets/select_gender.dart';
 
 class ClientProfileEdit extends StatefulWidget {
   const ClientProfileEdit({super.key});
@@ -105,13 +108,7 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).Gender,
-                            hint: state.user.gender.toString(),
-                            validator: null,
-                            onchange: null,
-                            controller: gender,
-                          ),
+                          const SelectGender(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -125,23 +122,11 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).Country,
-                            hint: "UAE",
-                            validator: null,
-                            onchange: null,
-                            controller: country,
-                          ),
+                          const SelectCountry(),
                           SizedBox(
                             height: 20.h,
                           ),
-                          InfoInput(
-                            name: S.of(context).City,
-                            hint: state.user.city,
-                            validator: null,
-                            onchange: null,
-                            controller: city,
-                          ),
+                          const SelectCity(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -227,12 +212,14 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                                         email: email.text.trim(),
                                         number: number.text.trim(),
                                         birth: birth.text.trim(),
-                                        gender: gender.text.trim(),
+                                        gender:
+                                            state.selectedgender.id.toString(),
                                         frontemiratesid: state.feid,
                                         backemiratesid: state.beid,
-                                        city: city.text,
+                                        city: state.selectedcity.id.toString(),
                                         emiratesid: eidnumber.text,
-                                        country: country.text,
+                                        country:
+                                            state.selectedcoutry.id.toString(),
                                         password: password.text,
                                         passwordconfirmation:
                                             retypePassword.text,

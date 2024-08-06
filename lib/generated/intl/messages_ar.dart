@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "Biography": MessageLookupByLibrary.simpleMessage("السيرة الذاتية:"),
         "CERTIFICATIONS": MessageLookupByLibrary.simpleMessage("الشهادات"),
         "Camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
+        "Cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
         "Certifications": MessageLookupByLibrary.simpleMessage("الشهادات:"),
         "Changethelanguage": MessageLookupByLibrary.simpleMessage("غير اللغة"),
         "Chooselanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
@@ -91,6 +92,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ProfileEdit":
             MessageLookupByLibrary.simpleMessage("تعديل الملف الشخصي"),
         "REGISTER": MessageLookupByLibrary.simpleMessage("انشاء حساب"),
+        "RateTheService": MessageLookupByLibrary.simpleMessage("قيم الخدمة"),
         "RetypePassword":
             MessageLookupByLibrary.simpleMessage("اعد كتابة كلمة السر"),
         "Send": MessageLookupByLibrary.simpleMessage("إرسال"),
@@ -159,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "search": MessageLookupByLibrary.simpleMessage("بحث"),
         "select": MessageLookupByLibrary.simpleMessage("اختر"),
+        "selectPaymentMethod":
+            MessageLookupByLibrary.simpleMessage("اختر طريقة الدفع"),
         "sendaquestion": MessageLookupByLibrary.simpleMessage("إرسال سؤال"),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),
         "translationcompany":

@@ -61,6 +61,9 @@ class Searchcomponent extends StatelessWidget {
                                 context.read<SearchBloc>().add(
                                       Bottomshow(bottom: bottom),
                                     );
+                                if (bottom) {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                }
                               },
                               child: Image.asset("assets/images/sliders.png"),
                             ),

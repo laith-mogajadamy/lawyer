@@ -21,6 +21,8 @@ class EnterState extends Equatable {
   final Lawyer user;
   final int id;
   final String token;
+  final String pushertoken;
+
   final String name;
   bool get isValidName => email.length > 8;
   final String email;
@@ -31,7 +33,7 @@ class EnterState extends Equatable {
   final String phone;
   bool get isValidnumber => phone.length >= 10;
 
-  final String gender;
+  final City selectedgender;
   final String birth;
   final String country;
   final String city;
@@ -52,8 +54,16 @@ class EnterState extends Equatable {
   final String message;
 //
   final String yearsofpractice;
-  final List<String> practices;
-  final List<String>? languages;
+  final List<Practice> practices;
+  final List<Language> languages;
+  final List<Practice> selectedpractices;
+  final List<Language> selectedlanguages;
+  final List<City> uaecitys;
+  final List<City> soudicitys;
+  final List<City> coutrys;
+  final City selectedcity;
+  final City selectedcoutry;
+  final List<City> genders;
 
   final List<Lawyer> contacts;
 
@@ -108,13 +118,14 @@ class EnterState extends Equatable {
       generalChats: [],
     ),
     this.token = '',
+    this.pushertoken = '',
     this.id = 0,
     this.email = '',
     this.password = '',
     this.retypePassword = '',
     this.name = '',
     this.phone = '',
-    this.gender = '',
+    this.selectedgender = const City(id: 0, name: ''),
     this.birth = '',
     this.country = '',
     this.city = '',
@@ -134,6 +145,42 @@ class EnterState extends Equatable {
     this.yearsofpractice = '',
     this.practices = const [],
     this.languages = const [],
+    this.selectedpractices = const [],
+    this.selectedlanguages = const [],
+    this.uaecitys = const [
+      City(id: 100, name: "Dubai"),
+      City(id: 101, name: "Abu Dhabi"),
+      City(id: 102, name: "Ajman"),
+      City(id: 103, name: "Rak"),
+      City(id: 104, name: "Fujairah"),
+      City(id: 105, name: "UM ALQ"),
+      City(id: 106, name: "Sharjah"),
+    ],
+    this.soudicitys = const [
+      City(id: 1, name: "Riyadh"),
+      City(id: 2, name: "Mecca"),
+      City(id: 3, name: "Madina"),
+      City(id: 4, name: "Damam"),
+      City(id: 5, name: "Jeddah"),
+      City(id: 6, name: "Khobar"),
+      City(id: 7, name: "Abha"),
+      City(id: 8, name: "Tabuk"),
+      City(id: 9, name: "Hail"),
+      City(id: 10, name: "Jazan"),
+      City(id: 11, name: "Najran"),
+      City(id: 12, name: "Baha"),
+      City(id: 13, name: "AlJouf"),
+    ],
+    this.coutrys = const [
+      City(id: 1, name: "Saudi"),
+      City(id: 2, name: "UAE"),
+    ],
+    this.selectedcity = const City(id: 0, name: ''),
+    this.selectedcoutry = const City(id: 0, name: ''),
+    this.genders = const [
+      City(id: 1, name: "Male"),
+      City(id: 2, name: "Female"),
+    ],
     this.contacts = const [],
   });
 
@@ -155,6 +202,7 @@ class EnterState extends Equatable {
     //
     Lawyer? user,
     String? token,
+    String? pushertoken,
     int? id,
     String? email,
     String? image,
@@ -162,7 +210,7 @@ class EnterState extends Equatable {
     String? retypePassword,
     String? name,
     String? phone,
-    String? gender,
+    City? selectedgender,
     String? birth,
     String? country,
     String? city,
@@ -183,8 +231,16 @@ class EnterState extends Equatable {
     List<Generalquestion>? generalquestions,
     //
     String? yearsofpractice,
-    List<String>? practices,
-    List<String>? languages,
+    List<Practice>? practices,
+    List<Language>? languages,
+    List<Practice>? selectedpractices,
+    List<Language>? selectedlanguages,
+    List<City>? uaecitys,
+    List<City>? soudicitys,
+    List<City>? coutrys,
+    City? selectedcity,
+    City? selectedcoutry,
+    List<City>? genders,
     List<Lawyer>? contacts,
   }) {
     return EnterState(
@@ -207,13 +263,14 @@ class EnterState extends Equatable {
       //
       user: user ?? this.user,
       token: token ?? this.token,
+      pushertoken: pushertoken ?? this.pushertoken,
       id: id ?? this.id,
       email: email ?? this.email,
       password: password ?? this.password,
       retypePassword: retypePassword ?? this.retypePassword,
       name: name ?? this.name,
       phone: phone ?? this.phone,
-      gender: gender ?? this.gender,
+      selectedgender: selectedgender ?? this.selectedgender,
       birth: birth ?? this.birth,
       country: country ?? this.country,
       city: city ?? this.city,
@@ -237,6 +294,15 @@ class EnterState extends Equatable {
       yearsofpractice: yearsofpractice ?? this.yearsofpractice,
       practices: practices ?? this.practices,
       languages: languages ?? this.languages,
+      selectedpractices: selectedpractices ?? this.selectedpractices,
+      selectedlanguages: selectedlanguages ?? this.selectedlanguages,
+      uaecitys: uaecitys ?? this.uaecitys,
+      soudicitys: soudicitys ?? this.soudicitys,
+      coutrys: coutrys ?? this.coutrys,
+      selectedcity: selectedcity ?? this.selectedcity,
+      selectedcoutry: selectedcoutry ?? this.selectedcoutry,
+      genders: genders ?? this.genders,
+
       contacts: contacts ?? this.contacts,
     );
   }
@@ -259,13 +325,14 @@ class EnterState extends Equatable {
         //
         user,
         token,
+        pushertoken,
         id,
         email,
         password,
         retypePassword,
         name,
         phone,
-        gender,
+        selectedgender,
         birth,
         country,
         city,
@@ -287,6 +354,14 @@ class EnterState extends Equatable {
         yearsofpractice,
         practices,
         languages,
+        selectedpractices,
+        selectedlanguages,
+        uaecitys,
+        soudicitys,
+        coutrys,
+        selectedcity,
+        selectedcoutry,
+        genders,
         contacts,
       ];
 }

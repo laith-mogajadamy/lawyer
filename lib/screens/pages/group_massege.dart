@@ -24,7 +24,7 @@ class GroupMassege extends StatelessWidget {
               height: 10.h,
             ),
             (state.user.groups!.isEmpty)
-                ? Container(
+                ? const Center(
                     child: Black22text(text: "You dont have groups"),
                   )
                 : Expanded(

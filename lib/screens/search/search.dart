@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/frequently-questions.dart';
-import 'package:lawyer/screens/general-question/frequently-questions_component.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/lawyersavilable.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/lawyerspage.dart';
 import 'package:lawyer/screens/lawyers_and_translation_company/translation_company.dart';
@@ -58,12 +56,17 @@ class _SearchState extends State<Search> {
                                   context.read<SearchBloc>().add(
                                         Filtershow(filter: filter),
                                       );
+
                                   if (filter) {
                                     context.read<SearchBloc>().add(
                                           Searchlawyers(),
                                         );
                                   } else {
                                     controller.clear();
+                                  }
+                                  if (!filter) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
                                   }
                                 },
                                 onChanged: (string) {

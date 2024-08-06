@@ -6,14 +6,17 @@ import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
+import 'package:lawyer/screens/welcome/enter.dart';
 import 'package:lawyer/screens/widgets/bio_input.dart';
+import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/certification_field.dart';
 import 'package:lawyer/screens/widgets/check_available.dart';
-import 'package:lawyer/screens/widgets/expertise_flield.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
 import 'package:lawyer/screens/widgets/license_flield.dart';
+import 'package:lawyer/screens/widgets/select_language.dart';
+import 'package:lawyer/screens/widgets/select_practice.dart';
 
 class LawyerRegister2 extends StatefulWidget {
   const LawyerRegister2({super.key});
@@ -25,7 +28,10 @@ class LawyerRegister2 extends StatefulWidget {
 class _LawyerRegister2State extends State<LawyerRegister2> {
   bool bottom = false;
   TextEditingController consultationprice = TextEditingController();
+  TextEditingController yearsofpractice = TextEditingController();
+
   TextEditingController expertise = TextEditingController();
+  TextEditingController language = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +57,14 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
                     child: Center(
                         child: Black22text(text: S.of(context).registeration)),
                   ),
-                  ExpertiseFlield(
-                    expertise: expertise,
+                  SizedBox(
+                    height: 20.h,
                   ),
+                  const SelectPractice(),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  const SelectLanguage(),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -73,6 +84,17 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
                             ConsultationPriceChanged(consultationprice: value),
                           ),
                       controller: consultationprice),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  InfoInput(
+                      name: "${S.of(context).yearsOfPractice} :",
+                      hint: "3",
+                      validator: null,
+                      onchange: (value) => context.read<EnterBloc>().add(
+                            YearsOfPracticeChanged(yearsofpractice: value),
+                          ),
+                      controller: yearsofpractice),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -130,7 +152,7 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
                           } else {
                             context
                                 .read<EnterBloc>()
-                                .add(LawyerRegisterSubmitted());
+                                .add(LawyerRegisterSubmitted(type: "2"));
                           }
                           // print(state.email);
                           // print("=============");

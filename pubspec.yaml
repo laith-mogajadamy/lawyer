@@ -60,6 +60,8 @@ dependencies:
   pusher_client: ^2.0.0
   from_css_color: ^2.0.0
   myfatoorah_flutter: ^3.0.13
+  flutter_rating_bar: ^4.0.1
+  flutter_inappwebview: ^6.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

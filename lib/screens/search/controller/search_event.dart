@@ -42,12 +42,23 @@ class ChangeSearchField extends SearchEvent {
   List<Object?> get props => [searchfield];
 }
 
-class Check extends SearchEvent {
-  final String? slelected;
+class ChangeFilterType extends SearchEvent {
+  final String? filtertype;
+
+  ChangeFilterType({
+    this.filtertype,
+  });
+
+  @override
+  List<Object?> get props => [filtertype];
+}
+
+class CountryCheck extends SearchEvent {
+  final City? slelected;
 
   final bool? check;
 
-  Check({
+  CountryCheck({
     this.check,
     this.slelected,
   });
@@ -57,4 +68,62 @@ class Check extends SearchEvent {
         check,
         slelected,
       ];
+}
+
+class CityCheck extends SearchEvent {
+  final City? slelected;
+
+  final bool? check;
+
+  CityCheck({
+    this.check,
+    this.slelected,
+  });
+
+  @override
+  List<Object?> get props => [
+        check,
+        slelected,
+      ];
+}
+
+class CheckPractise extends SearchEvent {
+  final Practice? slelected;
+
+  final bool? check;
+
+  CheckPractise({
+    this.check,
+    this.slelected,
+  });
+
+  @override
+  List<Object?> get props => [
+        check,
+        slelected,
+      ];
+}
+
+class CheckLanguage extends SearchEvent {
+  final Language? slelected;
+
+  final bool? check;
+
+  CheckLanguage({
+    this.check,
+    this.slelected,
+  });
+
+  @override
+  List<Object?> get props => [
+        check,
+        slelected,
+      ];
+}
+
+class GetSearchFilters extends SearchEvent {
+  GetSearchFilters();
+
+  @override
+  List<Object?> get props => [];
 }

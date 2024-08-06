@@ -131,6 +131,9 @@
     "save":"Save",
 
     "numOfConsultation":"Num Of Consultation",
-    "yearsOfPractice":"Years Of Practice"
-  
+    "yearsOfPractice":"Years Of Practice",
+    "RateTheService":"Rate The Service",
+    "selectPaymentMethod":"Select Payment Method",
+    "Cancel":"Cancel"
+
 }

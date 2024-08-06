@@ -1165,6 +1165,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Rate The Service`
+  String get RateTheService {
+    return Intl.message(
+      'Rate The Service',
+      name: 'RateTheService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Payment Method`
+  String get selectPaymentMethod {
+    return Intl.message(
+      'Select Payment Method',
+      name: 'selectPaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get Cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'Cancel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

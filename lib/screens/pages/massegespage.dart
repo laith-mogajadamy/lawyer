@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/pages/general_chat_page.dart';
 import 'package:lawyer/screens/pages/group_massege.dart';
-import 'package:lawyer/screens/pages/person_massege.dart';
 import 'package:lawyer/screens/widgets/black16text.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 
@@ -81,7 +79,7 @@ class _MassegesPageState extends State<MassegesPage> {
           body: const SafeArea(
             child: TabBarView(
               children: [
-                PersonMassege(),
+                // PersonMassege(),
                 GroupMassege(),
                 GeneralChatPage(),
               ],
