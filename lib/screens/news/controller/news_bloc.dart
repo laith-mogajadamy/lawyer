@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
+import 'package:lawyer/models/news.dart';
+import 'package:lawyer/models/news_model.dart';
 import 'package:lawyer/screens/news/data/news_request.dart';
 
 part 'news_event.dart';
@@ -24,16 +26,15 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         print(state.token);
         http.Response response = await NewsReqwest.getnews(state.token);
         var responsemap = await jsonDecode(response.body);
-        print("responsemap=");
+        print("news/responsemap=");
         print(responsemap);
         if (response.statusCode == 200) {
           emit(state.copyWith(
-            news: responsemap,
-            // news: List<String>.from(
-            //   (responsemap[0] as List).map(
-            //     (e) => GeneralquestionModel.fromJson(e),
-            //   ),
-            // ),
+            news: List<NewsM>.from(
+              (responsemap as List).map(
+                (e) => NewsModel.fromJson(e),
+              ),
+            ),
             newsState: RequestState.loaded,
           ));
           print("state.news=");

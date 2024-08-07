@@ -6,6 +6,7 @@ import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/pages/pages.dart';
+import 'package:lawyer/screens/welcome/client_register.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/register.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -192,7 +193,7 @@ class _LoginState extends State<Login> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const Register(),
+                                builder: (context) => const ClientRegister(),
                               ),
                             );
                           },

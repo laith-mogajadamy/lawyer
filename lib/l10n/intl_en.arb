@@ -134,6 +134,10 @@
     "yearsOfPractice":"Years Of Practice",
     "RateTheService":"Rate The Service",
     "selectPaymentMethod":"Select Payment Method",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "ttitle":"Title: ",
+    "shortdescription":"Short description: ",
+    "description":" Description: "
+
 
 }

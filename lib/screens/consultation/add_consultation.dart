@@ -27,164 +27,161 @@ class AddConsultation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => ConsultationBloc(),
-      child: BlocConsumer<ConsultationBloc, ConsultationState>(
-        listener: (context, state) {
-          if (state.invoicestate == RequestState.loaded) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.green,
-                duration: const Duration(seconds: 2),
-                content: Text(
-                  state.invoiceMessage,
-                  style: TextStyle(fontSize: 14.sp, color: Colors.white),
-                ),
+    return BlocConsumer<ConsultationBloc, ConsultationState>(
+      listener: (context, state) {
+        if (state.invoicestate == RequestState.loaded) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.green,
+              duration: const Duration(seconds: 2),
+              content: Text(
+                state.invoiceMessage,
+                style: TextStyle(fontSize: 14.sp, color: Colors.white),
               ),
-            );
-          } else if (state.invoicestate == RequestState.error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.red,
-                duration: const Duration(seconds: 2),
-                content: Text(
-                  state.invoiceMessage,
-                  style: TextStyle(fontSize: 14.sp, color: Colors.white),
-                ),
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: Center(
-                  child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      S.of(context).Consultations,
-                      style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Black18text(text: lawyer.name),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      width: size.width,
-                      child: ConsultationTitleInput(title: title),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      width: size.width,
-                      child:
-                          ConsultationDecriptionInput(description: description),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      width: size.width,
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        S
-                            .of(context)
-                            .THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppColor.apporange,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColor.apporange,
-                          decorationThickness: 3.h,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SizedBox(
-                      height: size.height / 15,
-                      width: size.width / 2.5,
-                      child: BlocBuilder<ConsultationBloc, ConsultationState>(
-                        builder: (context, state) {
-                          return ElevatedButton(
-                            onPressed: () {
-                              Locale currentLocale =
-                                  Localizations.localeOf(context);
-                              print(currentLocale.languageCode);
-                              startPayment(currentLocale.languageCode, context);
-                              // context.read<ConsultationBloc>().add(
-                              //       StartPayment(
-                              //         language: currentLocale.languageCode,
-                              //         title: title.text,
-                              //         description: description.text,
-                              //         invoicevalue:
-                              //             widget.lawyer.consultationPrice,
-                              //         receiverid: widget.lawyer.id,
-                              //         paymentid: paymentid,
-                              //         senderid: 0,
-                              //       ),
-                              //     );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: StadiumBorder(
-                                side: BorderSide(
-                                    color: Colors.black, width: 1.5.w),
-                              ),
-                            ),
-                            child: Text(
-                              S.of(context).paysend,
-                              style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 10.w, vertical: 10.h),
-                      width: size.width,
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        S
-                            .of(context)
-                            .IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: AppColor.apporange,
-                          fontWeight: FontWeight.w900,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColor.apporange,
-                          decorationThickness: 3.h,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )),
             ),
           );
-        },
-      ),
+        } else if (state.invoicestate == RequestState.error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 2),
+              content: Text(
+                state.invoiceMessage,
+                style: TextStyle(fontSize: 14.sp, color: Colors.white),
+              ),
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Center(
+                child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(
+                    S.of(context).Consultations,
+                    style: TextStyle(
+                      fontSize: 28.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Black18text(text: lawyer.name),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    width: size.width,
+                    child: ConsultationTitleInput(title: title),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    width: size.width,
+                    child:
+                        ConsultationDecriptionInput(description: description),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    width: size.width,
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      S
+                          .of(context)
+                          .THEDETAILANSWERWILLCOSTBASEDONTHELAWPRACTITIONERSRATEORSETPRICEOFTHISCONSULTAION,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColor.apporange,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColor.apporange,
+                        decorationThickness: 3.h,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  SizedBox(
+                    height: size.height / 15,
+                    width: size.width / 2.5,
+                    child: BlocBuilder<ConsultationBloc, ConsultationState>(
+                      builder: (context, state) {
+                        return ElevatedButton(
+                          onPressed: () {
+                            Locale currentLocale =
+                                Localizations.localeOf(context);
+                            print(currentLocale.languageCode);
+                            startPayment(currentLocale.languageCode, context);
+                            // context.read<ConsultationBloc>().add(
+                            //       StartPayment(
+                            //         language: currentLocale.languageCode,
+                            //         title: title.text,
+                            //         description: description.text,
+                            //         invoicevalue:
+                            //             widget.lawyer.consultationPrice,
+                            //         receiverid: widget.lawyer.id,
+                            //         paymentid: paymentid,
+                            //         senderid: 0,
+                            //       ),
+                            //     );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange,
+                            shape: StadiumBorder(
+                              side:
+                                  BorderSide(color: Colors.black, width: 1.5.w),
+                            ),
+                          ),
+                          child: Text(
+                            S.of(context).paysend,
+                            style: TextStyle(
+                                fontSize: 18.sp,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Container(
+                    margin:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    width: size.width,
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      S
+                          .of(context)
+                          .IFNOTANSWEREDIN48HOURSYOURMONEYWILLBESENTBACKTOYOURACCOUNT,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColor.apporange,
+                        fontWeight: FontWeight.w900,
+                        decoration: TextDecoration.underline,
+                        decorationColor: AppColor.apporange,
+                        decorationThickness: 3.h,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )),
+          ),
+        );
+      },
     );
   }
 

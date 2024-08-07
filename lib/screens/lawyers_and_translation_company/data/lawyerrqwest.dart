@@ -40,10 +40,11 @@ class Lawyersreqwest {
       "name": name,
       "members": membersid,
     };
+    print(data);
     var body = jsonEncode(data);
     var url = Uri.parse("${Global.url}group");
     http.Response response = await http.post(url, headers: headers, body: body);
-    print(response);
+    print(response.statusCode);
     var responsemap = jsonDecode(response.body);
     print("responsemap=");
     print(responsemap);

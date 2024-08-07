@@ -206,9 +206,9 @@ class GetPusherConfigrequest {
       "${Global.url}pusher_config",
       options: Options(headers: headers, method: "GET"),
     );
-    print(response.statusCode);
+    // print(response.statusCode);
 
-    print(response.data);
+    // print(response.data);
 
     return response;
   }

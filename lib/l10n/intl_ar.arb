@@ -134,5 +134,8 @@
     "yearsOfPractice":"سنوات الخبرة",
     "RateTheService":"قيم الخدمة",
     "selectPaymentMethod":"اختر طريقة الدفع",
-    "Cancel":"الغاء"
+    "Cancel":"الغاء",
+    "ttitle":" : العنوان",
+    "shortdescription":" :وصف قصير",
+    "description":" : الوصف"
 }

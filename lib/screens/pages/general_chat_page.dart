@@ -45,6 +45,7 @@ class GeneralChatPage extends StatelessWidget {
                                       token: state.token,
                                       user: state.user,
                                       group: state.user.generalChats![index],
+                                      pushertoken: state.pushertoken,
                                     ),
                                   ),
                                 );

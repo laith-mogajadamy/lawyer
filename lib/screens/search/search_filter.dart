@@ -27,7 +27,7 @@ class _SearchFilterState extends State<SearchFilter> {
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
-      height: size.height / 3,
+      height: size.height / 2.5,
       child: BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           switch (state.searchfiltersState) {
@@ -140,17 +140,17 @@ class _SearchFilterState extends State<SearchFilter> {
                             : (state.filtertype == "Practice")
                                 ? PracticeCheck(
                                     value: (state.selectedpractices.contains(
-                                      state.practices[index].name,
+                                      state.practices[index],
                                     )),
                                     name: state.practices[index].name,
                                     selected: state.practices[index],
                                   )
                                 : LanguageCheck(
                                     value: (state.selectedlanguages.contains(
-                                      state.languages[index].name,
+                                      state.languages[index],
                                     )),
                                     name: state.languages[index].name,
-                                    selected: state.languages[index].name,
+                                    selected: state.languages[index],
                                   );
                       },
                     ),

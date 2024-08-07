@@ -1195,6 +1195,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Title: `
+  String get ttitle {
+    return Intl.message(
+      'Title: ',
+      name: 'ttitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Short description: `
+  String get shortdescription {
+    return Intl.message(
+      'Short description: ',
+      name: 'shortdescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Description: `
+  String get description {
+    return Intl.message(
+      ' Description: ',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

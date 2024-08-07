@@ -150,6 +150,11 @@ class LawyersBloc extends Bloc<LawyersEvent, LawyersState> {
       );
     });
     on<CheckLawyer>((event, emit) async {
+      emit(
+        state.copyWith(
+          creatgroupstate: const InitialFormStatus(),
+        ),
+      );
       List<Lawyer> slected = List.from(state.selectedlawyers);
 
       print("before");
@@ -174,7 +179,12 @@ class LawyersBloc extends Bloc<LawyersEvent, LawyersState> {
       print("CreateGroup");
       String? ptoken = Preferences.getToken();
       if (ptoken!.isNotEmpty) {
-        emit(state.copyWith(token: ptoken, creatgroupstate: FormSubmitting()));
+        emit(
+          state.copyWith(
+            token: ptoken,
+            creatgroupstate: FormSubmitting(),
+          ),
+        );
         print("state.token");
         print(state.token);
 
@@ -183,18 +193,21 @@ class LawyersBloc extends Bloc<LawyersEvent, LawyersState> {
         var responsemap = await jsonDecode(response.body);
         print("responsemap=");
         print(responsemap);
-        if (response.statusCode == 200) {
+        if (response.statusCode == 201) {
           emit(state.copyWith(
+              selecte: false,
               creatgroupMessage: "Group created successfully ",
               creatgroupstate: SubmissionSuccess()));
         } else {
           emit(state.copyWith(
-            creatgroupstate: SubmissionFailed(responsemap["message"]),
-            creatgroupMessage: responsemap["message"],
+            selecte: false,
+            creatgroupstate: SubmissionFailed("Group creating failed"),
+            creatgroupMessage: "Group creating failed",
           ));
         }
       } else {
         emit(state.copyWith(
+          selecte: false,
           creatgroupstate: SubmissionFailed("Unauthenticated"),
           creatgroupMessage: "Unauthenticated",
         ));

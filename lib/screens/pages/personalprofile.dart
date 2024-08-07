@@ -38,8 +38,8 @@ class PersonalProfile extends StatelessWidget {
                       : CircleAvatar(
                           backgroundColor: AppColor.whiteColor,
                           radius: 75.r,
-                          child: Image.network(
-                            fit: BoxFit.cover,
+                          backgroundImage: NetworkImage(
+                            scale: 0.5,
                             state.user.profile,
                           ),
                         ),

@@ -172,20 +172,6 @@ class _TranslationCompanyRegisterState
                             height: 20.h,
                           ),
                           InfoInput(
-                            name: S.of(context).Occupation,
-                            hint: "tax lawyer",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    OccupationChanged(occupation: value),
-                                  );
-                            },
-                            controller: occupation,
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          InfoInput(
                               name: S.of(context).Password,
                               hint: "*******",
                               validator: (value) => state.isValidPassword

@@ -25,11 +25,11 @@ class Searchrequest {
     }
     List languagelist = [];
     for (var i = 0; i < language.length; i++) {
-      languagelist.add(language[i].name);
+      languagelist.add(language[i].id);
     }
     List practicelist = [];
     for (var i = 0; i < practice.length; i++) {
-      practicelist.add(practice[i].name);
+      practicelist.add(practice[i].id);
     }
     var url = Uri.parse(
         "${Global.url}lawyer?filter=[name]=$name&filter=[city]=$cityslist&filter=[practice]=$practicelist&filter=[language]=$languagelist");
@@ -54,8 +54,7 @@ class SearchFilterRequest {
       url,
       headers: headers,
     );
-    var responsemap = jsonDecode(response.body);
-    print(responsemap);
+
     return response;
   }
 
@@ -70,8 +69,6 @@ class SearchFilterRequest {
       url,
       headers: headers,
     );
-    var responsemap = jsonDecode(response.body);
-    print(responsemap);
 
     return response;
   }

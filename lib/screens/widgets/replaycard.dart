@@ -11,6 +11,8 @@ class Replaycard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.h),
       child: SizedBox(
@@ -25,8 +27,9 @@ class Replaycard extends StatelessWidget {
               width: 15.w,
             ),
             Container(
+              width: size.width / 1.4,
               decoration: BoxDecoration(
-                  color: AppColor.appgray,
+                  color: Color.fromARGB(255, 245, 242, 242),
                   borderRadius: BorderRadius.circular(20.r),
                   border: Border.all(color: Colors.black, width: 2.r)),
               child: Padding(

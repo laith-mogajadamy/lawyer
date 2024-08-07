@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/enums.dart';
-import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/general-question/controller/generalquestion_bloc.dart';
-import 'package:lawyer/screens/widgets/black22text.dart';
-import 'package:lawyer/screens/widgets/generalquestioncard.dart';
+import 'package:lawyer/screens/widgets/f_question_card.dart';
+import 'package:lawyer/screens/widgets/news_card.dart';
 import 'package:lottie/lottie.dart';
 
 class FrequentlyQuestionsComponent extends StatelessWidget {
@@ -34,8 +33,8 @@ class FrequentlyQuestionsComponent extends StatelessWidget {
               return ListView.builder(
                 itemCount: state.frequentlyquestions.length,
                 itemBuilder: (context, index) {
-                  return Generalquestioncard(
-                    genralqsttion: state.frequentlyquestions[index],
+                  return FQuestionCard(
+                    fquestion: state.frequentlyquestions[index],
                   );
                 },
               );

@@ -27,6 +27,8 @@ class _TranslationCompanyRegister2State
     extends State<TranslationCompanyRegister2> {
   bool bottom = false;
   TextEditingController consultationprice = TextEditingController();
+  TextEditingController yearsofpractice = TextEditingController();
+
   TextEditingController language = TextEditingController();
 
   @override
@@ -79,6 +81,17 @@ class _TranslationCompanyRegister2State
                             ConsultationPriceChanged(consultationprice: value),
                           ),
                       controller: consultationprice),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  InfoInput(
+                      name: "${S.of(context).yearsOfPractice} :",
+                      hint: "3",
+                      validator: null,
+                      onchange: (value) => context.read<EnterBloc>().add(
+                            YearsOfPracticeChanged(yearsofpractice: value),
+                          ),
+                      controller: yearsofpractice),
                   SizedBox(
                     height: 20.h,
                   ),

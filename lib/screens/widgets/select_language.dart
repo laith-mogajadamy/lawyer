@@ -20,10 +20,11 @@ class SelectLanguage extends StatelessWidget {
           children: [
             Black18text(text: S.of(context).Language),
             SizedBox(
-              height: size.height / 4,
+              height: size.height / 2.8,
               width: size.width,
               child: GridView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 4,
                   crossAxisCount: 2,

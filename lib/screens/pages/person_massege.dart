@@ -184,17 +184,20 @@ class _PersonMassegeState extends State<PersonMassege> {
                                           // }
                                           print("/////////");
                                           print(asyncSnapshot.data);
-                                          return Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15.w),
-                                            child: CircleAvatar(
-                                              radius: 14.r,
-                                              backgroundColor: AppColor.appgray,
-                                              child: Black16text(
-                                                  text: asyncSnapshot.data
-                                                      .toString()),
-                                            ),
-                                          );
+                                          return (asyncSnapshot.data != null)
+                                              ? Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15.w),
+                                                  child: CircleAvatar(
+                                                    radius: 14.r,
+                                                    backgroundColor:
+                                                        AppColor.appgray,
+                                                    child: Black16text(
+                                                        text: asyncSnapshot.data
+                                                            .toString()),
+                                                  ),
+                                                )
+                                              : const SizedBox.shrink();
                                         },
                                       ),
                                     ],

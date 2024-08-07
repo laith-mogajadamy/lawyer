@@ -22,68 +22,65 @@ class _MassegesPageState extends State<MassegesPage> {
     // Size size = MediaQuery.of(context).size;
 
     // TextEditingController textcontroller = TextEditingController();
-    return BlocProvider(
-      create: (context) => ChatBloc(),
-      child: DefaultTabController(
-        initialIndex: 0,
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            leadingWidth: 0,
-            automaticallyImplyLeading: false,
-            leading: null,
-            actions: null,
-            backgroundColor: AppColor.appgray,
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Black16text(text: S.of(context).Persons),
-                ),
-                Tab(
-                  child: Black16text(text: S.of(context).Groups),
-                ),
-                Tab(
-                  child: Black16text(text: S.of(context).generalchat),
-                ),
-              ],
-            ),
-            title: Black22text(text: S.of(context).chat),
-            // title: TextFormField(
-            //   onChanged: (string) {
-            //     setState(() {});
-            //   },
-            //   controller: textcontroller,
-            //   enabled: true,
-            //   style: TextStyle(color: Colors.black, fontSize: 18.sp),
-            //   decoration: InputDecoration(
-            //       focusedBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(20.r),
-            //       ),
-            //       hintText: S.of(context).search,
-            //       hintStyle: const TextStyle(color: Colors.black),
-            //       filled: true,
-            //       fillColor: AppColor.appgray,
-            //       prefixIcon: InkWell(
-            //         onTap: () {},
-            //         child: Icon(
-            //           Icons.search,
-            //           size: 33.sp,
-            //           color: Colors.black,
-            //         ),
-            //       ),
-            //       border: UnderlineInputBorder(
-            //           borderSide: BorderSide(color: Colors.black, width: 2.h))),
-            // ),
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          leadingWidth: 0,
+          automaticallyImplyLeading: false,
+          leading: null,
+          actions: null,
+          backgroundColor: AppColor.appgray,
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                child: Black16text(text: S.of(context).Persons),
+              ),
+              Tab(
+                child: Black16text(text: S.of(context).Groups),
+              ),
+              Tab(
+                child: Black16text(text: S.of(context).generalchat),
+              ),
+            ],
           ),
-          body: const SafeArea(
-            child: TabBarView(
-              children: [
-                // PersonMassege(),
-                GroupMassege(),
-                GeneralChatPage(),
-              ],
-            ),
+          title: Black22text(text: S.of(context).chat),
+          // title: TextFormField(
+          //   onChanged: (string) {
+          //     setState(() {});
+          //   },
+          //   controller: textcontroller,
+          //   enabled: true,
+          //   style: TextStyle(color: Colors.black, fontSize: 18.sp),
+          //   decoration: InputDecoration(
+          //       focusedBorder: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.r),
+          //       ),
+          //       hintText: S.of(context).search,
+          //       hintStyle: const TextStyle(color: Colors.black),
+          //       filled: true,
+          //       fillColor: AppColor.appgray,
+          //       prefixIcon: InkWell(
+          //         onTap: () {},
+          //         child: Icon(
+          //           Icons.search,
+          //           size: 33.sp,
+          //           color: Colors.black,
+          //         ),
+          //       ),
+          //       border: UnderlineInputBorder(
+          //           borderSide: BorderSide(color: Colors.black, width: 2.h))),
+          // ),
+        ),
+        body: const SafeArea(
+          child: TabBarView(
+            children: [
+              // PersonMassege(),
+              GroupMassege(),
+              GeneralChatPage(),
+            ],
           ),
         ),
       ),

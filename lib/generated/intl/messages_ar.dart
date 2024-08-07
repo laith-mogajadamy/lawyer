@@ -131,6 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاستشارات المغلقة"),
         "consultationprice":
             MessageLookupByLibrary.simpleMessage(":سعر الاستشارة"),
+        "description": MessageLookupByLibrary.simpleMessage(" : الوصف"),
         "donthaveanaccount":
             MessageLookupByLibrary.simpleMessage("لا تمتلك حساب؟"),
         "email": MessageLookupByLibrary.simpleMessage("الايميل"),
@@ -164,9 +165,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectPaymentMethod":
             MessageLookupByLibrary.simpleMessage("اختر طريقة الدفع"),
         "sendaquestion": MessageLookupByLibrary.simpleMessage("إرسال سؤال"),
+        "shortdescription": MessageLookupByLibrary.simpleMessage(" :وصف قصير"),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),
         "translationcompany":
             MessageLookupByLibrary.simpleMessage("شركات الترجمة"),
+        "ttitle": MessageLookupByLibrary.simpleMessage(" : العنوان"),
         "typeorselecttosearch":
             MessageLookupByLibrary.simpleMessage("اكتب أو حدد للبحث"),
         "typingCenter": MessageLookupByLibrary.simpleMessage("مركز الطباعة"),

@@ -99,15 +99,15 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       print(state.token);
       http.Response practiseresponse = await SearchFilterRequest.getpractice();
       var practiseresponsemap = jsonDecode(practiseresponse.body);
-      print("practiseresponsemap=");
-      print(practiseresponsemap);
+      // print("practiseresponsemap=");
+      // print(practiseresponsemap);
       http.Response languageresponse = await SearchFilterRequest.getlanguage();
       var languageresponsemap = jsonDecode(languageresponse.body);
       //get the locations
-      print("practiseresponsemap=");
-      print(practiseresponsemap);
-      print("languageresponsemap=");
-      print(languageresponsemap);
+      // print("practiseresponsemap=");
+      // print(practiseresponsemap);
+      // print("languageresponsemap=");
+      // print(languageresponsemap);
 
       if (practiseresponse.statusCode == 200 &&
           languageresponse.statusCode == 200) {
@@ -124,10 +124,10 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
           ),
           // searchfiltersState: RequestState.loaded
         ));
-        print("state.practices=");
-        print(state.practices);
-        print("state.languages=");
-        print(state.languages);
+        // print("state.practices=");
+        // print(state.practices);
+        // print("state.languages=");
+        // print(state.languages);
       } else {
         print("error11");
 
@@ -435,6 +435,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
     on<CountryChanged>((event, emit) async {
       emit(state.copyWith(
         selectedcoutry: event.country,
+        selectedcity: const City(id: 0, name: ''),
       ));
     });
     on<CityChanged>((event, emit) async {
@@ -618,6 +619,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         //check if its practise or expertise
         state.selectedpractices,
         state.selectedlanguages,
+        state.fimage,
       );
       print("message==${state.message}");
       print("*********");

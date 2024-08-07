@@ -102,6 +102,7 @@ class Auth {
     List<File>? licenses,
     List<Practice> practices,
     List<Language> languages,
+    File? profile,
   ) async {
     List certificationlist = [];
     for (var i = 0; i < certifications!.length; i++) {
@@ -164,8 +165,15 @@ class Auth {
         "licenses[]": licenseslist,
         "practices[]": practiceslist,
         "languages[]": languageslist,
+        "profile": await MultipartFile.fromFile(
+          profile!.path,
+          filename: profile.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
       },
     );
+    print(profile);
+    print(profile.path);
     print(formdata.fields);
     print(formdata.files);
     Response response;

@@ -29,245 +29,238 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return BlocProvider(
-      create: (context) => SearchBloc(),
-      child: BlocBuilder<SearchBloc, SearchState>(
-        builder: (context, state) {
-          return SafeArea(
-            child: Padding(
-              padding: EdgeInsets.only(top: 3.h),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    height: size.height / 16,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: size.width / 1.2,
-                            child: Form(
-                              child: TextFormField(
-                                onTap: () {
-                                  filter = !state.filter;
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(top: 3.h),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  height: size.height / 16,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: size.width / 1.2,
+                          child: Form(
+                            child: TextFormField(
+                              onTap: () {
+                                filter = !state.filter;
 
+                                context.read<SearchBloc>().add(
+                                      Filtershow(filter: filter),
+                                    );
+
+                                if (filter) {
                                   context.read<SearchBloc>().add(
-                                        Filtershow(filter: filter),
+                                        Searchlawyers(),
                                       );
-
-                                  if (filter) {
+                                } else {
+                                  controller.clear();
+                                }
+                                if (!filter) {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                }
+                              },
+                              onChanged: (string) {
+                                context.read<SearchBloc>().add(
+                                      ChangeSearchField(searchfield: string),
+                                    );
+                              },
+                              controller: controller,
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 18.sp),
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 2.w),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                hintText:
+                                    S.of(context).WhoareyoulookingforTaxLawyer,
+                                hintStyle: const TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                suffixIcon: InkWell(
+                                  onTap: () {
                                     context.read<SearchBloc>().add(
                                           Searchlawyers(),
                                         );
-                                  } else {
-                                    controller.clear();
-                                  }
-                                  if (!filter) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                  }
-                                },
-                                onChanged: (string) {
-                                  context.read<SearchBloc>().add(
-                                        ChangeSearchField(searchfield: string),
-                                      );
-                                },
-                                controller: controller,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18.sp),
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 2.w),
-                                    borderRadius: BorderRadius.circular(20.r),
+                                  },
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 33.sp,
+                                    color: Colors.black,
                                   ),
-                                  hintText: S
-                                      .of(context)
-                                      .WhoareyoulookingforTaxLawyer,
-                                  hintStyle: const TextStyle(
-                                      color: Colors.black, fontSize: 14),
-                                  suffixIcon: InkWell(
-                                    onTap: () {
-                                      context.read<SearchBloc>().add(
-                                            Searchlawyers(),
-                                          );
-                                    },
-                                    child: Icon(
-                                      Icons.search,
-                                      size: 33.sp,
-                                      color: Colors.black,
-                                    ),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 2.w,
                                   ),
-                                  disabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 2.w,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.r),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 2.w,
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 2.w,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.r),
+                                  borderRadius: BorderRadius.circular(20.r),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.black,
+                                    width: 2.w,
                                   ),
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.black,
-                                      width: 2.w,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.r),
-                                  ),
+                                  borderRadius: BorderRadius.circular(20.r),
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                  (state.filter)
-                      ? const Expanded(child: Searchcomponent())
-                      : Padding(
-                          padding: EdgeInsets.only(bottom: size.height / 50),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const News(),
-                              SizedBox(
-                                height: 10.h,
+                ),
+                (state.filter)
+                    ? const Expanded(child: Searchcomponent())
+                    : Padding(
+                        padding: EdgeInsets.only(bottom: size.height / 50),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const News(),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            LawyerHomeContainer(
+                                ontap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Lawyerspage()),
+                                  );
+                                },
+                                image:
+                                    "assets/images/frequently asked questions.png",
+                                text: S.of(context).LAWPRACTIONERS),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 15.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HomeContainer(
+                                    ontap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Generalquestion()),
+                                      );
+                                    },
+                                    image: "assets/images/generalquestion.png",
+                                    text: S.of(context).GeneralQuestions,
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  BlocBuilder<EnterBloc, EnterState>(
+                                    builder: (context, state) {
+                                      return (state.user.role == "client")
+                                          ? HomeContainer(
+                                              ontap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const TranslationCompanys()),
+                                                );
+                                              },
+                                              image:
+                                                  "assets/images/translationcompany.png",
+                                              text: S
+                                                  .of(context)
+                                                  .translationcompany,
+                                            )
+                                          : HomeContainer(
+                                              ontap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const FormPages()),
+                                                );
+                                              },
+                                              image: "assets/images/chat.png",
+                                              text: S.of(context).Theforum,
+                                            );
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 10.w,
+                                  ),
+                                  HomeContainer(
+                                    ontap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const FrequentlyQuestions()),
+                                      );
+                                    },
+                                    image:
+                                        "assets/images/frequently asked questions.png",
+                                    text:
+                                        S.of(context).frequentlyaskedquestions,
+                                  ),
+                                ],
                               ),
-                              LawyerHomeContainer(
-                                  ontap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Lawyerspage()),
-                                    );
-                                  },
-                                  image:
-                                      "assets/images/frequently asked questions.png",
-                                  text: S.of(context).LAWPRACTIONERS),
-                              SizedBox(
-                                height: 10.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 35.w,
+                                top: 10.h,
+                                right: 35.w,
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 15.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    HomeContainer(
-                                      ontap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Generalquestion()),
-                                        );
-                                      },
-                                      image:
-                                          "assets/images/generalquestion.png",
-                                      text: S.of(context).GeneralQuestions,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LawyersAvailable()),
+                                      );
+                                    },
+                                    child: Text(
+                                      S.of(context).lawyersAvailable,
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    BlocBuilder<EnterBloc, EnterState>(
-                                      builder: (context, state) {
-                                        return (state.user.role == "client")
-                                            ? HomeContainer(
-                                                ontap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const TranslationCompanys()),
-                                                  );
-                                                },
-                                                image:
-                                                    "assets/images/translationcompany.png",
-                                                text: S
-                                                    .of(context)
-                                                    .translationcompany,
-                                              )
-                                            : HomeContainer(
-                                                ontap: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const FormPages()),
-                                                  );
-                                                },
-                                                image: "assets/images/chat.png",
-                                                text: S.of(context).Theforum,
-                                              );
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    HomeContainer(
-                                      ontap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const FrequentlyQuestions()),
-                                        );
-                                      },
-                                      image:
-                                          "assets/images/frequently asked questions.png",
-                                      text: S
-                                          .of(context)
-                                          .frequentlyaskedquestions,
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 35.w,
-                                  top: 10.h,
-                                  right: 35.w,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LawyersAvailable()),
-                                        );
-                                      },
-                                      child: Text(
-                                        S.of(context).lawyersAvailable,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: 14.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                ],
-              ),
+                      ),
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

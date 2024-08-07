@@ -3,7 +3,7 @@ part of 'news_bloc.dart';
 class NewsState extends Equatable {
   final String token;
   //
-  final List<String> news;
+  final List<NewsM> news;
   final RequestState newsState;
   final String newsMessage;
   //
@@ -20,7 +20,7 @@ class NewsState extends Equatable {
   NewsState copyWith({
     String? token,
     //
-    List<String>? news,
+    List<NewsM>? news,
     RequestState? newsState,
     String? newsMessage,
     //

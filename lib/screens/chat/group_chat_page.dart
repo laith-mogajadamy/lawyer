@@ -20,6 +20,7 @@ import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
 import 'package:lawyer/screens/widgets/chatbuble.dart';
+import 'package:lawyer/screens/widgets/group_chat_buble.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pusher_client/pusher_client.dart';
 
@@ -27,11 +28,14 @@ class GroupChatPage extends StatefulWidget {
   final Lawyer user;
   final Groups group;
   final String token;
+  final String pushertoken;
+
   const GroupChatPage({
     super.key,
     required this.user,
     required this.token,
     required this.group,
+    required this.pushertoken,
   });
 
   @override
@@ -53,11 +57,12 @@ class _GroupChatPageState extends State<GroupChatPage> {
   addoldmessages() async {
     Response response;
     print(widget.token);
-
+    print("widget.group.id");
+    print(widget.group.id);
     response = await GetMessagesInGroup.getmessagesingroup(
         widget.group.id, widget.token);
     List<Message> hmessages = List<MessageModel>.from(
-      (response.data['data'] as List).map(
+      (response.data['messages'] ?? []).map(
         (e) => MessageModel.fromJson(e),
       ),
     );
@@ -69,11 +74,6 @@ class _GroupChatPageState extends State<GroupChatPage> {
   pusherinit() async {
     await addoldmessages();
 
-    Response response =
-        await GetPusherConfigrequest.getpusherconfig(widget.token);
-    String pushertoken =
-        response.data['options']['auth']['headers']['Authorization'];
-    print(pushertoken);
     try {
       pusher = PusherClient(
         "21c93d7ae9ded5a63591",
@@ -86,7 +86,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
             headers: {
               "Accept": "application/json",
               "Content-type": "application/json",
-              "Authorization": pushertoken,
+              "Authorization": widget.pushertoken,
             },
           ),
         ),
@@ -116,8 +116,10 @@ class _GroupChatPageState extends State<GroupChatPage> {
           message: jsonData['message'],
           type: "",
           file: File(""),
-          attachment: jsonData['attachment'],
-          sender: null,
+          attachment: jsonData['attachment']?["url"] ?? "",
+          sender: LawyerModel.fromJson(
+            jsonData['sender'] ?? {},
+          ),
           receiver: LawyerModel.fromJson(
             jsonData['receiver'] ?? {},
           ),
@@ -196,7 +198,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
               type: pfile!.path.split(".").last,
               file: pfile,
               attachment: null,
-              sender: null,
+              sender: widget.user,
               receiver: null);
           messages.insert(0, message);
           messagesstream.sink.add(message);
@@ -271,9 +273,12 @@ class _GroupChatPageState extends State<GroupChatPage> {
                         dragStartBehavior: DragStartBehavior.down,
                         itemBuilder: (BuildContext context, int index) {
                           Message message = messages[index];
+                          print(message.sender!.name);
+                          print(message);
+
                           return Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: ChatBubble(
+                            child: GroupChatBubble(
                               isMe: (message.sender != null)
                                   ? (message.sender!.id == widget.user.id)
                                       ? true
@@ -394,7 +399,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
                                     type: "text",
                                     file: null,
                                     attachment: null,
-                                    sender: null,
+                                    sender: widget.user,
                                     receiver: null);
                                 messages.insert(0, message);
                                 messagesstream.sink.add(message);

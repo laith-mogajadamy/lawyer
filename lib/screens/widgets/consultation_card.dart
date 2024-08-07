@@ -78,8 +78,13 @@ class ConsultationCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: Center(
-                                  child: Text(consultation.status,
-                                      style: TextStyle(fontSize: 12.sp)),
+                                  child: Text(
+                                    consultation.status,
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
                                 ),
                               )
                             : Container(
@@ -88,10 +93,14 @@ class ConsultationCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: Center(
-                                    child: Text(
-                                  consultation.status,
-                                  style: TextStyle(fontSize: 12.sp),
-                                )),
+                                  child: Text(
+                                    consultation.status,
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: AppColor.whiteColor,
+                                    ),
+                                  ),
+                                ),
                               ),
                       ),
                     ),

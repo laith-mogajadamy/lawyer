@@ -43,7 +43,7 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
           bottomNavigationBar:
               (state.bottom) ? const Imagepicker() : const SizedBox.shrink(),
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 25.w),
+            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 20.w),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

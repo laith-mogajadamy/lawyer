@@ -66,7 +66,8 @@ class Contacts extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: SizedBox(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 0, right: 25.w, top: 20.h),
                       child: GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(

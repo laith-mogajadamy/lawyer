@@ -46,6 +46,7 @@ class GroupMassege extends StatelessWidget {
                                       token: state.token,
                                       user: state.user,
                                       group: state.user.groups![index],
+                                      pushertoken: state.pushertoken,
                                     ),
                                   ),
                                 );

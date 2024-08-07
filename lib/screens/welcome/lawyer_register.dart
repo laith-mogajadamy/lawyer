@@ -66,7 +66,7 @@ class _LawyerRegisterState extends State<LawyerRegister> {
           bottomNavigationBar:
               (state.bottom) ? const Imagepicker() : const SizedBox.shrink(),
           body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 25.h),
+            padding: EdgeInsets.symmetric(vertical: 25.h, horizontal: 10.w),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,20 +165,6 @@ class _LawyerRegisterState extends State<LawyerRegister> {
                             height: 20.h,
                           ),
                           const SelectCity(),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          InfoInput(
-                            name: S.of(context).Occupation,
-                            hint: "tax lawyer",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    OccupationChanged(occupation: value),
-                                  );
-                            },
-                            controller: occupation,
-                          ),
                           SizedBox(
                             height: 20.h,
                           ),

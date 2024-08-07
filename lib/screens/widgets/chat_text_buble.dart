@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/message.dart';
+import 'package:lawyer/screens/widgets/black12text.dart';
 
 class ChatTextBuble extends StatelessWidget {
   const ChatTextBuble({
@@ -60,6 +61,11 @@ class ChatTextBuble extends StatelessWidget {
                   crossAxisAlignment:
                       isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 3.h),
+                      child: Black12text(text: message.sender!.name),
+                    ),
                     Text(
                       message.message!,
                       textAlign: isMe ? TextAlign.end : TextAlign.start,

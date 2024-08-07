@@ -138,6 +138,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ClosedConsultation"),
         "consultationprice":
             MessageLookupByLibrary.simpleMessage("consultation price:"),
+        "description": MessageLookupByLibrary.simpleMessage(" Description: "),
         "donthaveanaccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "email": MessageLookupByLibrary.simpleMessage("email"),
@@ -173,9 +174,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Payment Method"),
         "sendaquestion":
             MessageLookupByLibrary.simpleMessage("send a question"),
+        "shortdescription":
+            MessageLookupByLibrary.simpleMessage("Short description: "),
         "title": MessageLookupByLibrary.simpleMessage("BRIEfCASE"),
         "translationcompany":
             MessageLookupByLibrary.simpleMessage("Translation\nCompany"),
+        "ttitle": MessageLookupByLibrary.simpleMessage("Title: "),
         "typeorselecttosearch":
             MessageLookupByLibrary.simpleMessage("type or select to search"),
         "typingCenter": MessageLookupByLibrary.simpleMessage("typing Center"),

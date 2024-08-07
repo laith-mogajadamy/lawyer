@@ -23,121 +23,116 @@ class ConsultationPage extends StatelessWidget {
     print("*************");
     print(consultation.answer);
     Size size = MediaQuery.of(context).size;
-    return BlocProvider(
-      create: (context) => ConsultationBloc(),
-      child: BlocBuilder<ConsultationBloc, ConsultationState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                child: ListView(
-                  children: [
-                    Center(
-                      child: Text(
-                        S.of(context).Consultations,
-                        style: TextStyle(
-                          fontSize: 28.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+    return BlocBuilder<ConsultationBloc, ConsultationState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: ListView(
+                children: [
+                  Center(
+                    child: Text(
+                      S.of(context).Consultations,
+                      style: TextStyle(
+                        fontSize: 28.sp,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Center(child: Black18text(text: consultation.sender.name)),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    QuestionAndTitle(
-                      title:
-                          "${consultation.title}\n${consultation.description}",
-                    ),
-                    ReplayTextField(
-                      controller: controller,
-                      hint: S.of(context).Typeyouranswerwithdetails,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: size.width / 4),
-                      child: BlocListener<ConsultationBloc, ConsultationState>(
-                        listener: (context, state) {
-                          if (state.consultationState == RequestState.loaded) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.green,
-                                duration: const Duration(seconds: 2),
-                                content: Text(
-                                  state.consultationMessage,
-                                  style: TextStyle(
-                                      fontSize: 14.sp, color: Colors.white),
-                                ),
+                  ),
+                  Center(child: Black18text(text: consultation.sender.name)),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  QuestionAndTitle(
+                    title: "${consultation.title}\n${consultation.description}",
+                  ),
+                  ReplayTextField(
+                    controller: controller,
+                    hint: S.of(context).Typeyouranswerwithdetails,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: size.width / 4),
+                    child: BlocListener<ConsultationBloc, ConsultationState>(
+                      listener: (context, state) {
+                        if (state.consultationState == RequestState.loaded) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.green,
+                              duration: const Duration(seconds: 2),
+                              content: Text(
+                                state.consultationMessage,
+                                style: TextStyle(
+                                    fontSize: 14.sp, color: Colors.white),
                               ),
-                            );
-                            context.read<EnterBloc>().add(Getuser());
-                          } else if (state.consultationState ==
-                              RequestState.error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.red,
-                                duration: const Duration(seconds: 2),
-                                content: Text(
-                                  state.consultationMessage,
-                                  style: TextStyle(
-                                      fontSize: 14.sp, color: Colors.white),
-                                ),
+                            ),
+                          );
+                          context.read<EnterBloc>().add(Getuser());
+                        } else if (state.consultationState ==
+                            RequestState.error) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Colors.red,
+                              duration: const Duration(seconds: 2),
+                              content: Text(
+                                state.consultationMessage,
+                                style: TextStyle(
+                                    fontSize: 14.sp, color: Colors.white),
                               ),
-                            );
-                          }
+                            ),
+                          );
+                        }
+                      },
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          context.read<ConsultationBloc>().add(
+                                Answerconsultation(
+                                  id: consultation.id,
+                                  answer: controller.text.trim(),
+                                ),
+                              );
+                          controller.clear();
                         },
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            context.read<ConsultationBloc>().add(
-                                  Answerconsultation(
-                                    id: consultation.id,
-                                    answer: controller.text.trim(),
-                                  ),
-                                );
-                            controller.clear();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            fixedSize: Size(
-                              size.width / 5,
-                              size.height / 15,
-                            ),
-                            backgroundColor: Colors.orange,
-                            shape: StadiumBorder(
-                              side:
-                                  BorderSide(color: Colors.black, width: 1.5.w),
-                            ),
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: Size(
+                            size.width / 5,
+                            size.height / 15,
                           ),
-                          child: Text(
-                            S.of(context).Send,
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                          backgroundColor: Colors.orange,
+                          shape: StadiumBorder(
+                            side: BorderSide(color: Colors.black, width: 1.5.w),
                           ),
+                        ),
+                        child: Text(
+                          S.of(context).Send,
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    (consultation.answer.isEmpty)
-                        ? const SizedBox.shrink()
-                        : Column(
-                            children: [
-                              Black22text(text: S.of(context).Answer),
-                              Black22text(text: consultation.answer)
-                            ],
-                          ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  (consultation.answer.isEmpty)
+                      ? const SizedBox.shrink()
+                      : Column(
+                          children: [
+                            Black22text(text: S.of(context).Answer),
+                            Black22text(text: consultation.answer)
+                          ],
+                        ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

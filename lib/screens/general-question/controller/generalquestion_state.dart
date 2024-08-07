@@ -9,7 +9,7 @@ class GeneralquestionState extends Equatable {
   //
   final String generalquestionreplyMessage;
   //
-  final List<Generalquestion> frequentlyquestions;
+  final List<FQuestion> frequentlyquestions;
   final RequestState frequentlyquestionsState;
   final String frequentlyquestionMessage;
   //
@@ -36,7 +36,7 @@ class GeneralquestionState extends Equatable {
     //
     String? generalquestionreplyMessage,
     //
-    List<Generalquestion>? frequentlyquestions,
+    List<FQuestion>? frequentlyquestions,
     RequestState? frequentlyquestionsState,
     String? frequentlyquestionMessage,
   }) {

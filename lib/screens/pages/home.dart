@@ -73,7 +73,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
               ],
             ),
             SizedBox(
-              height: 10.h,
+              height: 0.h,
             ),
             const Expanded(child: Search()),
           ],

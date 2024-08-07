@@ -152,6 +152,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           searchfield: event.searchfield,
         ),
       );
+      print(state.searchfield);
     });
     //
     on<ChangeFilterType>((event, emit) async {
@@ -160,6 +161,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           filtertype: event.filtertype,
         ),
       );
+      print(state.filtertype);
     });
     on<CountryCheck>((event, emit) async {
       if (state.filtertype == "location") {

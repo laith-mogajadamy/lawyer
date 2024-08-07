@@ -4,9 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:lawyer/core/utils/enums.dart';
 import 'package:lawyer/core/utils/prefrences.dart';
+import 'package:lawyer/models/fquestion.dart';
+import 'package:lawyer/models/fquestion_model.dart';
 import 'package:lawyer/models/general_question.dart';
 import 'package:http/http.dart' as http;
 import 'package:lawyer/models/generalquestionmodel.dart';
+import 'package:lawyer/models/news.dart';
+import 'package:lawyer/models/news_model.dart';
 import 'package:lawyer/screens/general-question/data/general_question_reqwest.dart';
 
 part 'generalquestion_event.dart';
@@ -135,9 +139,9 @@ class GeneralquestionBloc
         print(responsemap);
         if (response.statusCode == 200) {
           emit(state.copyWith(
-            frequentlyquestions: List<GeneralquestionModel>.from(
+            frequentlyquestions: List<FQuestion>.from(
               (responsemap as List).map(
-                (e) => GeneralquestionModel.fromJson(e),
+                (e) => FQuestionModel.fromJson(e),
               ),
             ),
             frequentlyquestionsState: RequestState.loaded,
