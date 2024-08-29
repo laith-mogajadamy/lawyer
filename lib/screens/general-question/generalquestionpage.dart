@@ -51,8 +51,16 @@ class _GeneralquestionpageState extends State<Generalquestionpage> {
                   ),
                 ),
                 Center(
-                    child: Black18text(
-                        text: widget.generalquestion.userRequest.name)),
+                  child: BlocBuilder<EnterBloc, EnterState>(
+                    builder: (context, state) {
+                      return Black18text(
+                        text: (widget.generalquestion.userRequest.name == '')
+                            ? state.user.name
+                            : widget.generalquestion.userRequest.name,
+                      );
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: 10.h,
                 ),

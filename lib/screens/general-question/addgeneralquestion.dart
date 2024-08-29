@@ -18,6 +18,8 @@ class AddGeneralquestionpage extends StatefulWidget {
 
 class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
   TextEditingController controller = TextEditingController();
+  TextEditingController title = TextEditingController();
+
   @override
   void dispose() {
     controller.dispose();
@@ -43,6 +45,44 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                         fontSize: 28.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColor.apporange),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Container(
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                  width: size.width,
+                  height: size.height / 10,
+                  child: Form(
+                    child: TextFormField(
+                      controller: title,
+                      onChanged: (string) {},
+                      minLines: 2,
+                      maxLines: 30,
+                      enabled: true,
+                      style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                        hintText: S.of(context).ttitle,
+                        hintStyle: TextStyle(
+                            fontSize: 24.sp,
+                            color: AppColor.apporange,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColor.apporange,
+                            decorationThickness: 3,
+                            decorationStyle: TextDecorationStyle.dotted),
+                        filled: true,
+                        fillColor: AppColor.appgray,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -146,6 +186,7 @@ class _AddGeneralquestionpageState extends State<AddGeneralquestionpage> {
                         if (controller.text.isNotEmpty) {
                           context.read<GeneralquestionBloc>().add(
                                 AddGeneralquestion(
+                                  title: title.text.trim(),
                                   question: controller.text.trim(),
                                 ),
                               );

@@ -145,24 +145,6 @@ class _TranslationCompanyRegisterState
                           SizedBox(
                             height: 20.h,
                           ),
-                          const SelectGender(),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          InfoInput(
-                            name: S.of(context).birth,
-                            hint: "00-00-0000",
-                            validator: null,
-                            onchange: (value) {
-                              return context.read<EnterBloc>().add(
-                                    BirthChanged(birth: value),
-                                  );
-                            },
-                            controller: birth,
-                          ),
-                          SizedBox(
-                            height: 20.h,
-                          ),
                           const SelectCountry(),
                           SizedBox(
                             height: 20.h,
@@ -197,29 +179,6 @@ class _TranslationCompanyRegisterState
                                             retypePassword: value),
                                       ),
                               controller: retypePassword),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          InfoInput(
-                              name: S.of(context).EIDNumber,
-                              hint: "78400000000",
-                              validator: null,
-                              onchange: (value) =>
-                                  context.read<EnterBloc>().add(
-                                        EidNumberChanged(eidnumber: value),
-                                      ),
-                              controller: eidnumber),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          Black18text(text: S.of(context).UploadEID),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              FronteIdChange(),
-                              BackeIdChange(),
-                            ],
-                          ),
                           SizedBox(
                             height: 20.h,
                           ),

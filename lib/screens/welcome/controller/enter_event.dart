@@ -110,6 +110,8 @@ class LawyerProfiledit extends EnterEvent {
   final List<File>? licenses;
   final List<Practice>? practices;
   final List<Language>? languages;
+  final String? facebook;
+  final String? tiktok;
 
   LawyerProfiledit({
     this.fimage,
@@ -135,6 +137,8 @@ class LawyerProfiledit extends EnterEvent {
     this.licenses,
     this.practices,
     this.languages,
+    this.facebook,
+    this.tiktok,
   });
 
   @override
@@ -161,6 +165,73 @@ class LawyerProfiledit extends EnterEvent {
         emiratesid,
         licenses,
         practices,
+        languages,
+        facebook,
+        tiktok,
+      ];
+}
+
+class TCompanyProfiledit extends EnterEvent {
+  final File? fimage;
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? passwordconfirmation;
+  final String? number;
+  final String? country;
+  final String? city;
+  final String? landline;
+  final String? bio;
+  final String? location;
+  final int? consultationPrice;
+  final bool? available;
+  final List<File>? certification;
+  final List<File>? licenses;
+  final List<Language>? languages;
+  final String? facebook;
+  final String? tiktok;
+
+  TCompanyProfiledit({
+    this.fimage,
+    this.name,
+    this.email,
+    this.number,
+    this.location,
+    this.consultationPrice,
+    this.certification,
+    this.password,
+    this.passwordconfirmation,
+    this.country,
+    this.city,
+    this.landline,
+    this.bio,
+    this.available,
+    this.licenses,
+    this.languages,
+    this.facebook,
+    this.tiktok,
+  });
+
+  @override
+  List<Object?> get props => [
+        fimage,
+        name,
+        email,
+        number,
+        location,
+        consultationPrice,
+        certification,
+        password,
+        passwordconfirmation,
+        country,
+        city,
+        landline,
+        bio,
+        available,
+        licenses,
+        languages,
+        facebook,
+        tiktok,
       ];
 }
 
@@ -369,6 +440,24 @@ class TypeChanged extends EnterEvent {
   List<Object?> get props => [type];
 }
 
+class FacebookChanged extends EnterEvent {
+  final String? facebook;
+
+  FacebookChanged({this.facebook});
+
+  @override
+  List<Object?> get props => [facebook];
+}
+
+class TiktokChanged extends EnterEvent {
+  final String? tiktok;
+
+  TiktokChanged({this.tiktok});
+
+  @override
+  List<Object?> get props => [tiktok];
+}
+
 class LoginSubmitted extends EnterEvent {
   @override
   List<Object?> get props => [];
@@ -390,6 +479,18 @@ class ClientRegisterSubmitted extends EnterEvent {
 class LawyerRegisterSubmitted extends EnterEvent {
   final String? type;
   LawyerRegisterSubmitted({
+    this.type,
+  });
+
+  @override
+  List<Object?> get props => [
+        type,
+      ];
+}
+
+class CompanyRegisterSubmitted extends EnterEvent {
+  final String? type;
+  CompanyRegisterSubmitted({
     this.type,
   });
 

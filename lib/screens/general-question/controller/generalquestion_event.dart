@@ -20,12 +20,14 @@ class ReplayGeneralquestion extends GeneralquestionEvent {
 }
 
 class AddGeneralquestion extends GeneralquestionEvent {
+  final String? title;
+
   final String? question;
 
-  AddGeneralquestion({this.question});
+  AddGeneralquestion({this.title, this.question});
 
   @override
-  List<Object?> get props => [question];
+  List<Object?> get props => [title, question];
 }
 
 class GetFrequentlyQuestions extends GeneralquestionEvent {

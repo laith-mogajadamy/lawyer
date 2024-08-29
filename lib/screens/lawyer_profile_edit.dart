@@ -22,6 +22,8 @@ import 'package:lawyer/screens/widgets/profile_image_change.dart';
 import 'package:lawyer/screens/widgets/select_city.dart';
 import 'package:lawyer/screens/widgets/select_country.dart';
 import 'package:lawyer/screens/widgets/select_gender.dart';
+import 'package:lawyer/screens/widgets/select_language.dart';
+import 'package:lawyer/screens/widgets/select_practice.dart';
 
 class LawyerProfileEdit extends StatefulWidget {
   const LawyerProfileEdit({super.key});
@@ -66,6 +68,9 @@ class _LawyerProfileEditState extends State<LawyerProfileEdit> {
   TextEditingController password = TextEditingController();
   TextEditingController retypePassword = TextEditingController();
   TextEditingController eidnumber = TextEditingController();
+  TextEditingController yearsofpractice = TextEditingController();
+  TextEditingController facebook = TextEditingController();
+  TextEditingController tiktok = TextEditingController();
 
   @override
   void initState() {
@@ -208,7 +213,6 @@ class _LawyerProfileEditState extends State<LawyerProfileEdit> {
                           SizedBox(
                             height: 20.h,
                           ),
-
                           const CertificationField(),
                           SizedBox(
                             height: 10.h,
@@ -224,33 +228,57 @@ class _LawyerProfileEditState extends State<LawyerProfileEdit> {
                               onchange: null,
                               controller: consultationprice),
                           SizedBox(
-                            height: 10.h,
+                            height: 20.h,
                           ),
-
+                          InfoInput(
+                            name: "${S.of(context).yearsOfPractice} :",
+                            hint: "3",
+                            validator: null,
+                            onchange: null,
+                            controller: yearsofpractice,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           const BioInput(),
                           SizedBox(
                             height: 20.h,
                           ),
-                          const CheckAvailablewidget(),
                           SizedBox(
                             height: 20.h,
                           ),
-                          // (state.certifications!.isEmpty)
-                          //     ? const SizedBox.shrink()
-                          //     : SizedBox(
-                          //         height: size.height / 3,
-                          //         child: ListView.builder(
-                          //           itemCount: state.certifications!.length,
-                          //           padding: const EdgeInsets.all(8),
-                          //           shrinkWrap: true,
-                          //           physics: const BouncingScrollPhysics(),
-                          //           scrollDirection: Axis.horizontal,
-                          //           itemBuilder: (context, index) {
-                          //             return PdfWidget(
-                          //                 file: state.certifications![index]);
-                          //           },
-                          //         ),
-                          //       ),
+                          const SelectPractice(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const SelectLanguage(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          InfoInput(
+                            name: "facebook :",
+                            hint: "",
+                            validator: null,
+                            onchange: null,
+                            controller: facebook,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          InfoInput(
+                            name: "tiktok :",
+                            hint: "",
+                            validator: null,
+                            onchange: null,
+                            controller: tiktok,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const CheckAvailablewidget(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -295,7 +323,8 @@ class _LawyerProfileEditState extends State<LawyerProfileEdit> {
                                         email: email.text.trim(),
                                         number: number.text.trim(),
                                         birth: birth.text.trim(),
-                                        location: location.text.trim(),
+                                        location: state.selectedcoutry.name
+                                            .toString(),
                                         gender:
                                             state.selectedgender.id.toString(),
                                         consultationPrice: int.parse(
@@ -316,6 +345,10 @@ class _LawyerProfileEditState extends State<LawyerProfileEdit> {
                                         licenses: state.license,
                                         practices: state.selectedpractices,
                                         languages: state.selectedlanguages,
+                                        yearsofpractice:
+                                            yearsofpractice.text.trim(),
+                                        facebook: facebook.text.trim(),
+                                        tiktok: tiktok.text.trim(),
                                       ),
                                     );
                               },

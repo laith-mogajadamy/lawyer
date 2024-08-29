@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/models/general_question.dart';
+import 'package:lawyer/models/lawyer.dart';
 import 'package:lawyer/screens/general-question/generalquestionpage.dart';
 
-class Generalquestioncard extends StatelessWidget {
+class UserGeneralquestioncard extends StatelessWidget {
+  final Lawyer myself;
+
   final Generalquestion genralqsttion;
-  const Generalquestioncard({
+  const UserGeneralquestioncard({
     super.key,
     required this.genralqsttion,
+    required this.myself,
   });
 
   @override
@@ -52,10 +56,9 @@ class Generalquestioncard extends StatelessWidget {
                       SizedBox(
                         height: size.height / 10,
                         child: ListTile(
-                          leading:
-                              Image.network(genralqsttion.userRequest.profile),
+                          leading: Image.network(myself.profile),
                           title: Text(
-                            genralqsttion.userRequest.name,
+                            myself.name,
                             style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: 18.sp,

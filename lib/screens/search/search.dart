@@ -137,18 +137,37 @@ class _SearchState extends State<Search> {
                             SizedBox(
                               height: 10.h,
                             ),
-                            LawyerHomeContainer(
-                                ontap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Lawyerspage()),
-                                  );
-                                },
-                                image:
-                                    "assets/images/frequently asked questions.png",
-                                text: S.of(context).LAWPRACTIONERS),
+                            BlocBuilder<EnterBloc, EnterState>(
+                              builder: (context, state) {
+                                return (state.user.role == "lawyer")
+                                    ? LawyerHomeContainer(
+                                        ontap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const TranslationCompanys()),
+                                          );
+                                        },
+                                        image:
+                                            "assets/images/translationcompany.png",
+                                        text: S.of(context).translationcompany,
+                                      )
+                                    : LawyerHomeContainer(
+                                        ontap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Lawyerspage()),
+                                          );
+                                        },
+                                        image:
+                                            "assets/images/frequently asked questions.png",
+                                        text: S.of(context).LAWPRACTIONERS,
+                                      );
+                              },
+                            ),
                             SizedBox(
                               height: 10.h,
                             ),

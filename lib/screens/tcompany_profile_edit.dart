@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,33 +7,51 @@ import 'package:lawyer/core/utils/appcolors.dart';
 import 'package:lawyer/core/utils/formstatus.dart';
 import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
-import 'package:lawyer/screens/widgets/backe_id_change.dart';
-import 'package:lawyer/screens/widgets/black18text.dart';
+import 'package:lawyer/screens/widgets/bio_input.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
-import 'package:lawyer/screens/widgets/fronte_id_change.dart';
+import 'package:lawyer/screens/widgets/certification_field.dart';
+import 'package:lawyer/screens/widgets/check_available.dart';
 import 'package:lawyer/screens/widgets/imagepicker.dart';
 import 'package:lawyer/screens/widgets/info_input.dart';
+import 'package:lawyer/screens/widgets/license_flield.dart';
 import 'package:lawyer/screens/widgets/orange22text.dart';
 import 'package:lawyer/screens/widgets/profile_image_change.dart';
 import 'package:lawyer/screens/widgets/select_city.dart';
 import 'package:lawyer/screens/widgets/select_country.dart';
-import 'package:lawyer/screens/widgets/select_gender.dart';
+import 'package:lawyer/screens/widgets/select_language.dart';
 
-class ClientProfileEdit extends StatefulWidget {
-  const ClientProfileEdit({super.key});
+class TCompanyProfileEdit extends StatefulWidget {
+  const TCompanyProfileEdit({super.key});
 
   @override
-  State<ClientProfileEdit> createState() => _ClientProfileEditState();
+  State<TCompanyProfileEdit> createState() => _TCompanyProfileEditState();
 }
 
-class _ClientProfileEditState extends State<ClientProfileEdit> {
+class _TCompanyProfileEditState extends State<TCompanyProfileEdit> {
   bool bottom = false;
   final formKey = GlobalKey<FormState>();
+  List<File> _certification = [];
+  Future uploadpdf() async {
+    FilePickerResult? results = await FilePicker.platform.pickFiles(
+        type: FileType.custom, allowedExtensions: ['pdf'], allowMultiple: true);
+    print("result= $results");
+    if (results == null) {
+      return;
+    }
+    for (var i = 0; i < results.files.length; i++) {
+      File file = File(results.files[i].path ?? "");
+      print("file= $file");
+      String filename = results.files[i].name;
+      print("filename= $filename");
+      String path = results.files[i].path!;
+      print("path= $path");
+      _certification.add(file);
+    }
+  }
 
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController number = TextEditingController();
-  TextEditingController birth = TextEditingController();
   TextEditingController location = TextEditingController();
   TextEditingController gender = TextEditingController();
   TextEditingController consultationprice = TextEditingController();
@@ -41,7 +61,8 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
   TextEditingController occupation = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController retypePassword = TextEditingController();
-  TextEditingController eidnumber = TextEditingController();
+  TextEditingController facebook = TextEditingController();
+  TextEditingController tiktok = TextEditingController();
 
   @override
   void initState() {
@@ -111,17 +132,12 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          const SelectGender(),
-                          SizedBox(
-                            height: 20.h,
-                          ),
                           InfoInput(
-                            name: S.of(context).birth,
-                            hint: state.user.birth.toString(),
-                            validator: null,
-                            onchange: null,
-                            controller: birth,
-                          ),
+                              name: S.of(context).LandLine,
+                              hint: state.user.phone.toString(),
+                              validator: null,
+                              onchange: null,
+                              controller: landline),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -130,16 +146,6 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                             height: 20.h,
                           ),
                           const SelectCity(),
-                          SizedBox(
-                            height: 20.h,
-                          ),
-                          InfoInput(
-                            name: S.of(context).Occupation,
-                            hint: state.user.occupation,
-                            validator: null,
-                            onchange: null,
-                            controller: occupation,
-                          ),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -165,23 +171,58 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                           SizedBox(
                             height: 20.h,
                           ),
+                          const CertificationField(),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          const LicenseFlield(),
+                          SizedBox(
+                            height: 10.h,
+                          ),
                           InfoInput(
-                              name: S.of(context).EIDNumber,
-                              hint: state.user.emiratesId.toString(),
+                              name: S.of(context).consultationprice,
+                              hint: state.user.consultationPrice.toString(),
                               validator: null,
                               onchange: null,
-                              controller: eidnumber),
+                              controller: consultationprice),
                           SizedBox(
                             height: 20.h,
                           ),
-                          Black18text(text: S.of(context).UploadEID),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              FronteIdChange(),
-                              BackeIdChange(),
-                            ],
+                          const BioInput(),
+                          SizedBox(
+                            height: 20.h,
                           ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const SelectLanguage(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          InfoInput(
+                            name: "facebook :",
+                            hint: "",
+                            validator: null,
+                            onchange: null,
+                            controller: facebook,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          InfoInput(
+                            name: "tiktok :",
+                            hint: "",
+                            validator: null,
+                            onchange: null,
+                            controller: tiktok,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const CheckAvailablewidget(),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -220,24 +261,29 @@ class _ClientProfileEditState extends State<ClientProfileEdit> {
                             child: ElevatedButton(
                               onPressed: () {
                                 context.read<EnterBloc>().add(
-                                      ClientProfiledit(
+                                      TCompanyProfiledit(
                                         fimage: state.fimage,
                                         name: name.text.trim(),
                                         email: email.text.trim(),
                                         number: number.text.trim(),
-                                        birth: birth.text.trim(),
-                                        gender:
-                                            state.selectedgender.id.toString(),
-                                        frontemiratesid: state.feid,
-                                        backemiratesid: state.beid,
+                                        location: state.selectedcoutry.name
+                                            .toString(),
+                                        consultationPrice: int.parse(
+                                            consultationprice.text.trim()),
+                                        certification: _certification,
+                                        available: state.available,
+                                        bio: state.biography,
                                         city: state.selectedcity.id.toString(),
-                                        emiratesid: eidnumber.text,
                                         country:
                                             state.selectedcoutry.id.toString(),
+                                        landline: landline.text,
                                         password: password.text,
                                         passwordconfirmation:
                                             retypePassword.text,
-                                        occupation: occupation.text.trim(),
+                                        licenses: state.license,
+                                        languages: state.selectedlanguages,
+                                        facebook: facebook.text.trim(),
+                                        tiktok: tiktok.text.trim(),
                                       ),
                                     );
                               },

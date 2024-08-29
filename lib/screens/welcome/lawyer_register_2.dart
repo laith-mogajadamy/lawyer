@@ -32,6 +32,8 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
 
   TextEditingController expertise = TextEditingController();
   TextEditingController language = TextEditingController();
+  TextEditingController facebook = TextEditingController();
+  TextEditingController tiktok = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +90,38 @@ class _LawyerRegister2State extends State<LawyerRegister2> {
                     height: 20.h,
                   ),
                   InfoInput(
-                      name: "${S.of(context).yearsOfPractice} :",
-                      hint: "3",
-                      validator: null,
-                      onchange: (value) => context.read<EnterBloc>().add(
-                            YearsOfPracticeChanged(yearsofpractice: value),
-                          ),
-                      controller: yearsofpractice),
+                    name: "${S.of(context).yearsOfPractice} :",
+                    hint: "3",
+                    validator: null,
+                    onchange: (value) => context.read<EnterBloc>().add(
+                          YearsOfPracticeChanged(yearsofpractice: value),
+                        ),
+                    controller: yearsofpractice,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  InfoInput(
+                    name: "facebook :",
+                    hint: "",
+                    validator: null,
+                    onchange: (value) => context.read<EnterBloc>().add(
+                          FacebookChanged(facebook: value),
+                        ),
+                    controller: facebook,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  InfoInput(
+                    name: "tiktok :",
+                    hint: "",
+                    validator: null,
+                    onchange: (value) => context.read<EnterBloc>().add(
+                          TiktokChanged(tiktok: value),
+                        ),
+                    controller: tiktok,
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),

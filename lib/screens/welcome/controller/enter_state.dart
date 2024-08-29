@@ -66,6 +66,8 @@ class EnterState extends Equatable {
   final List<City> genders;
 
   final List<Lawyer> contacts;
+  final String facebook;
+  final String tiktok;
 
   const EnterState({
     // this.user = const User(
@@ -106,6 +108,7 @@ class EnterState extends Equatable {
       closedConsultation: 0,
       profile: "",
       certification: [],
+      licenses: [],
       practices: [],
       languages: [],
       consultationsReceiver: [],
@@ -116,6 +119,12 @@ class EnterState extends Equatable {
       unreadNotifications: [],
       groups: [],
       generalChats: [],
+      available: '',
+      bio: '',
+      facebook: '',
+      landLine: '',
+      location: '',
+      tiktok: '',
     ),
     this.token = '',
     this.pushertoken = '',
@@ -182,6 +191,8 @@ class EnterState extends Equatable {
       City(id: 2, name: "Female"),
     ],
     this.contacts = const [],
+    this.facebook = '',
+    this.tiktok = '',
   });
 
   EnterState copyWith({
@@ -242,6 +253,8 @@ class EnterState extends Equatable {
     City? selectedcoutry,
     List<City>? genders,
     List<Lawyer>? contacts,
+    String? facebook,
+    String? tiktok,
   }) {
     return EnterState(
       islogedin: islogedin ?? this.islogedin,
@@ -304,6 +317,8 @@ class EnterState extends Equatable {
       genders: genders ?? this.genders,
 
       contacts: contacts ?? this.contacts,
+      facebook: facebook ?? this.facebook,
+      tiktok: tiktok ?? this.tiktok,
     );
   }
 
@@ -363,5 +378,7 @@ class EnterState extends Equatable {
         selectedcoutry,
         genders,
         contacts,
+        facebook,
+        tiktok,
       ];
 }

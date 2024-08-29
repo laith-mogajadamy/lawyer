@@ -44,6 +44,7 @@ class Generalquestionreplay {
 class Addgeneralquestion {
   static Future<http.Response> addgeneralquestion(
     String token,
+    String title,
     String question,
   ) async {
     Map<String, String> headers = {
@@ -52,6 +53,7 @@ class Addgeneralquestion {
       "Authorization": "Bearer $token"
     };
     Map data = {
+      "title": title,
       "question": question,
     };
     var body = jsonEncode(data);

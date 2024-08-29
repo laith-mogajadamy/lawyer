@@ -30,6 +30,8 @@ class _TranslationCompanyRegister2State
   TextEditingController yearsofpractice = TextEditingController();
 
   TextEditingController language = TextEditingController();
+  TextEditingController facebook = TextEditingController();
+  TextEditingController tiktok = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -85,13 +87,26 @@ class _TranslationCompanyRegister2State
                     height: 20.h,
                   ),
                   InfoInput(
-                      name: "${S.of(context).yearsOfPractice} :",
-                      hint: "3",
-                      validator: null,
-                      onchange: (value) => context.read<EnterBloc>().add(
-                            YearsOfPracticeChanged(yearsofpractice: value),
-                          ),
-                      controller: yearsofpractice),
+                    name: "facebook :",
+                    hint: "",
+                    validator: null,
+                    onchange: (value) => context.read<EnterBloc>().add(
+                          FacebookChanged(facebook: value),
+                        ),
+                    controller: facebook,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  InfoInput(
+                    name: "tiktok :",
+                    hint: "",
+                    validator: null,
+                    onchange: (value) => context.read<EnterBloc>().add(
+                          TiktokChanged(tiktok: value),
+                        ),
+                    controller: tiktok,
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -149,7 +164,7 @@ class _TranslationCompanyRegister2State
                           } else {
                             context
                                 .read<EnterBloc>()
-                                .add(LawyerRegisterSubmitted(type: "3"));
+                                .add(CompanyRegisterSubmitted(type: "3"));
                           }
                           // print(state.email);
                           // print("=============");

@@ -14,11 +14,15 @@ class Lawyer extends Equatable {
   final dynamic birth;
   final dynamic gender;
   final dynamic phone;
+  final dynamic landLine;
+
   final dynamic consultationPrice;
   final dynamic isactive;
   final dynamic role;
   final dynamic country;
   final dynamic city;
+  final dynamic location;
+
   final dynamic emiratesId;
   final dynamic frontEmiratesId;
   final dynamic backEmiratesId;
@@ -26,6 +30,9 @@ class Lawyer extends Equatable {
   final dynamic yearsOfPractice;
   final dynamic numOfConsultation;
   final dynamic closedConsultation;
+  final dynamic available;
+  final dynamic bio;
+
   final String profile;
   final List<Consultation>? consultationsReceiver;
   final List<Consultation>? consultationsSender;
@@ -34,12 +41,16 @@ class Lawyer extends Equatable {
   final List<Message>? receiverMessage;
 
   final List<String>? certification;
+  final List<String>? licenses;
+
   final List<Practice>? practices;
   final List<Language>? languages;
 
   final List<Notifications>? unreadNotifications;
   final List<Groups>? groups;
   final List<Groups>? generalChats;
+  final String facebook;
+  final String tiktok;
 
   const Lawyer({
     required this.id,
@@ -48,11 +59,13 @@ class Lawyer extends Equatable {
     required this.birth,
     required this.gender,
     required this.phone,
+    required this.landLine,
     required this.consultationPrice,
     required this.isactive,
     required this.role,
     required this.country,
     required this.city,
+    required this.location,
     required this.emiratesId,
     required this.frontEmiratesId,
     required this.backEmiratesId,
@@ -60,8 +73,11 @@ class Lawyer extends Equatable {
     required this.yearsOfPractice,
     required this.numOfConsultation,
     required this.closedConsultation,
+    required this.available,
+    required this.bio,
     required this.profile,
     required this.certification,
+    required this.licenses,
     required this.practices,
     required this.languages,
     required this.consultationsReceiver,
@@ -72,6 +88,8 @@ class Lawyer extends Equatable {
     required this.unreadNotifications,
     required this.groups,
     required this.generalChats,
+    required this.facebook,
+    required this.tiktok,
   });
 
   @override
@@ -82,11 +100,13 @@ class Lawyer extends Equatable {
         birth,
         gender,
         phone,
+        landLine,
         consultationPrice,
         isactive,
         role,
         country,
         city,
+        location,
         emiratesId,
         frontEmiratesId,
         backEmiratesId,
@@ -94,8 +114,11 @@ class Lawyer extends Equatable {
         yearsOfPractice,
         numOfConsultation,
         closedConsultation,
+        available,
+        bio,
         profile,
         certification,
+        licenses,
         practices,
         languages,
         consultationsReceiver,
@@ -106,5 +129,7 @@ class Lawyer extends Equatable {
         unreadNotifications,
         groups,
         generalChats,
+        facebook,
+        tiktok,
       ];
 }

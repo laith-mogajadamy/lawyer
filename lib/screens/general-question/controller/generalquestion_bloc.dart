@@ -99,7 +99,7 @@ class GeneralquestionBloc
         print("state.token");
         print(state.token);
         http.Response response = await Addgeneralquestion.addgeneralquestion(
-            state.token, event.question!);
+            state.token, event.title!, event.question!);
         var responsemap = await jsonDecode(response.body);
         print("responsemap=");
         print(responsemap);

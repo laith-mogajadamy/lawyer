@@ -4,6 +4,7 @@ import 'package:lawyer/generated/l10n.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/widgets/black22text.dart';
 import 'package:lawyer/screens/widgets/generalquestioncard.dart';
+import 'package:lawyer/screens/widgets/user_general_question_card.dart';
 
 class UserGeneralquestioncomponent extends StatefulWidget {
   const UserGeneralquestioncomponent({super.key});
@@ -24,7 +25,8 @@ class _FilesPageState extends State<UserGeneralquestioncomponent> {
           return ListView.builder(
             itemCount: state.user.generalquestions!.length,
             itemBuilder: (context, index) {
-              return Generalquestioncard(
+              return UserGeneralquestioncard(
+                myself: state.user,
                 genralqsttion: state.user.generalquestions![index],
               );
             },

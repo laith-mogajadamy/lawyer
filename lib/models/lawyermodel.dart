@@ -23,6 +23,7 @@ class LawyerModel extends Lawyer {
     required super.closedConsultation,
     required super.profile,
     required super.certification,
+    required super.licenses,
     required super.practices,
     required super.languages,
     required super.consultationsReceiver,
@@ -39,6 +40,12 @@ class LawyerModel extends Lawyer {
     required super.backEmiratesId,
     required super.occupation,
     required super.generalChats,
+    required super.landLine,
+    required super.location,
+    required super.available,
+    required super.bio,
+    required super.facebook,
+    required super.tiktok,
   });
 
   factory LawyerModel.fromJson(Map<String, dynamic> json) => LawyerModel(
@@ -48,21 +55,23 @@ class LawyerModel extends Lawyer {
         birth: json['birth'] ?? '',
         gender: json['gender'] ?? 0,
         phone: json['phone'] ?? '',
-        consultationPrice: json['consultationPrice'] ?? 0,
+        consultationPrice: json["lawyer"]?['consultationPrice'] ?? 0,
         isactive: json['isactive'] ?? 1,
         role: json['role'] ?? '',
         country: json['country'] ?? '',
         city: json['city'] ?? '',
         emiratesId: json['emiratesId'] ?? 0,
-        frontEmiratesId: json['emiratesId'] ?? '',
-        backEmiratesId: json['emiratesId'] ?? '',
+        frontEmiratesId: json['frontEmiratesId'] ?? '',
+        backEmiratesId: json['backEmiratesId'] ?? '',
         occupation: json['client']?['occupation'] ?? '',
-        yearsOfPractice: json['yearsOfPractice'] ?? '',
-        numOfConsultation: json['numOfConsultation'] ?? 1,
-        closedConsultation: json['closedConsultation'] ?? 0,
+        yearsOfPractice: json["lawyer"]?['yearsOfPractice'] ?? '',
+        numOfConsultation: json["lawyer"]?['numOfConsultation'] ?? 1,
+        closedConsultation: json["lawyer"]?['closedConsultation'] ?? 0,
         profile: json['profile'] ?? '',
-        certification:
-            List<String>.from(((json['certification'] ?? []) as List)),
+        certification: List<String>.from(
+            ((json["lawyer"]?['certification'] ?? []) as List)),
+        licenses:
+            List<String>.from(((json["lawyer"]?['licenses'] ?? []) as List)),
         practices: List<PracticeModel>.from(
           ((json['practices'] ?? []) as List).map(
             (e) => PracticeModel.fromJson(e),
@@ -113,5 +122,11 @@ class LawyerModel extends Lawyer {
             (e) => GroupsModel.fromJson(e),
           ),
         ),
+        landLine: json["lawyer"]?['landLine'] ?? '',
+        location: json["lawyer"]?['location'] ?? '',
+        available: json["lawyer"]?['available'] ?? '',
+        bio: json["lawyer"]?['bio'] ?? '',
+        facebook: json["lawyer"]?['facebook'] ?? '',
+        tiktok: json["lawyer"]?['tiktok'] ?? '',
       );
 }

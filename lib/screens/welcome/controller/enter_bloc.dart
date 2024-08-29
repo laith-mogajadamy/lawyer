@@ -73,6 +73,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
               islogedin: "false"),
         );
       }
+      print("state.user");
+      print(state.user);
     });
     //
     on<GetPusherToken>((event, emit) async {
@@ -214,6 +216,59 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         event.licenses,
         event.practices!,
         event.languages!,
+        event.facebook,
+        event.tiktok,
+      );
+      print(response.statusCode);
+      print("data=${response.data}");
+
+      // Map<String, dynamic> responsemap = await jsonDecode(response.data);
+      if (response.statusCode == 200) {
+        emit(
+          state.copyWith(
+            user: LawyerModel.fromJson(response.data),
+            message: " profile edit successed",
+            editStatus: SubmissionSuccess(),
+          ),
+        );
+        print("state.message${state.message}");
+
+        print("state.user${state.user}");
+      } else {
+        emit(
+          state.copyWith(
+            message: " profile edit failed",
+            editStatus: SubmissionFailed(state.message),
+          ),
+        );
+      }
+    });
+    //
+    on<TCompanyProfiledit>((event, emit) async {
+      print("TCompanyProfiledit");
+      print(state.token);
+      emit(state.copyWith(editStatus: FormSubmitting()));
+      Response response = await Uploadfile.tcompanyprofileedit(
+        state.user.id,
+        state.token,
+        event.fimage,
+        event.name,
+        event.email,
+        event.password,
+        event.passwordconfirmation,
+        event.number,
+        event.country,
+        event.city,
+        event.landline,
+        event.bio,
+        event.location,
+        event.consultationPrice,
+        event.available! ? 1 : 0,
+        event.certification,
+        event.licenses,
+        event.languages!,
+        event.facebook,
+        event.tiktok,
       );
       print(response.statusCode);
       print("data=${response.data}");
@@ -495,6 +550,24 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       ));
     });
     //
+    on<FacebookChanged>((event, emit) async {
+      print(" FacebookChanged");
+
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        facebook: event.facebook,
+      ));
+    });
+    //
+    on<TiktokChanged>((event, emit) async {
+      print(" TiktokChanged");
+
+      emit(state.copyWith(
+        formStatus: const InitialFormStatus(),
+        tiktok: event.tiktok,
+      ));
+    });
+    //
     on<LoginSubmitted>((event, emit) async {
       emit(state.copyWith(
           formStatus: FormSubmitting(),
@@ -504,7 +577,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         GetLanguageAndPractice(),
       );
       http.Response response = await Auth.login(state.email, state.password);
-      Map responsemap = await jsonDecode(response.body);
+      var responsemap = await jsonDecode(response.body);
       print("message==${state.message}");
       print("*********");
       print(responsemap);
@@ -513,7 +586,7 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
       if (response.statusCode == 200) {
         emit(
           state.copyWith(
-            user: LawyerModel.fromJson(responsemap["user"]),
+            user: LawyerModel.fromJson(responsemap['user']),
             token: responsemap["access_token"],
             message: " log in successed",
             formStatus: SubmissionSuccess(),
@@ -620,6 +693,8 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         state.selectedpractices,
         state.selectedlanguages,
         state.fimage,
+        state.facebook,
+        state.tiktok,
       );
       print("message==${state.message}");
       print("*********");
@@ -645,7 +720,57 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
         print(state.formStatus);
       }
     });
-
+    //
+    on<CompanyRegisterSubmitted>((event, emit) async {
+      emit(state.copyWith(
+        formStatus: FormSubmitting(),
+      ));
+      Response response = await Auth.tcompanyregister(
+        event.type!,
+        state.name,
+        state.email,
+        state.password,
+        state.retypePassword,
+        state.phone,
+        state.selectedcoutry.id.toString(),
+        state.selectedcity.id.toString(),
+        state.landline,
+        state.consultationprice,
+        state.biography,
+        state.selectedcoutry.name.toString(),
+        (state.available) ? "1" : "0",
+        state.certifications,
+        state.license,
+        state.selectedlanguages,
+        state.fimage,
+        state.facebook,
+        state.tiktok,
+      );
+      print("message==${state.message}");
+      print("*********");
+      print("statusCode==${response.statusCode}");
+      print("*********");
+      if (response.statusCode == 201) {
+        add(
+          LoginSubmitted(),
+        );
+        Preferences.savetoken(response.data["accessToken"]);
+        Preferences.saveemail(state.email);
+        Preferences.savepassword(state.password);
+        print("++++++++++++++");
+        print("token:${response.data["accessToken"]}");
+        print("++++++++++++++");
+        print(state.formStatus);
+      } else {
+        emit(
+          state.copyWith(
+            formStatus: SubmissionFailed(state.message),
+          ),
+        );
+        print(state.formStatus);
+      }
+    });
+    //
     on<Logout>((event, emit) async {
       emit(
         state.copyWith(
@@ -694,6 +819,13 @@ class EnterBloc extends Bloc<EnterEvent, EnterState> {
                 unreadNotifications: [],
                 groups: [],
                 generalChats: [],
+                available: '',
+                bio: '',
+                facebook: '',
+                landLine: '',
+                location: '',
+                tiktok: '',
+                licenses: [],
               ),
               type: '',
               logoutStatus: SubmissionSuccess(),

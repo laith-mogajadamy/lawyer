@@ -32,6 +32,8 @@ class Uploadfile {
     final List<File>? licenses,
     final List<Practice> practices,
     final List<Language> languages,
+    final String? facebook,
+    final String? tiktok,
   ) async {
     print("Uploadfile");
     print(certification);
@@ -102,6 +104,8 @@ class Uploadfile {
           filename: fimage.path.split("/").last,
           contentType: MediaType('image', 'png'),
         ),
+        "facebook": facebook,
+        "tiktok": tiktok,
       },
     );
 
@@ -113,6 +117,105 @@ class Uploadfile {
 
     Response response = await Dio().post(
       "${Global.url}lawyer/$id",
+      data: formdata,
+      options: Options(headers: headers, method: "POST"),
+      onSendProgress: (count, total) {
+        print("count=$count");
+        print("total=$total");
+      },
+    );
+    print(response.statusCode);
+
+    print(response.data);
+    return response;
+  }
+
+  static Future tcompanyprofileedit(
+    int id,
+    String token,
+    final File? fimage,
+    final String? name,
+    final String? email,
+    final String? password,
+    final String? passwordconfirmation,
+    final String? number,
+    final String? country,
+    final String? city,
+    final String? landline,
+    final String? bio,
+    final String? location,
+    final int? consultationPrice,
+    final int? available,
+    final List<File>? certification,
+    final List<File>? licenses,
+    final List<Language> languages,
+    final String? facebook,
+    final String? tiktok,
+  ) async {
+    print("Uploadfile");
+    print(certification);
+    print(fimage);
+
+    List certificationlist = [];
+    for (var i = 0; i < certification!.length; i++) {
+      certificationlist.add(
+        await MultipartFile.fromFile(
+          certification[i].path,
+          filename: certification[i].path.split('/').last,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+    List licensesllist = [];
+    for (var i = 0; i < licenses!.length; i++) {
+      licensesllist.add(
+        await MultipartFile.fromFile(
+          licenses[i].path,
+          filename: licenses[i].path.split('/').last,
+          contentType: MediaType('file', 'pdf'),
+        ),
+      );
+    }
+
+    List languageslist = [];
+    for (var i = 0; i < languages.length; i++) {
+      languageslist.add(languages[i].id);
+    }
+    FormData formdata = FormData.fromMap(
+      {
+        "name": name,
+        "email": email,
+        "password": password,
+        "password_confirmation": passwordconfirmation,
+        "phone": number,
+        "country": country,
+        "city": city,
+        "land_line": landline,
+        "translation_price": consultationPrice,
+        "bio": bio,
+        "location": location,
+        "available": available,
+        "certification[]": certificationlist,
+        "licenses[]": licensesllist,
+        "languages[]": languageslist,
+        "profile": await MultipartFile.fromFile(
+          fimage!.path,
+          filename: fimage.path.split("/").last,
+          contentType: MediaType('image', 'png'),
+        ),
+        "facebook": facebook,
+        "tiktok": tiktok,
+      },
+    );
+
+    Map<String, String> headers = {
+      "Accept": "application/json",
+      "Content-type": "multipart/form-data",
+      "Authorization": "Bearer $token",
+    };
+
+    Response response = await Dio().post(
+      "${Global.url}company/$id",
       data: formdata,
       options: Options(headers: headers, method: "POST"),
       onSendProgress: (count, total) {

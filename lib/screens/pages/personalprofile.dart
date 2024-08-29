@@ -9,6 +9,7 @@ import 'package:lawyer/screens/general-question/addgeneralquestion.dart';
 import 'package:lawyer/screens/general-question/user_general_question.dart';
 import 'package:lawyer/screens/language_change.dart';
 import 'package:lawyer/screens/lawyer_profile_edit.dart';
+import 'package:lawyer/screens/tcompany_profile_edit.dart';
 import 'package:lawyer/screens/welcome/controller/enter_bloc.dart';
 import 'package:lawyer/screens/welcome/enter.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
@@ -128,19 +129,28 @@ class PersonalProfile extends StatelessWidget {
                     text: S.of(context).ProfileEdit,
                     icon: Icons.edit_note_rounded,
                     ontap: () {
-                      (state.user.role == "client")
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ClientProfileEdit(),
-                              ),
-                            )
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LawyerProfileEdit(),
-                              ),
-                            );
+                      if (state.user.role == "client") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ClientProfileEdit(),
+                          ),
+                        );
+                      } else if (state.user.role == "translation_company") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TCompanyProfileEdit(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LawyerProfileEdit(),
+                          ),
+                        );
+                      }
                     },
                   ),
                   const Graydivider(),
