@@ -30,9 +30,8 @@ class FQuestionCard extends StatelessWidget {
               ),
             );
           },
-          title: Black16text(text: fquestion.title),
-          subtitle: Black12text(text: fquestion.shortDescription),
-          trailing: Image.network(fquestion.img),
+          title: Black16text(text: fquestion.question),
+          subtitle: Black12text(text: fquestion.answer),
         ),
         const Graydivider(),
       ],

@@ -70,7 +70,7 @@ class ViweFQuestionPage extends StatelessWidget {
                       Row(
                         children: [
                           Black18text(text: S.of(context).ttitle),
-                          Black18text(text: fquestion.title),
+                          Black18text(text: fquestion.question),
                         ],
                       ),
                       SizedBox(
@@ -78,9 +78,9 @@ class ViweFQuestionPage extends StatelessWidget {
                       ),
                       Wrap(
                         children: [
-                          Black18text(text: S.of(context).shortdescription),
+                          Black18text(text: S.of(context).Answer),
                           Text(
-                            fquestion.shortDescription,
+                            fquestion.answer,
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: Colors.black,
@@ -92,28 +92,28 @@ class ViweFQuestionPage extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Image.network(
-                        fquestion.img,
-                        height: size.height / 5,
-                        width: size.width / 2.5,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Wrap(
-                        children: [
-                          Black18text(text: S.of(context).description),
-                          Text(
-                            fquestion.description,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Image.network(
+                      //   fquestion.img,
+                      //   height: size.height / 5,
+                      //   width: size.width / 2.5,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      // SizedBox(
+                      //   height: 10.h,
+                      // ),
+                      // Wrap(
+                      //   children: [
+                      //     Black18text(text: S.of(context).description),
+                      //     Text(
+                      //       fquestion.description,
+                      //       style: TextStyle(
+                      //         fontSize: 16.sp,
+                      //         color: Colors.black,
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),

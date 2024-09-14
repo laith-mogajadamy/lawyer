@@ -161,5 +161,83 @@ class GeneralquestionBloc
         ));
       }
     });
+    on<GetFrequentlyQuestionsEN>((event, emit) async {
+      print("GetFrequentlyQuestionsEN");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response response =
+            await FrequentlyQuestionReqwest.getfrequentlyquestionEN();
+        var responsemap = await jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+            frequentlyquestions: List<FQuestion>.from(
+              (responsemap as List).map(
+                (e) => FQuestionModel.fromJson(e),
+              ),
+            ),
+            frequentlyquestionsState: RequestState.loaded,
+          ));
+          print("state.frequentlyquestions=");
+          print(state.frequentlyquestions);
+        } else {
+          emit(state.copyWith(
+            frequentlyquestionsState: RequestState.error,
+            frequentlyquestionMessage: responsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.error,
+          frequentlyquestionMessage: "Unauthenticated",
+        ));
+      }
+    });
+    on<GetFrequentlyQuestionsAR>((event, emit) async {
+      print("GetFrequentlyQuestionsAR");
+      String? ptoken = Preferences.getToken();
+      if (ptoken!.isNotEmpty) {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.loading,
+          token: ptoken,
+        ));
+        print("state.token");
+        print(state.token);
+        http.Response response =
+            await FrequentlyQuestionReqwest.getfrequentlyquestionAR();
+        var responsemap = await jsonDecode(response.body);
+        print("responsemap=");
+        print(responsemap);
+        if (response.statusCode == 200) {
+          emit(state.copyWith(
+            frequentlyquestions: List<FQuestion>.from(
+              (responsemap as List).map(
+                (e) => FQuestionModel.fromJson(e),
+              ),
+            ),
+            frequentlyquestionsState: RequestState.loaded,
+          ));
+          print("state.frequentlyquestions=");
+          print(state.frequentlyquestions);
+        } else {
+          emit(state.copyWith(
+            frequentlyquestionsState: RequestState.error,
+            frequentlyquestionMessage: responsemap["message"],
+          ));
+        }
+      } else {
+        emit(state.copyWith(
+          frequentlyquestionsState: RequestState.error,
+          frequentlyquestionMessage: "Unauthenticated",
+        ));
+      }
+    });
   }
 }

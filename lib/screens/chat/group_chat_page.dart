@@ -100,14 +100,11 @@ class _GroupChatPageState extends State<GroupChatPage> {
     } catch (e) {
       print(e);
     }
-// get the group  id
     receiverchannel =
         pusher.subscribe("private-group-channel-${widget.group.id}");
-    // senderchannel = pusher.subscribe("private-group-channel-1");
     print(receiverchannel.name);
 
-    // channel.trigger('chatMessage', jsonEncode({"message": "hi"}));
-    await receiverchannel.bind('chatMessage', (event) async {
+    await receiverchannel.bind('groupMessage', (event) async {
       if (event!.data != null) {
         var jsonData = jsonDecode(event.data!);
         print(event.data);

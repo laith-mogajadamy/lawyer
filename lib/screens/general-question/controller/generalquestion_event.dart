@@ -36,3 +36,17 @@ class GetFrequentlyQuestions extends GeneralquestionEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetFrequentlyQuestionsEN extends GeneralquestionEvent {
+  GetFrequentlyQuestionsEN();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetFrequentlyQuestionsAR extends GeneralquestionEvent {
+  GetFrequentlyQuestionsAR();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -78,4 +78,32 @@ class FrequentlyQuestionReqwest {
 
     return response;
   }
+
+  static Future<http.Response> getfrequentlyquestionEN(
+      // String token,
+      ) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      // "Authorization": "Bearer $token"
+    };
+    var url = Uri.parse("${Global.url}FAQ/en");
+    http.Response response = await http.get(url, headers: headers);
+
+    return response;
+  }
+
+  static Future<http.Response> getfrequentlyquestionAR(
+      // String token,
+      ) async {
+    Map<String, String> headers = {
+      "Content-type": "application/json",
+      "Accept": "application/json",
+      // "Authorization": "Bearer $token"
+    };
+    var url = Uri.parse("${Global.url}FAQ/ar");
+    http.Response response = await http.get(url, headers: headers);
+
+    return response;
+  }
 }
