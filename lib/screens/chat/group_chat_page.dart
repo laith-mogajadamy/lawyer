@@ -19,7 +19,6 @@ import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/chatbuble.dart';
 import 'package:lawyer/screens/widgets/group_chat_buble.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -67,7 +66,23 @@ class _GroupChatPageState extends State<GroupChatPage> {
       ),
     );
     print(response);
-    messagesstream.sink.add(hmessages[0]);
+    (hmessages.isNotEmpty)
+        ? messagesstream.sink.add(hmessages[0])
+        : messagesstream.sink.add(
+            Message(
+              isMe: false,
+              message: "this is the first message",
+              type: '',
+              file: File(''),
+              attachment: '',
+              sender: LawyerModel.fromJson(
+                {},
+              ),
+              receiver: LawyerModel.fromJson(
+                {},
+              ),
+            ),
+          );
     messages.addAll(hmessages.reversed);
   }
 
@@ -121,11 +136,11 @@ class _GroupChatPageState extends State<GroupChatPage> {
             jsonData['receiver'] ?? {},
           ),
         );
-
         messagesstream.sink.add(message);
         messages.insert(0, message);
       } else {}
     });
+
     // await senderchannel.bind('chatMessage', (event) async {
     //   if (event!.data != null) {
     //     var jsonData = jsonDecode(event.data!);
@@ -148,8 +163,18 @@ class _GroupChatPageState extends State<GroupChatPage> {
     // });
   }
 
+  evettriger() async {
+    print('evet-triger');
+    await receiverchannel.trigger(
+      'groupMessage',
+      (event) async {
+        return {"": ''};
+      },
+    );
+  }
+
   disactive() async {
-    receiverchannel.unbind('chatMessage');
+    receiverchannel.unbind('groupMessage');
     await pusher.unsubscribe("private-group-channel-${widget.group.id}");
     pusher.disconnect();
     messagesstream.close();
@@ -263,29 +288,34 @@ class _GroupChatPageState extends State<GroupChatPage> {
                       }
 
                       print(messages);
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: messages.length,
-                        shrinkWrap: true,
-                        dragStartBehavior: DragStartBehavior.down,
-                        itemBuilder: (BuildContext context, int index) {
-                          Message message = messages[index];
-                          print(message.sender!.name);
-                          print(message);
+                      return (messages.length != 0)
+                          ? ListView.builder(
+                              reverse: true,
+                              itemCount: messages.length,
+                              shrinkWrap: true,
+                              dragStartBehavior: DragStartBehavior.down,
+                              itemBuilder: (BuildContext context, int index) {
+                                Message message = messages[index];
+                                print(message.sender!.name);
+                                print(message);
 
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: GroupChatBubble(
-                              isMe: (message.sender != null)
-                                  ? (message.sender!.id == widget.user.id)
-                                      ? true
-                                      : false
-                                  : message.isMe!,
-                              message: message,
-                            ),
-                          );
-                        },
-                      );
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  child: GroupChatBubble(
+                                    isMe: (message.sender != null)
+                                        ? (message.sender!.id == widget.user.id)
+                                            ? true
+                                            : false
+                                        : message.isMe!,
+                                    message: message,
+                                  ),
+                                );
+                              },
+                            )
+                          : Center(
+                              child: Text("no messages"),
+                            );
                     },
                   ),
                 ),
@@ -380,29 +410,30 @@ class _GroupChatPageState extends State<GroupChatPage> {
                           fillColor: AppColor.appgray,
                           suffix: InkWell(
                             onTap: () {
-                              String messageText =
-                                  messageController.text.trim();
-                              if (messageText.isNotEmpty) {
-                                context.read<ChatBloc>().add(
-                                      SendMessageToGroupEvent(
-                                        attachment: null,
-                                        message: messageText,
-                                        id: widget.group.id,
-                                      ),
-                                    );
-                                Message message = Message(
-                                    isMe: true,
-                                    message: messageText,
-                                    type: "text",
-                                    file: null,
-                                    attachment: null,
-                                    sender: widget.user,
-                                    receiver: null);
-                                messages.insert(0, message);
-                                messagesstream.sink.add(message);
-                                messageController.clear();
-                                // You can add logic here to send the message to the other user or store it.
-                              }
+                              evettriger();
+                              // String messageText =
+                              //     messageController.text.trim();
+                              // if (messageText.isNotEmpty) {
+                              //   context.read<ChatBloc>().add(
+                              //         SendMessageToGroupEvent(
+                              //           attachment: null,
+                              //           message: messageText,
+                              //           id: widget.group.id,
+                              //         ),
+                              //       );
+                              //   Message message = Message(
+                              //       isMe: true,
+                              //       message: messageText,
+                              //       type: "text",
+                              //       file: null,
+                              //       attachment: null,
+                              //       sender: widget.user,
+                              //       receiver: null);
+                              //   messages.insert(0, message);
+                              //   messagesstream.sink.add(message);
+                              //   messageController.clear();
+                              //   // You can add logic here to send the message to the other user or store it.
+                              // }
                             },
                             child: Icon(
                               Icons.send,

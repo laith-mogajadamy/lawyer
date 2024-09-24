@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>BRIEfCASE</string>
+	<string>BRIEFCASE</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -58,8 +58,8 @@
     </array>
 	<key>NSAppTransportSecurity</key>
     <dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
+       <key>NSAllowsArbitraryLoads</key>
+       <true/>
     </dict>
 </dict>
 </plist>

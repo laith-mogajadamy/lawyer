@@ -37,7 +37,7 @@ class HomeContainer extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 8.w, top: 5.h, right: 8.w),
+              padding: EdgeInsets.only(left: 2.w, top: 5.h, right: 2.w),
               child: Black10text(
                 text: text,
               ),

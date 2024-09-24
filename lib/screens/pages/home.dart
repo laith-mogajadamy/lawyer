@@ -57,7 +57,7 @@ class _HomeState extends State<Home> with AutomaticKeepAliveClientMixin {
             Column(
               children: [
                 SizedBox(
-                  height: size.height / 6,
+                  height: size.height / 10,
                   child: Image.asset(
                     "assets/images/logo.png",
                   ),
