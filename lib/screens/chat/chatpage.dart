@@ -73,7 +73,23 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
     print(response);
-    messagesstream.sink.add(hmessages[0]);
+    (hmessages.isNotEmpty)
+        ? messagesstream.sink.add(hmessages[0])
+        : messagesstream.sink.add(
+            Message(
+              isMe: false,
+              message: "this is the first message",
+              type: '',
+              file: File(''),
+              attachment: '',
+              sender: LawyerModel.fromJson(
+                {},
+              ),
+              receiver: LawyerModel.fromJson(
+                {},
+              ),
+            ),
+          );
     messages.addAll(hmessages.reversed);
   }
 

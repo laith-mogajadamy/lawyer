@@ -19,7 +19,6 @@ import 'package:lawyer/models/messagemodel.dart';
 import 'package:lawyer/screens/chat/controller/chat_bloc.dart';
 import 'package:lawyer/screens/chat/data/chatrequest.dart';
 import 'package:lawyer/screens/widgets/black18text.dart';
-import 'package:lawyer/screens/widgets/chatbuble.dart';
 import 'package:lawyer/screens/widgets/group_chat_buble.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -56,9 +55,7 @@ class _GroupChatPageState extends State<GroupChatPage> {
       StreamController<Message>.broadcast();
   addoldmessages() async {
     Response response;
-    print(widget.token);
-    print("widget.group.id");
-    print(widget.group.id);
+
     response = await GetMessagesInGroup.getmessagesingroup(
         widget.group.id, widget.token);
     List<Message> hmessages = List<MessageModel>.from(
@@ -66,8 +63,23 @@ class _GroupChatPageState extends State<GroupChatPage> {
         (e) => MessageModel.fromJson(e),
       ),
     );
-    print(response);
-    messagesstream.sink.add(hmessages[0]);
+    (hmessages.isNotEmpty)
+        ? messagesstream.sink.add(hmessages[0])
+        : messagesstream.sink.add(
+            Message(
+              isMe: false,
+              message: "this is the first message",
+              type: '',
+              file: File(''),
+              attachment: '',
+              sender: LawyerModel.fromJson(
+                const {},
+              ),
+              receiver: LawyerModel.fromJson(
+                const {},
+              ),
+            ),
+          );
     messages.addAll(hmessages.reversed);
   }
 
@@ -94,63 +106,40 @@ class _GroupChatPageState extends State<GroupChatPage> {
         // enableLogging: true,
       );
       await pusher.connect();
-      print("===========");
-
-      print(pusher.getSocketId());
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
-    receiverchannel =
-        pusher.subscribe("private-group-channel-${widget.group.id}");
-    print(receiverchannel.name);
+    receiverchannel = pusher.subscribe("group-channel-${widget.group.id}");
 
     await receiverchannel.bind('groupMessage', (event) async {
       if (event!.data != null) {
-        var jsonData = jsonDecode(event.data!);
-        print(event.data);
+        Map jsonData = jsonDecode(event.data!);
+        print(jsonData);
         Message message = Message(
           isMe: (jsonData['sender_id'] == widget.user.id) ? true : false,
-          message: jsonData['message'],
+          message: jsonData['message'] ?? '',
           type: "",
           file: File(""),
-          attachment: jsonData['attachment']?["url"] ?? "",
-          sender: LawyerModel.fromJson(
-            jsonData['sender'] ?? {},
-          ),
-          receiver: LawyerModel.fromJson(
-            jsonData['receiver'] ?? {},
-          ),
+          attachment: jsonData['attachment'] ?? "",
+          sender: LawyerModel.fromJson(jsonData['sender'] ??
+              {
+                "name": jsonData['sender_name'] ?? '',
+              }),
+          receiver: LawyerModel.fromJson(jsonData['receiver'] ?? {}),
         );
-
-        messagesstream.sink.add(message);
-        messages.insert(0, message);
-      } else {}
+        if (message.isMe!) {
+        } else {
+          messagesstream.sink.add(message);
+          messages.insert(0, message);
+        }
+      }
     });
-    // await senderchannel.bind('chatMessage', (event) async {
-    //   if (event!.data != null) {
-    //     var jsonData = jsonDecode(event.data!);
-    //     print(event.data);
-    //     Message message = Message(
-    //       isMe: (jsonData['sender_id'] == widget.user.id) ? true : false,
-    //       message: jsonData['message'],
-    //       type: "",
-    //       file: File(""),
-    //       attachment: jsonData['attachment'],
-    //       sender: null,
-    //       receiver: LawyerModel.fromJson(
-    //         jsonData['receiver'] ?? {},
-    //       ),
-    //     );
-
-    //     messagesstream.sink.add(message);
-    //     messages.insert(0, message);
-    //   } else {}
-    // });
   }
 
   disactive() async {
-    receiverchannel.unbind('chatMessage');
-    await pusher.unsubscribe("private-group-channel-${widget.group.id}");
+    receiverchannel.unbind('groupMessage');
+    await pusher.unsubscribe("group-channel-${widget.group.id}");
     pusher.disconnect();
     messagesstream.close();
     messageController.dispose();
@@ -181,9 +170,6 @@ class _GroupChatPageState extends State<GroupChatPage> {
                       attachment: pfile, message: null, id: widget.group.id),
                 );
           }
-          print("************************");
-          print(bottom);
-          bottom = !bottom;
           context.read<ChatBloc>().add(
                 Bottomshow(
                   bottom: bottom,
@@ -262,30 +248,31 @@ class _GroupChatPageState extends State<GroupChatPage> {
                         );
                       }
 
-                      print(messages);
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: messages.length,
-                        shrinkWrap: true,
-                        dragStartBehavior: DragStartBehavior.down,
-                        itemBuilder: (BuildContext context, int index) {
-                          Message message = messages[index];
-                          print(message.sender!.name);
-                          print(message);
-
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            child: GroupChatBubble(
-                              isMe: (message.sender != null)
-                                  ? (message.sender!.id == widget.user.id)
-                                      ? true
-                                      : false
-                                  : message.isMe!,
-                              message: message,
-                            ),
-                          );
-                        },
-                      );
+                      return (messages.length != 0)
+                          ? ListView.builder(
+                              reverse: true,
+                              itemCount: messages.length,
+                              shrinkWrap: true,
+                              dragStartBehavior: DragStartBehavior.down,
+                              itemBuilder: (BuildContext context, int index) {
+                                Message message = messages[index];
+                                return Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  child: GroupChatBubble(
+                                    isMe: (message.sender != null)
+                                        ? (message.sender!.id == widget.user.id)
+                                            ? true
+                                            : false
+                                        : message.isMe!,
+                                    message: message,
+                                  ),
+                                );
+                              },
+                            )
+                          : const Center(
+                              child: Text("no messages"),
+                            );
                     },
                   ),
                 ),
@@ -312,7 +299,6 @@ class _GroupChatPageState extends State<GroupChatPage> {
                                 GestureDetector(
                                   onTap: () async {
                                     await pickimage(ImageSource.gallery);
-
                                     sendattachment();
                                   },
                                   child: SizedBox(
